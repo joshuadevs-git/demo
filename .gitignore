@@ -53,3 +53,6 @@ TEMPLATE.md
 archive/
 
 dev-server.log
+
+# Local backup files
+backup/

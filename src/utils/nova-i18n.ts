@@ -1,34 +1,52 @@
-import copy from '@data/i18n/nova.json';
 
-export type NovaLocale = 'pl' | 'en';
+import copy from "@data/i18n/nova.json";
 
-export function getNovaCopy(locale: NovaLocale = 'pl') {
-  return copy[locale] ?? copy.pl;
+export type NovaLocale = "en";
+
+export function getNovaCopy(_locale: NovaLocale = "en") {
+  return copy.en;
 }
 
-export function getNovaSectionCopy(locale: NovaLocale, dataKey?: string) {
+export function getNovaSectionCopy(
+  _locale: NovaLocale,
+  dataKey?: string
+) {
   if (!dataKey) return undefined;
-  return getNovaCopy(locale).sections[dataKey as keyof typeof copy.pl.sections];
+
+  return getNovaCopy().sections[
+    dataKey as keyof typeof copy.en.sections
+  ];
 }
 
 function withNovaBase(path: string): string {
   const configuredBase = process.env.PUBLIC_BASE_PATH || import.meta.env.BASE_URL;
-  const base = configuredBase === '/'
-    ? ''
-    : `/${configuredBase.replace(/^\/+|\/+$/g, '')}`;
-  return `${base}${path}` || '/';
+
+  const base =
+    configuredBase === "/"
+      ? ""
+      : `/${configuredBase.replace(/^\/+|\/+$/g, "")}`;
+
+  return `${base}${path}` || "/";
 }
 
-export function getNovaLocalePath(locale: NovaLocale): string {
-  return withNovaBase(locale === 'en' ? '/' : '/pl/');
+export function getNovaLocalePath(_locale: NovaLocale = "en"): string {
+  return withNovaBase("/");
 }
 
-export function getNovaNavigationPath(href: string, locale: NovaLocale): string {
-  if (href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:')) {
+export function getNovaNavigationPath(
+  href: string,
+  _locale: NovaLocale = "en"
+): string {
+  if (
+    href.startsWith("#") ||
+    href.startsWith("http") ||
+    href.startsWith("mailto:") ||
+    href.startsWith("tel:")
+  ) {
     return href;
   }
 
-  const normalized = href.startsWith('/') ? href : `/${href}`;
-  if (locale === 'en') return withNovaBase(normalized);
-  return withNovaBase(normalized === '/' ? '/pl/' : `/pl${normalized}`);
+  const normalized = href.startsWith("/") ? href : `/${href}`;
+
+  return withNovaBase(normalized);
 }
