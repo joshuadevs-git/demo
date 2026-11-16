@@ -71,7 +71,7 @@ const {
 	ogImage = seo.defaultOgImage,
 	noIndex = isStaging || !seo.index,
 	lang = SITE_LOCALE,
-	locale = SITE_LOCALE === 'en' ? 'en' : 'pl',
+	locale = 'en',
 	theme: themeProp,
 	sectionPattern = 'off',
 	schemaTemplate = 'default',
@@ -83,7 +83,7 @@ const {
 	showShell = true,
 	clientRuntime = true,
 	enableLenis = true,
-} = Astro.props;
+} = Astro.props as Props;
 
 // Meta robots value: noindex wins, for public pages follow from seo.json decides.
 const robotsContent = `${noIndex ? 'noindex' : 'index'}, ${seo.follow ? 'follow' : 'nofollow'}`;

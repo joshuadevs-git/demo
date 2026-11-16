@@ -18,8 +18,8 @@ type GoogleRating = { rating: number; count: number; label: string };
 
 export interface Props {
   sectionId?: string;
-  /** Content language with JSON (pl default, en alternative).*/
-  lang?: "pl" | "en";
+  /** English-only content language. */
+lang?: "en";
   /** Eyebrow above the title, e.g. "Interior finishing".*/
   label?: string;
   title?: string;
@@ -43,7 +43,7 @@ export interface Props {
 
 const {
   sectionId = "hero-split",
-  lang = "pl",
+  lang = "en",
   label,
   title,
   description,
@@ -60,7 +60,7 @@ const {
 } = Astro.props as Props;
 
 // Why: content per language, with fallback to pl when the language is unknown.
-const t = data[lang] ?? data.pl;
+const t = data.en;
 
 // Why: "props || json" pattern, props take precedence over JSON data.
 const resolvedLabel = label || t.label;

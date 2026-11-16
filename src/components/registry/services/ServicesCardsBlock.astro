@@ -25,7 +25,7 @@ export interface Props {
   /** Id sekcji dla kotwic nawigacyjnych. */
   sectionId?: string;
 /** Content language from JSON. */
-  lang?: "pl" | "en";
+  lang?: "en";
   title?: string;
   description?: string;
   items?: ServiceItem[];
@@ -37,7 +37,7 @@ export interface Props {
 
 const {
 sectionId = "uslugi",
-lang = "pl",
+lang = "en",
 title,
 description,
 items,
@@ -45,15 +45,14 @@ headingTag = "h2",
 class: className = "",
 } = Astro.props as Props;
 
-const t = data[lang] ?? data.pl;
+const t = data.en;
 
 const resolvedTitle = title || t.title;
 const resolvedDescription = description || t.description;
 const resolvedItems = items ?? t.items ?? [];
-const isPl = lang === "pl";
 // Why: CTA label fallback is linguistic, because JSON always specifies linkLabel, and props
 // without this value should not render the English name in the Polish section.
-const fallbackLinkLabel = isPl ? "Umów konsultację" : "Book a consultation";
+const fallbackLinkLabel = "Book a consultation";
 ---
 
 <Section id={sectionId} tone="page" class:list={[className]}>

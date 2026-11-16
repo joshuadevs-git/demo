@@ -10,7 +10,7 @@ export interface Props {
 	locale?: NovaLocale;
 }
 
-const { theme = "light", locale = "pl" } = Astro.props;
+const { theme = "light", locale = "en" } = Astro.props as Props;
 const headerData = getNovaCopy(locale).navigation;
 
 const isDark = theme === "dark" || theme === "transparent";

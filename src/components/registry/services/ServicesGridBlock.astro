@@ -24,7 +24,7 @@ export interface Props {
   /** Id sekcji (kotwica nawigacji), np. "uslugi". */
   sectionId?: string;
 /** Content language from JSON: "pl" or "en". The fallback is "pl". */
-  lang?: "pl" | "en";
+ lang?: "en";
   title?: string;
   description?: string;
   items?: ServiceItem[];
@@ -36,7 +36,7 @@ export interface Props {
 
 const {
 sectionId = "uslugi",
-lang = "pl",
+lang = "en",
 title,
 description,
 items,
@@ -46,7 +46,7 @@ class: className = "",
 
 // Why: t is the content of the chosen language; en is a fallback when lang does not exist in
 // JSON (the configurable block model).
-const t = data[lang] ?? data.pl;
+const t = data.en;
 
 const resolvedTitle = title || t.title;
 const resolvedDescription = description || t.description;

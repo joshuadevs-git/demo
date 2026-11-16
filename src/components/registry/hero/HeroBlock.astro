@@ -27,7 +27,9 @@ interface Props {
 }
 
 const props = Astro.props as Props;
-const fallback = ACTIVE_TEMPLATE === "nova" ? undefined : jsonData;
+const fallback = (
+  ACTIVE_TEMPLATE === "nova" ? undefined : jsonData
+) as Partial<Props> | undefined;
 const eyebrow = props.eyebrow ?? fallback?.eyebrow;
 const heading = props.heading ?? fallback?.heading;
 const headingAccent = props.headingAccent ?? fallback?.headingAccent;

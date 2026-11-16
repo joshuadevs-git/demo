@@ -8,7 +8,7 @@ interface Props {
 	locale?: NovaLocale;
 }
 
-const { drawerMode = "mobile", locale = "pl" } = Astro.props;
+const { drawerMode = "mobile", locale = "en" } = Astro.props as Props;
 const headerData = getNovaCopy(locale).navigation;
 const rootVisibility = drawerMode === "mobile" ? "lg:hidden" : "";
 const socialLinks = getNavDrawerSocialLinks();

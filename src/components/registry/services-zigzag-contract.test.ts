@@ -69,7 +69,7 @@ function renderServicesZigzagHtml(data: ZigzagSection, sectionId = 'services-zig
 }
 
 describe('ServicesZigzag, kontrakt renderowania', () => {
-  const defaultData: ZigzagSection = zigzagData.pl;
+ const defaultData: ZigzagSection = zigzagData.en;
 
   it('renderuje <section> z id i ui-section', () => {
     const $ = cheerio.load(renderServicesZigzagHtml(defaultData));
@@ -86,18 +86,17 @@ describe('ServicesZigzag, kontrakt renderowania', () => {
   it('renderuje h2 z tytułem sekcji (SectionHeader)', () => {
     const $ = cheerio.load(renderServicesZigzagHtml(defaultData));
     expect($('h2').length).toBe(1);
-    expect($('h2').text()).toContain('Nasze usługi');
+    expect($('h2').text()).toContain('Our services');
   });
 
   describe('dane JSON', () => {
-    it('JSON ma sekcje pl i en z taką samą liczbą usług', () => {
-      expect(zigzagData.pl.items.length).toBeGreaterThanOrEqual(4);
-      expect(zigzagData.pl.items.length).toBeLessThanOrEqual(6);
-      expect(zigzagData.en.items.length).toBe(zigzagData.pl.items.length);
-    });
+    it('English JSON has the expected number of services', () => {
+  expect(zigzagData.en.items.length).toBeGreaterThanOrEqual(4);
+  expect(zigzagData.en.items.length).toBeLessThanOrEqual(6);
+});
 
     it('wszystkie obrazki wskazują placeholdery starter-kita', () => {
-      zigzagData.pl.items.forEach((item) => {
+      zigzagData.en.items.forEach((item) => {
         expect(item.image).toMatch(/^\/assets\/placeholders\//);
       });
     });
@@ -189,7 +188,7 @@ describe('ServicesZigzag, kontrakt renderowania', () => {
     });
   });
 
-  it('wersja en ma tę samą strukturę co pl', () => {
+  it('English version renders the expected structure', () => {
     const $ = cheerio.load(renderServicesZigzagHtml(zigzagData.en));
     expect($('.grid').length).toBe(zigzagData.en.items.length);
     expect($('h2').text()).toContain('Our services');

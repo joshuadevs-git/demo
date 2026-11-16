@@ -24,7 +24,7 @@ type ServiceItem = {
 export interface Props {
   sectionId?: string;
 /** Content language with JSON. EN is the default language, EN holds the equivalent. */
-  lang?: "pl" | "en";
+  lang?: "en";
   title?: string;
   description?: string;
   items?: ServiceItem[];
@@ -36,7 +36,7 @@ export interface Props {
 
 const {
 sectionId = "services-zigzag",
-lang = "pl",
+lang = "en",
 title,
 description,
 items,
@@ -46,16 +46,14 @@ class: className = "",
 
 // Why: lyrics are in SSOT (Single Source of Truth) with fallback to JSON.Props from CMS or
 // PageBuilder overwrite content from the feed.
-const t = data[lang] ?? data.pl;
+const t = data.en;
 const resolvedTitle = title || t.title;
 const resolvedDescription = description || t.description;
 const resolvedItems = items ?? t.items ?? [];
 // Why: Anchor to contact is a safe default target when the block is embedded without data or
 // the item does not have a set link.
-const DEFAULT_HREF = "/kontakt/";
-const DEFAULT_LINK_LABEL_PL = "Umów konsultację";
-const DEFAULT_LINK_LABEL_EN = "Book a consultation";
-const defaultLinkLabel = lang === "en" ? DEFAULT_LINK_LABEL_EN : DEFAULT_LINK_LABEL_PL;
+const defaultLinkLabel = "Book a consultation";
+const DEFAULT_HREF = "/contact/";
 ---
 
 <!-- Why: The zigzag layout renders services in a two-column grid on md+
