@@ -1,0 +1,248 @@
+---
+import Section from "@components/ui/layout/Section.astro";
+import Container from "@components/ui/layout/Container.astro";
+import Heading from "@components/ui/atoms/Heading.astro";
+import Text from "@components/ui/atoms/Text.astro";
+import Button from "@components/ui/atoms/Button.astro";
+import SmartImage from "@components/ui/atoms/SmartImage.astro";
+import jsonData from "@data/sections/nova-hero-wireframe.json";
+import { ACTIVE_TEMPLATE } from "@config/template";
+
+type Stat = { value: string; label: string };
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  headingAccent?: string;
+  subheading?: string;
+  description?: string;
+  primaryCTA?: { label: string; href: string };
+  secondaryCTA?: { label: string; href: string };
+  image?: string;
+  imageAlt?: string;
+  stats?: Stat[];
+  sectionId?: string;
+  class?: string;
+}
+
+const props = Astro.props as Props;
+const fallback = ACTIVE_TEMPLATE === "nova" ? undefined : jsonData;
+const eyebrow = props.eyebrow ?? fallback?.eyebrow;
+const heading = props.heading ?? fallback?.heading;
+const headingAccent = props.headingAccent ?? fallback?.headingAccent;
+const subheading = props.subheading ?? fallback?.subheading;
+const description = props.description ?? fallback?.description;
+const primaryCTA = props.primaryCTA ?? fallback?.primaryCTA;
+const secondaryCTA = props.secondaryCTA ?? fallback?.secondaryCTA;
+const image = props.image ?? fallback?.image;
+const imageAlt = props.imageAlt ?? fallback?.imageAlt ?? "";
+const stats = props.stats ?? fallback?.stats ?? [];
+---
+
+<Section
+  id={props.sectionId ?? "hero"}
+  tone="page"
+  class:list={[
+    "hero-section nova-responsive-hero overflow-hidden pt-0 pb-0", 
+    props.class,
+  ]}
+>
+  <Container class="w-full max-w-none px-0">
+    <div class="relative overflow-hidden rounded-t-xl bg-[#12213F] text-white pt-20 md:pt-28">
+      
+      <!-- BALANCED GRID -->
+      <div class="grid min-w-0 grid-cols-1 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:grid-cols-2">
+        
+        <!-- LEFT SIDE: TEXT -->
+        <div class="flex min-w-0 flex-col justify-center px-[clamp(1.25rem,5vw,5rem)] pb-[clamp(3rem,9vw,6rem)] pt-[clamp(3rem,7vw,5rem)] md:min-h-[34rem] md:px-[clamp(1.5rem,4vw,3.5rem)] md:pb-8 md:pt-10 lg:px-[clamp(1.5rem,5vw,5rem)] lg:pb-[clamp(2rem,3vw,3rem)] lg:pt-[clamp(4rem,5vw,5rem)]">
+          <div class="flex min-w-0 flex-col justify-start gap-[clamp(1.25rem,4vw,2rem)] md:gap-5 lg:-translate-y-6 lg:gap-[clamp(1.25rem,2vw,2rem)]" data-motion-sequence="fade">
+            
+            <Text tag="p" variant="accent-label" class="font-sans font-semibold tracking-[0.18em] text-[#FF8A00] md:text-[0.72rem] lg:text-[clamp(0.75rem,0.85vw,0.95rem)]">{eyebrow}</Text>
+            
+            <Heading tag="h1" variant="hero" class="max-w-[42rem] font-bold leading-[1.02] tracking-[-0.04em] [text-wrap:balance] text-[clamp(2.5rem,10vw,3.75rem)] md:max-w-[42rem] md:text-[clamp(3rem,4.4vw,4.75rem)] lg:text-[clamp(3rem,4.4vw,4.75rem)]">
+              {heading}{' '}<span class="text-white">{headingAccent}</span>
+            </Heading>
+
+            <!-- ADDED SUBHEADING -->
+            {subheading && (
+              <Text variant="body" class="max-w-[38rem] text-white font-semibold md:text-[clamp(1.1rem,1.4vw,1.3rem)] lg:text-[clamp(1.2rem,1.5vw,1.4rem)]">
+                {subheading}
+              </Text>
+            )}
+            
+            <Text variant="lead" class="max-w-[38rem] text-white/80 md:max-w-[25rem] md:text-[clamp(1rem,1.45vw,1.2rem)] lg:max-w-[38rem] lg:text-[clamp(1.1rem,1.45vw,1.4rem)]">{description}</Text>
+            
+           <div class="flex flex-col gap-3 pt-2 sm:flex-row sm:flex-nowrap sm:items-center">
+  {primaryCTA && (
+    <Button
+      href={primaryCTA.href}
+      variant="primary"
+      size="lg"
+      class="bg-[#FF8A00] !text-[#12213F] border-none transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#FF8A00]/90 hover:shadow-[0_10px_24px_-6px_rgba(255,138,0,0.55)] min-h-11 w-full whitespace-nowrap font-semibold tracking-normal !px-6 sm:w-auto md:text-[clamp(0.95rem,1.05vw,1.1rem)]"
+    >
+      {primaryCTA.label}
+    </Button>
+  )}
+
+  {secondaryCTA && (
+    <Button
+      href={secondaryCTA.href}
+      variant="outline"
+      size="lg"
+      class="min-h-11 w-full whitespace-nowrap font-semibold tracking-normal text-white border-white/30 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/60 hover:bg-white/10 !px-6 sm:w-auto md:text-[clamp(0.95rem,1.05vw,1.1rem)]"
+    >
+      {secondaryCTA.label}
+    </Button>
+  )}
+</div>
+          </div>
+        </div>
+
+        <!-- RIGHT SIDE: IMAGE -->
+        <div class="relative min-w-0 flex items-center justify-center px-5 md:px-0 md:pr-6 lg:pr-12 pb-8 md:pb-12 md:pt-4" data-motion="fade" style="--motion-delay: 120ms">
+          
+          <svg class="pointer-events-none absolute size-0 overflow-hidden" aria-hidden="true" focusable="false">
+            <defs>
+              <clipPath id="nova-responsive-photo-blob" clipPathUnits="objectBoundingBox">
+                <path d="M .20 0 H .94 C .98 0 1 .02 1 .06 V .70 C 1 .86 .88 1 .72 1 H .08 C .03 1 0 .97 0 .92 V .24 C 0 .10 .09 0 .20 0 Z" />
+              </clipPath>
+            </defs>
+          </svg>
+          
+          <!-- HOVER WRAPPER: lift + glow (filter sits outside the clip-path so the glow isn't cut off) -->
+          <div class="hero-photo relative z-10 w-fit max-w-full">
+            <figure class="hero-photo-frame relative w-fit max-w-full overflow-hidden [clip-path:url(#nova-responsive-photo-blob)]">
+              <SmartImage
+                src={image}
+                alt={imageAlt}
+                width={1200}
+                height={800}
+                loading="eager"
+                class="hero-photo-img block h-auto w-auto max-w-full max-h-[28rem] md:max-h-[36rem] lg:max-h-[40rem] object-contain"
+              />
+              <!-- light sweep -->
+              <span class="hero-photo-shine pointer-events-none absolute inset-0" aria-hidden="true"></span>
+            </figure>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTTOM: STATS -->
+<div class="hero-stats grid grid-cols-2 rounded-t-[var(--rounded-lg)] bg-[#DCE3EE] border-t border-[#12213F]/10 px-[clamp(1rem,3vw,2.5rem)] py-[clamp(2rem,3vw,2.5rem)] md:grid-cols-4" data-motion-sequence="viewport" data-motion-profile="soft">
+  {stats.map((stat) => (
+    <div class="nova-stat relative flex flex-col items-center justify-start gap-2 px-[clamp(0.75rem,2vw,1.5rem)] py-3 text-center">
+      <Heading
+        tag="strong"
+        variant="section-heading-lg"
+        class="!text-[clamp(1.25rem,2.2vw,2rem)] !leading-tight font-bold text-[#12213F] [text-wrap:balance] md:whitespace-nowrap"
+      >
+        {stat.value}
+      </Heading>
+      <Text tag="span" variant="feature-body-sm" class="text-[#12213F]/70">{stat.label}</Text>
+    </div>
+  ))}
+</div>
+    </div>
+  </Container>
+</Section>
+
+<style>
+  :global(.nova-responsive-hero) .nova-stat {
+    position: relative;
+  }
+
+  /* ---------- Hero photo hover animation ---------- */
+  .hero-photo {
+    transition:
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.5s ease;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.25));
+    will-change: transform;
+  }
+
+  .hero-photo-frame {
+    transition: clip-path 0.5s ease;
+  }
+
+  /* :global needed because SmartImage renders the <img> in a child component */
+  .hero-photo :global(.hero-photo-img) {
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: scale(1);
+  }
+
+  .hero-photo-shine {
+    background: linear-gradient(
+      115deg,
+      transparent 35%,
+      rgba(255, 255, 255, 0.28) 50%,
+      transparent 65%
+    );
+    transform: translateX(-120%);
+    transition: transform 0s;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .hero-photo:hover {
+      transform: translateY(-10px) rotate(-0.6deg);
+      filter: drop-shadow(0 24px 32px rgba(0, 0, 0, 0.4))
+        drop-shadow(0 0 28px rgba(255, 138, 0, 0.35));
+    }
+
+    .hero-photo:hover :global(.hero-photo-img) {
+      transform: scale(1.07);
+    }
+
+    .hero-photo:hover .hero-photo-shine {
+      transform: translateX(120%);
+      transition: transform 0.9s ease;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-photo,
+    .hero-photo :global(.hero-photo-img),
+    .hero-photo-shine {
+      transition: none !important;
+    }
+
+    .hero-photo:hover,
+    .hero-photo:hover :global(.hero-photo-img) {
+      transform: none !important;
+    }
+  }
+
+  @media (max-width: 767px) {
+    :global(.nova-responsive-hero) .nova-stat:nth-child(even)::before {
+      position: absolute;
+      inset-block: 0.75rem;
+      left: 0;
+      width: 0.0625rem;
+      background-color: var(--color-brand-light);
+      content: "";
+      opacity: 0.35;
+    }
+
+    :global(.nova-responsive-hero) .nova-stat:nth-child(-n + 2)::after {
+      position: absolute;
+      right: 0.75rem;
+      bottom: 0;
+      left: 0.75rem;
+      height: 0.0625rem;
+      background-color: var(--color-brand-light);
+      content: "";
+      opacity: 0.35;
+    }
+  }
+
+  @media (min-width: 768px) {
+    :global(.nova-responsive-hero) .nova-stat + .nova-stat::before {
+      position: absolute;
+      inset-block: 25%;
+      left: 0;
+      width: 0.0625rem;
+      background-color: var(--color-brand-light);
+      content: "";
+      opacity: 0.35;
+    }
+  }
+</style>

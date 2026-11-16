@@ -1,0 +1,12 @@
+{
+  "seo": {
+    "title": "Success Stories - CaseBridge",
+    "description": "Read how CaseBridge graduates are making an impact in the legal industry."
+  },
+  "heading": "Success Stories",
+  "sections": [
+    { "id": "navbar", "variant": "floating" },
+    { "id": "successStories", "variant": "default" },
+    { "id": "footer", "variant": "nova" }
+  ]
+}

@@ -1,0 +1,154 @@
+---
+import Section from "@components/ui/layout/Section.astro";
+import Container from "@components/ui/layout/Container.astro";
+import Heading from "@components/ui/atoms/Heading.astro";
+import Text from "@components/ui/atoms/Text.astro";
+import Button from "@components/ui/atoms/Button.astro";
+import jsonData from "@data/sections/nova-team.json";
+import { ACTIVE_TEMPLATE } from "@config/template";
+
+interface TeamAvatar { src: string; alt: string; }
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  closing?: string;
+  image?: string;
+  imageAlt?: string;
+  checks?: string[];
+  buttonLabel?: string;
+  buttonHref?: string;
+  videoCaption?: string;
+  // kept so existing callers don't break (not rendered anymore)
+  teamLabel?: string;
+  teamCount?: string;
+  teamAriaLabel?: string;
+  teamAvatars?: TeamAvatar[];
+  class?: string;
+}
+
+const props = Astro.props as Props;
+const fallback = ACTIVE_TEMPLATE === "nova" ? undefined : jsonData;
+
+const eyebrow = props.eyebrow ?? fallback?.eyebrow;
+const title = props.title ?? fallback?.title;
+const description = props.description ?? fallback?.description;
+const closing = props.closing ?? (fallback as any)?.closing;
+const image = props.image ?? fallback?.image;
+const imageAlt = props.imageAlt ?? fallback?.imageAlt ?? "";
+const videoCaption = props.videoCaption ?? (fallback as any)?.videoCaption;
+
+// Each blank-line / new-line in the JSON becomes its own paragraph
+const paragraphs = (description ?? "").split(/\n+/).map((p) => p.trim()).filter(Boolean);
+---
+
+<Section id="zespol" tone="page" class:list={["nova-team py-16 md:py-24", props.class]}>
+  <Container class="w-full max-w-none px-[clamp(1.5rem,5vw,5rem)]">
+    <div class="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-16">
+
+      <!-- VIDEO: click to play with sound -->
+      <div class="nova-team-media relative" data-motion="viewport" data-motion-skip>
+        <figure class="relative m-0 grid min-h-80 cursor-pointer place-items-center overflow-hidden rounded-[var(--ui-radius-xl)]">
+          <video
+            id="team-video"
+            src={image}
+            loop
+            playsinline
+            muted
+            preload="metadata"
+            class="h-full min-h-80 w-full object-cover"
+          >
+            <p>{imageAlt}</p>
+          </video>
+
+          <!-- Play button overlay -->
+          <div
+            id="play-overlay"
+            role="button"
+            tabindex="0"
+            aria-label="Play video with sound"
+            class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-[#12213F]/35"
+          >
+            <div class="flex size-16 items-center justify-center rounded-full bg-white text-[#12213F]">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="ml-1 size-7" aria-hidden="true">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+            {videoCaption && (
+              <span class="text-sm font-medium tracking-wide text-white">{videoCaption}</span>
+            )}
+          </div>
+        </figure>
+      </div>
+
+      <!-- STORY -->
+      <div class="flex min-w-0 flex-col gap-5" data-motion-sequence="viewport" data-motion-profile="soft">
+
+        {eyebrow && (
+          <Text tag="p" variant="accent-label" class="font-sans text-sm font-semibold tracking-[0.18em] text-[#B35F00]">
+            {eyebrow}
+          </Text>
+        )}
+
+        <Heading tag="h2" variant="section-title" class="[text-wrap:balance]">{title}</Heading>
+
+        <div class="flex flex-col gap-4">
+          {paragraphs.map((p) => (
+            <Text variant="lead" class="max-w-[38rem] text-[#12213F]/75">{p}</Text>
+          ))}
+        </div>
+
+        
+
+        {closing && (
+          <blockquote class="nova-team-closing m-0 max-w-[38rem] border-l-4 border-[#FF8A00] py-1 pl-5">
+            <Heading tag="p" variant="feature-title" class="!text-[clamp(1.2rem,1.8vw,1.55rem)] !leading-snug font-bold text-[#12213F] [text-wrap:balance]">
+              {closing}
+            </Heading>
+          </blockquote>
+        )}
+    
+      </div>
+    </div>
+  </Container>
+</Section>
+
+
+<script>
+  const video = document.getElementById("team-video") as HTMLVideoElement | null;
+  const overlay = document.getElementById("play-overlay");
+
+  if (video && overlay) {
+    const showOverlay = () => {
+      overlay.style.opacity = "1";
+      overlay.style.pointerEvents = "auto";
+    };
+    const hideOverlay = () => {
+      overlay.style.opacity = "0";
+      overlay.style.pointerEvents = "none";
+    };
+
+    // Play with sound
+    const play = (e: Event) => {
+      e.stopPropagation();
+      video.muted = false;
+      video.volume = 1;
+      video.play();
+      hideOverlay();
+    };
+
+    overlay.addEventListener("click", play);
+    overlay.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        play(e);
+      }
+    });
+
+    // Clicking the playing video pauses it and brings the button back
+    video.addEventListener("click", () => {
+      if (!video.paused) video.pause();
+    });
+    video.addEventListener("pause", showOverlay);
+  }
+</script>

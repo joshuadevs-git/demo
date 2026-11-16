@@ -1,0 +1,416 @@
+---
+import Section from "@components/ui/layout/Section.astro";
+import Container from "@components/ui/layout/Container.astro";
+
+// Photos are placeholders (Unsplash samples). Swap each `image` for the real coach photo.
+const coaches = [
+  {
+    name: "Coach Jules",
+    role: "Medical Records Coordinator for law firms",
+    headline: "Your experience is your advantage",
+    description: `You don't have to change who you are to change your career. Sometimes, you just need to take your skills somewhere new.
+    
+Before entering the legal industry, I worked as a Team Lead in the BPO industry in Bacolod, managing daily operations, coordinating teams, and handling administrative responsibilities.
+
+Today, I specialize in medical records coordination and retrieval for law firms. I work with healthcare providers, track medical records, organize case documents, and help ensure attorneys have the information they need.
+
+What I once considered ordinary BPO experience has become one of my greatest strengths in my legal career.
+
+Here's what I want you to remember: Communication, organization, problem-solving, and attention to detail are skills that law firms value. You may not know legal procedures yet, but you already have a foundation you can build on.
+
+Ready to explore a career in the legal industry? Take the first step. Your next opportunity might be closer than you think.`,
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=900&auto=format&fit=crop",
+  },
+  {
+    name: "Coach Cristina",
+    role: "Paralegal Assistant, personal injury law firm",
+    headline: "It's never too late to start again",
+    description:
+      "Cristina has a degree in Chemical Engineering and has worked in quality assurance, auditing, customer service and teaching, and has run her own businesses. Each of those jobs built skills she uses today as a Paralegal Assistant. Your past experience is not wasted. You don't need to know everything before you start, only the courage to learn.",
+    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=900&auto=format&fit=crop",
+  },
+  {
+    name: "Coach Christine",
+    role: "Assistant to the Intake Director",
+    headline: "Every experience has a purpose",
+    description:
+      "Christine started as an Office Assistant, then moved through the food business, online teaching, BPO and Human Resources. Her path wasn't a straight line, but managing tasks, meeting deadlines and handling people prepared her for the legal industry. You don't need a law degree to get started, just the willingness to learn.",
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=900&auto=format&fit=crop",
+  },
+  {
+    name: "Coach Fran",
+    role: "Intake Coordinator, US-based law firm",
+    headline: "You are more qualified than you think",
+    description:
+      "Fran spent nine years in BPO, from customer service and tech support to Team Leader, with a degree in Information Technology. Now Fran screens inquiries and gathers case information for a US law firm. If you come from BPO, customer service, sales or administration, you may already have the skills law firms are looking for.",
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=900&auto=format&fit=crop",
+  },
+];
+
+// Position of each card relative to the active one: 0 = center, -1 = left, 1 = right.
+// Anything with |offset| >= 2 is tucked behind the center card.
+const offsetOf = (i: number, active: number, n: number) => {
+  let d = (((i - active) % n) + n) % n;
+  if (d > n / 2) d -= n;
+  return d;
+};
+---
+
+<Section id="success-stories" tone="page" class="py-20 md:py-28 bg-[#F3F5F9] overflow-hidden">
+  <Container class="w-full max-w-[90rem] px-[clamp(1rem,5vw,5rem)]">
+
+    <p class="text-center text-[#5A6478] text-base md:text-lg max-w-xl mx-auto mb-10 md:mb-14">
+      Real career journeys. Transferable skills. New opportunities in the legal industry.
+    </p>
+
+    <!-- Carousel -->
+    <div
+      id="coach-carousel"
+      class="relative"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Coach testimonials"
+    >
+      <div class="stage relative" tabindex="0">
+
+        <!-- Large faded title behind the cards -->
+        <h2 class="stage-title" aria-label="Our coaches">
+          OUR COACHES
+        </h2>
+
+        <!-- Cards -->
+        <div class="cards relative">
+          {coaches.map((coach, i) => (
+            <article
+              class="coach-card"
+              data-index={i}
+              data-offset={offsetOf(i, 0, coaches.length)}
+              aria-label={`${i + 1} of ${coaches.length}: ${coach.name}`}
+            >
+              <img
+                src={coach.image}
+                alt={`Portrait of ${coach.name}`}
+                loading={i === 0 ? "eager" : "lazy"}
+                draggable="false"
+              />
+            </article>
+          ))}
+        </div>
+
+        <!-- Side arrows (desktop) -->
+        <button type="button" data-dir="-1" aria-label="Previous coach" class="arrow arrow-left hidden md:grid">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="size-5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7" />
+          </svg>
+        </button>
+        <button type="button" data-dir="1" aria-label="Next coach" class="arrow arrow-right hidden md:grid">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="size-5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Description for the active coach -->
+      <div class="copy-wrap mt-10 md:mt-14 mx-auto max-w-2xl text-center" aria-live="polite">
+        {coaches.map((coach, i) => (
+          <div class={`story-copy ${i === 0 ? "is-active" : ""}`} data-index={i}>
+            <!-- Name first, role underneath -->
+            <p class="text-[#FF8A00] font-semibold text-lg md:text-xl leading-tight">
+              {coach.name}
+            </p>
+            <p class="mt-1 text-[#5A6478] text-sm md:text-base">
+              {coach.role}
+            </p>
+            <h3 class="mt-4 text-[clamp(1.75rem,3.6vw,2.75rem)] leading-[1.1] font-bold tracking-tight text-[#12213F]">
+              {coach.headline}
+            </h3>
+            <p class="mt-5 text-[#3B465C] text-base md:text-lg leading-relaxed">
+              {coach.description}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Dots + arrows (mobile) -->
+      <div class="mt-8 flex items-center justify-center gap-5">
+        <button type="button" data-dir="-1" aria-label="Previous coach" class="arrow-sm md:hidden">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="size-4" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7" />
+          </svg>
+        </button>
+
+        <div class="flex items-center gap-2">
+          {coaches.map((coach, i) => (
+            <button
+              type="button"
+              class={`dot ${i === 0 ? "is-active" : ""}`}
+              data-dot={i}
+              aria-label={`Show ${coach.name}`}
+            ></button>
+          ))}
+        </div>
+
+        <button type="button" data-dir="1" aria-label="Next coach" class="arrow-sm md:hidden">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="size-4" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </Container>
+</Section>
+
+<style>
+  #coach-carousel {
+    --cw: clamp(230px, 68vw, 370px);   /* center card width */
+    --title: clamp(2.75rem, 10.5vw, 8.5rem);
+    --ease: cubic-bezier(0.22, 0.8, 0.24, 1);
+  }
+
+  .stage {
+    /* Cards start lower, so only the faded bottom edge of the title tucks behind them */
+    padding-top: calc(var(--title) * 0.82);
+    outline: none;
+  }
+  .stage:focus-visible {
+    outline: 2px solid #ff8a00;
+    outline-offset: 8px;
+    border-radius: 1.5rem;
+  }
+
+  /* Large orange headline behind the photos (fades out toward the bottom) */
+  .stage-title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    text-align: center;
+    white-space: nowrap;
+    font-size: var(--title);
+    line-height: 0.95;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: transparent;
+    background: linear-gradient(to bottom, #ff8a00 20%, rgba(255, 138, 0, 0.25) 95%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    user-select: none;
+  }
+
+  /* Card track */
+  .cards {
+    z-index: 1;
+    height: calc(var(--cw) * 1.333);
+  }
+
+  .coach-card {
+    --tx: 0px;
+    --s: 1;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: var(--cw);
+    height: calc(var(--cw) * 1.333);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    background: #cfd6e4;
+    cursor: pointer;
+    transform: translateX(calc(-50% + var(--tx))) scale(var(--s));
+    transition:
+      transform 650ms var(--ease),
+      opacity 450ms ease,
+      filter 450ms ease,
+      box-shadow 450ms ease;
+    will-change: transform;
+  }
+  .coach-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+    pointer-events: none;
+  }
+
+  /* Center card: full colour, biggest, on top */
+  .coach-card[data-offset="0"] {
+    z-index: 30;
+    cursor: default;
+    box-shadow: 0 40px 70px -30px rgba(18, 33, 63, 0.55);
+  }
+
+  /* Side cards: smaller, black & white, tucked behind the center */
+  .coach-card[data-offset="-1"],
+  .coach-card[data-offset="1"] {
+    --s: 0.82;
+    z-index: 20;
+    filter: grayscale(1) brightness(0.95);
+    opacity: 0.92;
+    box-shadow: 0 25px 45px -28px rgba(18, 33, 63, 0.4);
+  }
+  .coach-card[data-offset="-1"] { --tx: calc(var(--cw) * -0.74); }
+  .coach-card[data-offset="1"]  { --tx: calc(var(--cw) * 0.74); }
+
+  /* Everything else waits behind the center card */
+  .coach-card[data-offset="2"],
+  .coach-card[data-offset="-2"],
+  .coach-card[data-offset="3"],
+  .coach-card[data-offset="-3"] {
+    --s: 0.6;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    filter: grayscale(1);
+  }
+
+  /* Arrows */
+  .arrow {
+    position: absolute;
+    top: calc(50% + var(--title) * 0.41);
+    z-index: 40;
+    width: 3.25rem;
+    height: 3.25rem;
+    place-items: center;
+    border-radius: 9999px;
+    background: #12213f;
+    color: #fff;
+    transform: translateY(-50%);
+    transition: background-color 200ms ease, transform 200ms ease;
+  }
+  .arrow:hover { background: #ff8a00; }
+  .arrow:focus-visible { outline: 2px solid #ff8a00; outline-offset: 3px; }
+  .arrow-left  { left: clamp(0rem, 4vw, 4rem); }
+  .arrow-right { right: clamp(0rem, 4vw, 4rem); }
+
+  .arrow-sm {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    background: #12213f;
+    color: #fff;
+  }
+  .arrow-sm:focus-visible { outline: 2px solid #ff8a00; outline-offset: 3px; }
+  @media (min-width: 768px) {
+    .arrow-sm { display: none; }
+  }
+
+  /* Dots */
+  .dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: rgba(18, 33, 63, 0.2);
+    transition: width 300ms var(--ease), background-color 300ms ease;
+  }
+  .dot.is-active {
+    width: 1.75rem;
+    background: #ff8a00;
+  }
+  .dot:focus-visible { outline: 2px solid #12213f; outline-offset: 3px; }
+
+  /* Description swap */
+  .copy-wrap {
+    display: grid;
+  }
+  .story-copy {
+    grid-area: 1 / 1;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 350ms ease, transform 450ms var(--ease), visibility 0s linear 350ms;
+  }
+  .story-copy.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity 450ms ease 150ms, transform 500ms var(--ease) 150ms, visibility 0s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .coach-card,
+    .story-copy,
+    .story-copy.is-active,
+    .dot,
+    .arrow {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const root = document.getElementById("coach-carousel");
+
+  if (root) {
+    const cards = Array.from(root.querySelectorAll<HTMLElement>(".coach-card"));
+    const copies = Array.from(root.querySelectorAll<HTMLElement>(".story-copy"));
+    const dots = Array.from(root.querySelectorAll<HTMLElement>(".dot"));
+    const stage = root.querySelector<HTMLElement>(".stage");
+    const n = cards.length;
+    let active = 0;
+
+    const offsetOf = (i: number) => {
+      let d = (((i - active) % n) + n) % n;
+      if (d > n / 2) d -= n;
+      return d;
+    };
+
+    const render = () => {
+      cards.forEach((card, i) => {
+        const o = offsetOf(i);
+        card.dataset.offset = String(o);
+        card.setAttribute("aria-hidden", o === 0 ? "false" : "true");
+      });
+      copies.forEach((el, i) => el.classList.toggle("is-active", i === active));
+      dots.forEach((el, i) => el.classList.toggle("is-active", i === active));
+    };
+
+    const go = (index: number) => {
+      active = ((index % n) + n) % n;
+      render();
+    };
+
+    // Arrows (desktop sides + mobile row)
+    root.querySelectorAll<HTMLElement>("[data-dir]").forEach((btn) => {
+      btn.addEventListener("click", () => go(active + Number(btn.dataset.dir)));
+    });
+
+    // Dots
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => go(Number(dot.dataset.dot)));
+    });
+
+    // Click a side card to bring it to the center
+    cards.forEach((card, i) => {
+      card.addEventListener("click", () => {
+        if (i !== active && Math.abs(offsetOf(i)) === 1) go(i);
+      });
+    });
+
+    // Keyboard
+    stage?.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") { e.preventDefault(); go(active - 1); }
+      if (e.key === "ArrowRight") { e.preventDefault(); go(active + 1); }
+    });
+
+    // Swipe
+    let startX = 0;
+    let tracking = false;
+    stage?.addEventListener("pointerdown", (e) => {
+      startX = e.clientX;
+      tracking = true;
+    });
+    stage?.addEventListener("pointerup", (e) => {
+      if (!tracking) return;
+      tracking = false;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 45) go(active + (dx < 0 ? 1 : -1));
+    });
+    stage?.addEventListener("pointercancel", () => (tracking = false));
+
+    render();
+  }
+</script>

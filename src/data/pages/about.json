@@ -1,0 +1,12 @@
+{
+  "seo": {
+    "title": "About Us - CaseBridge",
+    "description": "Learn more about our mission."
+  },
+  "heading": "About Us",
+  "sections": [
+    { "id": "navbar", "variant": "floating" },
+    { "id": "careerPathways", "variant": "default" },
+    { "id": "footer", "variant": "nova" }
+  ]
+}

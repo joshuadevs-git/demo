@@ -1,0 +1,128 @@
+{
+  "en": {
+    "page": {
+      "title": "Nova, websites for ambitious brands",
+      "description": "We create modern websites that strengthen your image, attract clients and support business growth.",
+      "heading": "New possibilities for ambitious brands"
+    },
+    "navigation": {
+      "menu": [
+        { "label": "Home", "href": "/" },
+        { "label": "About", "href": "/about" },
+        { "label": "Request a Talent", "href": "/request-a-talent" },
+        { "label": "Success Stories", "href": "/success-stories" },
+        { "label": "Contact us", "href": "/contact" }
+      ],
+      "cta": {
+        "label": "Enroll Now",
+        "hoverLabel": "Let's talk",
+        "href": "#contact"
+      },
+      "aria": {
+        "menuOpen": "Open navigation menu",
+        "menuClose": "Close menu",
+        "menuExpand": "Expand submenu",
+        "navMain": "Main navigation",
+        "drawer": "Navigation menu"
+      },
+      "languageLabel": "Choose language"
+    },
+    "sections": {
+   "nova-hero-wireframe": {
+    "eyebrow": "LEGAL VA TRAINING CENTER",
+    "heading": "Trained Legal Talent Your Clients Can Count On.",
+    "headingAccent": "",
+    "subheading": "Learn the skills. Start your Legal VA career. Get connected to real opportunities.",
+    "description": "Casebridge trains aspiring Virtual Assistants to work with law firms. You learn by doing, practice on real CRM software, and get guidance from coaches who work in the industry every day.",
+    "primaryCTA": { "label": "Explore Training Programs", "href": "#programs" },
+    "secondaryCTA": { "label": "Request a Legal VA Talent Pool", "href": "#talent-pool" },
+    "image": "/assets/images/t001-nova/1.jpg",
+    "imageAlt": "Strategist working at a laptop",
+    "stats": [
+      { "value": "Hands-on CRM", "label": "Practice on real platforms" },
+      { "value": "HIPAA certified", "label": "Free training included" },
+      { "value": "Mock Calls", "label": "Plus interview practice" },
+      { "value": "Small batches", "label": "Only 10 per live batch" }
+    ]
+  },
+      "nova-projects": {
+        "eyebrow":"WHO CAN TRAIN WITH US",
+        "title": "No legal background? No Problem.",
+        "description": "What you already know can help you succeed in this industry. You bring the potential. We build the skills.",
+        "linkLabel": "Reserve Your Free Orientation Seat",
+        "linkHref": "#realizacje",
+        "items": [
+          { "category": "Websites", "title": "A premium brand with a new website", "image": "/assets/images/t001-nova/4.jpg", "alt": "Laptop showing a website project" },
+          { "category": "Brand identity", "title": "A new identity for an ambitious brand", "image": "/assets/images/t001-nova/5.jpg", "alt": "Modern building used as a project example" }
+        ]
+      },
+           "nova-services": {
+  "items": [
+    { "icon": "headset", "title": "BPO professionals", "description": "Your customer service, sales, and call-handling skills fit legal support roles well." },
+    { "icon": "globe", "title": "OFWs and overseas professionals", "description": "Build a remote career and bring your experience home." },
+    { "icon": "graduation-cap", "title": "Fresh graduates", "description": "Studied Criminology, Political Science, Nursing, or Psychology? Turn it into job-ready skills." },
+    { "icon": "briefcase", "title": "Corporate employees and career shifters", "description": "Take your admin, communication, and organizing skills into a growing industry." }
+  ]
+},
+           "nova-team": {
+  "eyebrow": "OUR STORY",
+  "title": "Five Friends. One Mission. A Bridge to the Legal Industry.",
+  "description": "CaseBridge started with five friends who all work with U.S. law firms. We saw how fast demand for Legal VAs was growing, and we saw many talented VAs stay away from the legal niche because the word \"legal\" sounds scary.\nSo we built CaseBridge: hands-on training, free HIPAA training and certification, CRM practice, and ongoing coaching. Through our agency partnerships, qualified graduates get priority consideration for endorsement when a relevant position opens.",
+  "closing": "We help you build the bridge. You bring the determination to cross it.",
+  "image": "/assets/videos/mission.mp4",
+  "imageAlt": "The CaseBridge founders sharing their story",
+  "videoCaption": "Watch our story"
+
+},
+
+
+      "faq3": {
+        "title": "Frequently asked questions",
+        "description": "The key information about our process, collaboration and outcomes before you start a project.",
+        "tagline": "FAQ",
+        "items": [
+          { "q": "How long does it take to prepare a new website?", "a": "A standard project usually takes 2 to 4 weeks. The timeline depends on the scope, number of pages and how quickly the materials are provided." },
+          { "q": "Can you help prepare the copy and images?", "a": "Yes. We can organise existing materials, prepare the content structure and recommend a direction for imagery and graphics that fits the brand." },
+          { "q": "Will the website work well on mobile?", "a": "Yes. We design for phones, tablets and desktops from the start. Every key view is checked across several screen sizes." },
+          { "q": "Can I edit the website after launch?", "a": "Yes. We structure the project so the most important content can be updated easily. We also provide a short handover guide after launch." }
+        ]
+      },
+      "testimonial-v2": {
+        "title": "Reviews that say more",
+        "description": "See how working with us translated into a stronger image and better results for our clients.",
+        "tagline": "Client reviews",
+        "avatarAltPrefix": "Photo of",
+        "items": [
+          { "quote": "The new website finally gave our communication a clear structure and started bringing better enquiries from the first week.", "author": "Anna Kowalska", "initials": "AK", "role": "Founder of a premium brand", "avatar": "https://i.pravatar.cc/150?u=anna-kowalska" },
+          { "quote": "The process was focused, efficient and very well guided. We received a website that genuinely fits our brand.", "author": "Michal Nowak", "initials": "MN", "role": "Operations director", "avatar": "https://i.pravatar.cc/150?u=michal-nowak" },
+          { "quote": "We can finally present our work in a way that reflects its quality. Clients noticed the difference straight away.", "author": "Karolina Wojcik", "initials": "KW", "role": "Studio owner", "avatar": "https://i.pravatar.cc/150?u=karolina-wojcik" }
+        ]
+      }
+    },
+    "footer": {
+      "eyebrow": "Your brand deserves more",
+      "heading": "Let's create together",
+      "description": "Tell us about your project and let's see how we can help your brand grow.",
+      "primaryLabel": "Get in touch",
+      "primaryHref": "#contact",
+      "secondaryLabel": "Explore services",
+      "secondaryHref": "#services",
+      "legalLinks": [
+        { "label": "Privacy policy", "href": "/polityka-prywatnosci/" },
+        { "label": "Cookies", "href": "/cookies/" }
+      ],
+      "footerLinks": [
+        { "label": "About us", "href": "#zespol" },
+        { "label": "Services", "href": "#services" },
+        { "label": "Selected work", "href": "#realizacje" },
+        { "label": "Reviews", "href": "#opinie" }
+      ],
+      "ariaLegal": "Legal documents",
+      "ariaNavigation": "Footer navigation",
+      "copyright": "All rights reserved.",
+      "attributionPrefix": "Design and development by ",
+      "attributionLinkLabel": "WebScale",
+      "attributionLinkHref": "https://webscale.pl"
+    }
+  }
+}

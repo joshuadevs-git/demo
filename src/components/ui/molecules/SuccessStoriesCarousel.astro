@@ -1,0 +1,357 @@
+---
+import Section from "@components/ui/layout/Section.astro";
+import Container from "@components/ui/layout/Container.astro";
+
+/*
+  VIDEO FILES
+  Astro serves everything inside the `public/` folder from the site root, so the file
+  public/assets/videos/mission.mp4  is used as  "/assets/videos/mission.mp4"  (no "public" in the path).
+
+  Every agent uses the same sample video for now. To give each agent their own video,
+  change that agent's `mp4` (e.g. "/assets/videos/jules.mp4") or set `youtubeId` instead.
+  The `image` photos are placeholders. Replace them with real thumbnails or photos.
+*/
+const SAMPLE_VIDEO = "/assets/videos/mission.mp4";
+
+const agents = [
+  {
+    name: "Coach Jules",
+    role: "Medical Records Coordinator for law firms",
+    headline: "Your experience is your advantage",
+    description:
+      "A former BPO Team Lead from Bacolod, now coordinating and retrieving medical records for law firms. Communication, organization and attention to detail carried straight over.",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=900&auto=format&fit=crop",
+    youtubeId: "",
+    mp4: SAMPLE_VIDEO,
+  },
+  {
+    name: "Coach Cristina",
+    role: "Paralegal Assistant, personal injury law firm",
+    headline: "It's never too late to start again",
+    description:
+      "A Chemical Engineering graduate who moved through quality assurance, teaching and her own businesses before becoming a Paralegal Assistant. None of that experience was wasted.",
+    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=900&auto=format&fit=crop",
+    youtubeId: "",
+    mp4: SAMPLE_VIDEO,
+  },
+  {
+    name: "Coach Christine",
+    role: "Assistant to the Intake Director",
+    headline: "Every experience has a purpose",
+    description:
+      "From Office Assistant to Human Resources to the legal industry. Her path wasn't a straight line, but every step prepared her for where she is today.",
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=900&auto=format&fit=crop",
+    youtubeId: "",
+    mp4: SAMPLE_VIDEO,
+  },
+  {
+    name: "Coach Fran",
+    role: "Intake Coordinator, US-based law firm",
+    headline: "You are more qualified than you think",
+    description:
+      "Nine years in BPO and an IT degree led to intake work for a US law firm. The skills law firms look for may already be yours.",
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=900&auto=format&fit=crop",
+    youtubeId: "",
+    mp4: SAMPLE_VIDEO,
+  },
+];
+---
+
+<Section id="video-testimonials" tone="page" class="py-20 md:py-32 bg-white overflow-hidden">
+  <Container class="w-full max-w-[90rem] px-[clamp(1.25rem,5vw,5rem)]">
+
+    <!-- Header -->
+    <div class="mb-14 md:mb-20 grid gap-6 md:grid-cols-[1fr_auto] md:items-end md:gap-16">
+      <div>
+        <p class="flex items-center gap-3 text-sm font-medium text-[#FF8A00]">
+          <span class="h-px w-8 bg-[#FF8A00]"></span>
+          Video testimonials
+        </p>
+        <h2 class="mt-5 max-w-2xl text-[clamp(2.25rem,4.6vw,3.75rem)] leading-[1.05] font-bold tracking-tight text-[#12213F]">
+          Hear it from our agents
+        </h2>
+      </div>
+      <p class="max-w-sm text-[#5A6478] text-base md:text-lg leading-relaxed">
+        Real career journeys, in their own words.
+      </p>
+    </div>
+
+    <!-- Cards -->
+    <ul class="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4 items-start">
+      {agents.map((agent) => (
+        <li class="vt-card">
+          <div
+            class="vt-media"
+            data-name={agent.name}
+            data-poster={agent.image}
+            data-youtube={agent.youtubeId}
+            data-mp4={agent.mp4}
+          >
+            <!-- Thumbnail + play button -->
+            <button type="button" class="vt-thumb" aria-label={`Play ${agent.name}'s video story`}>
+              <img src={agent.image} alt="" loading="lazy" draggable="false" />
+              <span class="vt-shade" aria-hidden="true"></span>
+              <span class="vt-play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                  <path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l11-6.86a1 1 0 0 0 0-1.7l-11-6.86A1 1 0 0 0 8 5.14z" />
+                </svg>
+              </span>
+            </button>
+
+            <!-- The video appears here when played -->
+            <div class="vt-slot"></div>
+          </div>
+
+          <div class="vt-body">
+            <p class="text-[#12213F] text-lg font-semibold leading-tight">{agent.name}</p>
+            <p class="mt-1 text-[#5A6478] text-sm">{agent.role}</p>
+
+            <div class="vt-rule" aria-hidden="true"></div>
+
+            <h3 class="text-[#12213F] text-base font-medium leading-snug">{agent.headline}</h3>
+            <p class="mt-2 text-[#5A6478] text-[0.95rem] leading-relaxed">{agent.description}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </Container>
+</Section>
+
+<style>
+  /* ---------- Card ---------- */
+  .vt-card {
+    min-width: 0;
+  }
+
+  .vt-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: 1.25rem;
+    background: #0b1220;
+  }
+
+  /* Thumbnail */
+  .vt-thumb {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background: #e6eaf2;
+  }
+  .vt-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+    transition: transform 900ms cubic-bezier(0.22, 0.8, 0.24, 1);
+  }
+  .vt-card:hover .vt-thumb img {
+    transform: scale(1.03);
+  }
+  .vt-thumb:focus-visible {
+    outline: 3px solid #ff8a00;
+    outline-offset: -3px;
+  }
+  .vt-media.is-playing .vt-thumb {
+    display: none;
+  }
+
+  .vt-shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(11, 18, 32, 0) 55%, rgba(11, 18, 32, 0.35) 100%);
+  }
+
+  /* Minimal play button */
+  .vt-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    padding-left: 0.15rem; /* optically centers the triangle */
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #12213f;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.45);
+    transform: translate(-50%, -50%);
+    transition: transform 300ms ease, background-color 300ms ease;
+  }
+  .vt-card:hover .vt-play,
+  .vt-thumb:focus-visible .vt-play {
+    background: #ff8a00;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+
+  /* Video area (filled by the script) */
+  .vt-slot {
+    position: absolute;
+    inset: 0;
+    display: none;
+    background: #0b1220;
+  }
+  .vt-media.is-playing .vt-slot {
+    display: block;
+  }
+  .vt-slot :global(video),
+  .vt-slot :global(iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: contain;
+    background: #0b1220;
+  }
+  .vt-slot :global(.vt-stop) {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 5;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 999px;
+    background: rgba(11, 18, 32, 0.7);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+  .vt-slot :global(.vt-stop:hover) {
+    background: #fff;
+    color: #12213f;
+  }
+  .vt-slot :global(.vt-stop:focus-visible) {
+    outline: 2px solid #ff8a00;
+    outline-offset: 2px;
+  }
+  .vt-slot :global(.vt-empty) {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* Text */
+  .vt-body {
+    padding-top: 1.25rem;
+  }
+  .vt-rule {
+    height: 1px;
+    margin: 1rem 0;
+    background: #e4e8f0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vt-thumb img,
+    .vt-play {
+      transition: none;
+    }
+    .vt-card:hover .vt-thumb img { transform: none; }
+  }
+</style>
+
+<script>
+  const cards = Array.from(document.querySelectorAll<HTMLElement>("#video-testimonials .vt-media"));
+  let current: HTMLElement | null = null;
+
+  const stop = (card: HTMLElement) => {
+    const slot = card.querySelector<HTMLElement>(".vt-slot");
+    slot?.querySelectorAll("video").forEach((v) => v.pause());
+    if (slot) slot.innerHTML = "";
+    card.classList.remove("is-playing");
+    if (current === card) current = null;
+  };
+
+  const showMessage = (slot: HTMLElement, text: string) => {
+    slot.querySelectorAll("video, iframe, .vt-empty").forEach((el) => el.remove());
+    const msg = document.createElement("div");
+    msg.className = "vt-empty";
+    msg.textContent = text;
+    slot.appendChild(msg);
+  };
+
+  const play = (card: HTMLElement) => {
+    // Only one video plays at a time
+    if (current && current !== card) stop(current);
+
+    const slot = card.querySelector<HTMLElement>(".vt-slot");
+    if (!slot) return;
+    const { name = "Agent", poster = "", youtube = "", mp4 = "" } = card.dataset;
+
+    slot.innerHTML = "";
+    let media: HTMLElement | null = null;
+
+    if (youtube) {
+      const frame = document.createElement("iframe");
+      frame.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(youtube)}?autoplay=1&rel=0&playsinline=1`;
+      frame.title = `${name} video testimonial`;
+      frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+      frame.allowFullscreen = true;
+      media = frame;
+    } else if (mp4) {
+      const video = document.createElement("video");
+      video.src = mp4;
+      video.poster = poster;
+      video.controls = true;
+      video.autoplay = true;
+      video.playsInline = true;
+      video.preload = "auto";
+      video.addEventListener("ended", () => stop(card));
+      // Shows a clear message if the file path is wrong or the file can't be read
+      video.addEventListener("error", () =>
+        showMessage(slot, `We couldn't load this video. Check that the file exists at ${mp4}`)
+      );
+      media = video;
+    }
+
+    if (media) {
+      slot.appendChild(media);
+    } else {
+      showMessage(slot, "Video coming soon.");
+    }
+
+    // Close button: goes back to the thumbnail
+    const close = document.createElement("button");
+    close.type = "button";
+    close.className = "vt-stop";
+    close.setAttribute("aria-label", "Close video");
+    close.innerHTML =
+      '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>';
+    close.addEventListener("click", () => {
+      stop(card);
+      card.querySelector<HTMLElement>(".vt-thumb")?.focus();
+    });
+    slot.appendChild(close);
+
+    card.classList.add("is-playing");
+    current = card;
+
+    if (media instanceof HTMLVideoElement) {
+      media.play().catch(() => {
+        /* if the browser blocks autoplay, the controls are visible so the viewer can press play */
+      });
+    }
+  };
+
+  cards.forEach((card) => {
+    card.querySelector<HTMLElement>(".vt-thumb")?.addEventListener("click", () => play(card));
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && current) stop(current);
+  });
+</script>
