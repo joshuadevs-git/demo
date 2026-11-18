@@ -46,39 +46,45 @@ const paragraphs = (description ?? "").split(/\n+/).map((p) => p.trim()).filter(
   <Container class="w-full max-w-none px-[clamp(1.5rem,5vw,5rem)]">
     <div class="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-16">
 
-      <!-- VIDEO: click to play with sound -->
-      <div class="nova-team-media relative" data-motion="viewport" data-motion-skip>
-        <figure class="relative m-0 grid min-h-80 cursor-pointer place-items-center overflow-hidden rounded-[var(--ui-radius-xl)]">
+      <!-- VIDEO: boxed card, click to play with sound -->
+      <div class="nova-team-media relative flex justify-center" data-motion="viewport" data-motion-skip>
+        <div class="relative w-full max-w-[42rem]">
+        <figure
+          data-team-video-root
+          class="relative m-0 h-[22rem] w-full cursor-pointer overflow-hidden rounded-2xl bg-[#12213F] shadow-[0_24px_48px_-18px_rgba(18,33,63,0.5)] md:h-[32rem]"
+        >
           <video
-            id="team-video"
+            data-team-video
             src={image}
             loop
             playsinline
+            webkit-playsinline
             muted
-            preload="metadata"
-            class="h-full min-h-80 w-full object-cover"
+            preload="auto"
+            class="absolute inset-0 h-full w-full object-cover"
           >
             <p>{imageAlt}</p>
           </video>
 
           <!-- Play button overlay -->
           <div
-            id="play-overlay"
+            data-team-overlay
             role="button"
             tabindex="0"
             aria-label="Play video with sound"
-            class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-[#12213F]/35"
+            class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-[#12213F]/35 transition-opacity duration-300"
           >
-            <div class="flex size-16 items-center justify-center rounded-full bg-white text-[#12213F]">
+            <div class="flex size-16 items-center justify-center rounded-full bg-white text-[#12213F] shadow-lg transition-transform duration-300 hover:scale-105">
               <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="ml-1 size-7" aria-hidden="true">
                 <path d="M8 5v14l11-7z" />
               </svg>
             </div>
             {videoCaption && (
-              <span class="text-sm font-medium tracking-wide text-white">{videoCaption}</span>
+              <span class="px-4 text-center text-sm font-medium tracking-wide text-white">{videoCaption}</span>
             )}
           </div>
         </figure>
+        </div>
       </div>
 
       <!-- STORY -->
@@ -113,42 +119,76 @@ const paragraphs = (description ?? "").split(/\n+/).map((p) => p.trim()).filter(
   </Container>
 </Section>
 
-
 <script>
-  const video = document.getElementById("team-video") as HTMLVideoElement | null;
-  const overlay = document.getElementById("play-overlay");
+  // Runs on first load AND after every Astro page navigation,
+  // so the player works without a manual refresh.
+  function initTeamVideo() {
+    document.querySelectorAll<HTMLElement>("[data-team-video-root]").forEach((root) => {
+      if (root.dataset.ready === "true") return;
+      root.dataset.ready = "true";
 
-  if (video && overlay) {
-    const showOverlay = () => {
-      overlay.style.opacity = "1";
-      overlay.style.pointerEvents = "auto";
-    };
-    const hideOverlay = () => {
-      overlay.style.opacity = "0";
-      overlay.style.pointerEvents = "none";
-    };
+      const video = root.querySelector<HTMLVideoElement>("[data-team-video]");
+      const overlay = root.querySelector<HTMLElement>("[data-team-overlay]");
+      if (!video || !overlay) return;
 
-    // Play with sound
-    const play = (e: Event) => {
-      e.stopPropagation();
-      video.muted = false;
-      video.volume = 1;
-      video.play();
-      hideOverlay();
-    };
+      const showOverlay = () => {
+        overlay.style.opacity = "1";
+        overlay.style.pointerEvents = "auto";
+      };
+      const hideOverlay = () => {
+        overlay.style.opacity = "0";
+        overlay.style.pointerEvents = "none";
+      };
 
-    overlay.addEventListener("click", play);
-    overlay.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        play(e);
-      }
+      // Play with sound (needs a user gesture; falls back to muted if the browser refuses)
+      const play = async (e: Event) => {
+        e.stopPropagation();
+        video.muted = false;
+        video.volume = 1;
+        try {
+          await video.play();
+        } catch {
+          video.muted = true;
+          try {
+            await video.play();
+          } catch {
+            return;
+          }
+        }
+      };
+
+      overlay.addEventListener("click", play);
+      overlay.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          play(e);
+        }
+      });
+
+      // Clicking the playing video pauses it
+      video.addEventListener("click", () => {
+        if (!video.paused) video.pause();
+      });
+
+      // Overlay always mirrors the real video state
+      video.addEventListener("play", hideOverlay);
+      video.addEventListener("playing", hideOverlay);
+      video.addEventListener("pause", showOverlay);
+      video.addEventListener("ended", showOverlay);
+
+      // If loading fails once (network hiccup), retry instead of needing a refresh
+      let retried = false;
+      video.addEventListener("error", () => {
+        if (retried) return;
+        retried = true;
+        video.load();
+      });
+
+      if (video.paused) showOverlay();
+      else hideOverlay();
     });
-
-    // Clicking the playing video pauses it and brings the button back
-    video.addEventListener("click", () => {
-      if (!video.paused) video.pause();
-    });
-    video.addEventListener("pause", showOverlay);
   }
+
+  initTeamVideo();
+  document.addEventListener("astro:page-load", initTeamVideo);
 </script>
