@@ -6,12 +6,12 @@
   },
   "heading": "Nowe możliwości dla ambitnych marek",
   "sections": [
-    { "id": "navbar", "variant": "floating" },
-    { "id": "hero", "variant": "nova" },
-    { "id": "portfolio", "variant": "nova" },
-    { "id": "novaServices", "variant": "default" },
-    { "id": "novaTeam", "variant": "default" },
-    { "id": "testimonials", "variant": "v2" },
-    { "id": "footer", "variant": "nova" }
-  ]
+  { "id": "navbar", "variant": "floating" },
+  { "id": "hero", "variant": "nova" },
+  { "id": "portfolio", "variant": "nova" },
+  { "id": "novaServices", "variant": "default" },
+  { "id": "novaTeam", "variant": "default" },
+  { "id": "testimonials", "variant": "v2" },
+  { "id": "footer", "variant": "nova" }
+]
 }
