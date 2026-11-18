@@ -34,8 +34,8 @@ const eyebrow = props.eyebrow ?? fallback?.eyebrow;
 const title = props.title ?? fallback?.title;
 const description = props.description ?? fallback?.description;
 const closing = props.closing ?? (fallback as any)?.closing;
-const image = props.image ?? fallback?.image;
-const imageAlt = props.imageAlt ?? fallback?.imageAlt ?? "";
+const image = props.image ?? (fallback as any)?.image;
+const imageAlt = props.imageAlt ?? (fallback as any)?.imageAlt ?? "";
 const videoCaption = props.videoCaption ?? (fallback as any)?.videoCaption;
 
 // Each blank-line / new-line in the JSON becomes its own paragraph

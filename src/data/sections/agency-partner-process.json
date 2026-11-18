@@ -1,0 +1,41 @@
+﻿{
+    "en":  {
+               "eyebrow":  "FOR AGENCIES \u0026 BUSINESS PARTNERS",
+               "heading":  "Need Trained Legal Talent? We’ll Help You Find Them.",
+               "description":  "We work with agencies and businesses that need skilled people in legal intake, medical records retrieval, paralegal support, case management, and legal administration. Tell us the role and skills you need. We source, screen, and present qualified candidates for your review.",
+               "highlight":  {
+                                 "title":  "Sourcing and initial vetting are FREE.",
+                                 "description":  "No upfront recruitment fees."
+                             },
+               "processTitle":  "Book an Agency Discovery Call",
+               "steps":  [
+                             {
+                                 "num":  "01",
+                                 "title":  "Share Your Requirements",
+                                 "description":  "Send us your talent requirements."
+                             },
+                             {
+                                 "num":  "02",
+                                 "title":  "We Source and Vet",
+                                 "description":  "We source and vet candidates for you."
+                             },
+                             {
+                                 "num":  "03",
+                                 "title":  "Review Your Shortlist",
+                                 "description":  "Review our shortlist and their profiles."
+                             },
+                             {
+                                 "num":  "04",
+                                 "title":  "Interview and Select",
+                                 "description":  "Interview and choose your candidate."
+                             },
+                             {
+                                 "num":  "05",
+                                 "title":  "Successful Placement",
+                                 "description":  "After a successful placement, our agreed agency referral arrangement applies."
+                             }
+                         ],
+               "primaryCta":  "Book an Agency Discovery Call",
+               "secondaryCta":  "Reserve My Free Seat"
+           }
+}

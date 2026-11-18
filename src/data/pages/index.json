@@ -1,8 +1,8 @@
 
 {
   "seo": {
-    "title": "Nova, strony internetowe dla ambitnych marek",
-    "description": "Tworzymy nowoczesne strony internetowe, które wzmacniają wizerunek, przyciągają klientów i wspierają rozwój biznesu."
+    "title": "CaseBridge",
+    "description": "We create modern websites that strengthen your image, attract clients and support business growth."
   },
   "heading": "Nowe możliwości dla ambitnych marek",
   "sections": [
@@ -11,6 +11,8 @@
   { "id": "portfolio", "variant": "nova" },
   { "id": "novaServices", "variant": "default" },
   { "id": "novaTeam", "variant": "default" },
+  { "id": "agencyPartnerProcess", "variant": "default" },
+  { "id": "faq3", "variant": "default" },
   { "id": "testimonials", "variant": "v2" },
   { "id": "footer", "variant": "nova" }
 ]

@@ -1,0 +1,120 @@
+---
+import Section from "@components/ui/layout/Section.astro";
+import Container from "@components/ui/layout/Container.astro";
+import Heading from "@components/ui/atoms/Heading.astro";
+import Text from "@components/ui/atoms/Text.astro";
+import Button from "@components/ui/atoms/Button.astro";
+import jsonData from "@data/sections/agency-partner-process.json";
+
+type Step = {
+  num: string;
+  title: string;
+  description: string;
+};
+
+type Content = {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  highlight: {
+    title: string;
+    description: string;
+  };
+  processTitle: string;
+  steps: Step[];
+  primaryCta: string;
+  secondaryCta: string;
+  primaryHref?: string;
+  secondaryHref?: string;
+};
+
+export interface Props {
+  locale?: "en";
+  en?: Content;
+  data?: { en: Content };
+  headingTag?: string;
+}
+
+const props = Astro.props as Props;
+const t = props.en ?? props.data?.en ?? jsonData.en as Content;
+const headingTag = props.headingTag ?? "h2";
+const steps = (t.steps ?? []) as Step[];
+---
+
+<Section tone="page" class="border-t border-brand-dark/10">
+  <Container>
+    <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.95fr)] lg:gap-16">
+
+      <!-- LEFT: TEXT -->
+      <div class="min-w-0 text-left">
+        <Text tag="p" variant="accent-label" class="font-sans font-semibold tracking-[0.18em] text-[#FF8A00] md:text-[0.72rem] lg:text-[clamp(0.75rem,0.85vw,0.95rem)]">
+          {t.eyebrow}
+        </Text>
+
+        <Heading
+          tag={headingTag}
+          variant="section-heading-lg"
+          class="mt-4 !font-extrabold !leading-[1.1] !text-brand-dark"
+        >
+          {t.heading}
+        </Heading>
+
+        <Text variant="lead" class="mt-6 max-w-xl">
+          {t.description}
+        </Text>
+
+        <!-- Highlight: orange bold lead-in + normal text on the same line -->
+        <p class="mt-6 max-w-xl text-base leading-7 text-brand-dark md:text-lg">
+          <strong class="font-extrabold text-brand-primary">{t.highlight.title}</strong>{" "}
+          <span>{t.highlight.description}</span>
+        </p>
+
+        <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+          <Button href={t.primaryHref || "#"} variant="primary" size="lg">
+            {t.primaryCta}
+          </Button>
+
+          <Button href={t.secondaryHref || "#"} variant="outline" size="lg">
+            {t.secondaryCta}
+          </Button>
+        </div>
+      </div>
+
+      <!-- RIGHT: STEP CARDS -->
+      <ol class="m-0 flex min-w-0 list-none flex-col gap-4 p-0 md:gap-5" aria-label={t.processTitle}>
+        {steps.map((step) => (
+          <li class="process-card rounded-2xl border border-brand-dark/10 bg-white px-6 py-7 shadow-sm md:px-8 md:py-9">
+            <p class="m-0 text-base leading-8 text-brand-dark md:text-lg">
+              <strong class="mr-1 font-extrabold">{step.num}.</strong>
+              <span>{step.title}</span>
+            </p>
+
+            {step.description && (
+              <p class="m-0 mt-1 pl-6 text-sm leading-7 text-brand-dark/70 md:text-base">
+                {step.description}
+              </p>
+            )}
+          </li>
+        ))}
+      </ol>
+
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .process-card {
+    transition:
+      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .process-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 138, 0, 0.45);
+      box-shadow: 0 12px 28px -12px rgba(18, 33, 63, 0.18);
+    }
+  }
+</style>

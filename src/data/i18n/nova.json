@@ -1,7 +1,7 @@
 {
   "en": {
     "page": {
-      "title": "Nova, websites for ambitious brands",
+      "title": "CaseBridge",
       "description": "We create modern websites that strengthen your image, attract clients and support business growth.",
       "heading": "New possibilities for ambitious brands"
     },
@@ -76,17 +76,21 @@
 },
 
 
-      "faq3": {
+           "faq3": {
         "title": "Frequently asked questions",
-        "description": "The key information about our process, collaboration and outcomes before you start a project.",
+        "description": "Everything you need to know about getting started, training options, and building your career as a legal virtual assistant.",
         "tagline": "FAQ",
         "items": [
-          { "q": "How long does it take to prepare a new website?", "a": "A standard project usually takes 2 to 4 weeks. The timeline depends on the scope, number of pages and how quickly the materials are provided." },
-          { "q": "Can you help prepare the copy and images?", "a": "Yes. We can organise existing materials, prepare the content structure and recommend a direction for imagery and graphics that fits the brand." },
-          { "q": "Will the website work well on mobile?", "a": "Yes. We design for phones, tablets and desktops from the start. Every key view is checked across several screen sizes." },
-          { "q": "Can I edit the website after launch?", "a": "Yes. We structure the project so the most important content can be updated easily. We also provide a short handover guide after launch." }
+          { "q": "Do I need a legal background?", "a": "No. We welcome people from all kinds of education and work backgrounds." },
+          { "q": "Can BPO professionals move into legal?", "a": "Yes. Communication, customer service, sales, and call-handling skills are valuable in legal support roles." },
+          { "q": "What if I have no VA experience?", "a": "Start with our free orientation. You'll understand the industry and see your training options." },
+          { "q": "What's the difference between self-paced and live training?", "a": "Self-paced training uses modules and recorded lessons. Live training adds interactive coaching and hands-on practice." },
+          { "q": "Will Casebridge help me find a job?", "a": "We help you prepare for your career and work with partner agencies that need legal VA talent. Qualified graduates may get priority consideration for endorsement when suitable openings come up. Employment is not guaranteed." },
+          { "q": "Is HIPAA training included?", "a": "Yes. FREE HIPAA training and certification are part of our training offer." },
+          { "q": "Is the orientation free?", "a": "Yes, it's completely free." }
         ]
       },
+    
       "testimonial-v2": {
         "title": "Reviews that say more",
         "description": "See how working with us translated into a stronger image and better results for our clients.",
@@ -99,6 +103,8 @@
         ]
       }
     },
+
+
     "footer": {
       "eyebrow": "Your brand deserves more",
       "heading": "Let's create together",

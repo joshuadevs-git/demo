@@ -6,7 +6,7 @@
   "description": "Tworzymy nowoczesne strony internetowe, które wzmacniają wizerunek, przyciągają klientów i realnie wspierają rozwój biznesu.",
   "primaryCTA": { "label": "Rozpocznij projekt", "href": "/kontakt/" },
   "secondaryCTA": { "label": "Request a Legal VA Talent Pool", "href": "/talent-pool" },
-  "image": "/assets/images/t001-nova/t001-nova-hero.webp",
+  "image": "/assets/images/t001-nova/1.jpg",
   "imageAlt": "Strateg pracujący przy laptopie",
   "stats": [
     { "value": "2000+", "label": "Zrealizowanych projektów" },
