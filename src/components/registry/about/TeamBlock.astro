@@ -48,10 +48,10 @@ const paragraphs = (description ?? "").split(/\n+/).map((p) => p.trim()).filter(
 
       <!-- VIDEO: boxed card, click to play with sound -->
       <div class="nova-team-media relative flex justify-center" data-motion="viewport" data-motion-skip>
-        <div class="relative w-full max-w-[42rem]">
+        <div class="relative w-full h-[30rem] max-w-[50rem]">
         <figure
           data-team-video-root
-          class="relative m-0 h-[22rem] w-full cursor-pointer overflow-hidden rounded-2xl bg-[#12213F] shadow-[0_24px_48px_-18px_rgba(18,33,63,0.5)] md:h-[32rem]"
+          class="relative m-0 w-full cursor-pointer overflow-hidden rounded-2xl bg-[#12213F] shadow-[0_24px_48px_-18px_rgba(18,33,63,0.5)]"
         >
           <video
             data-team-video
@@ -61,7 +61,7 @@ const paragraphs = (description ?? "").split(/\n+/).map((p) => p.trim()).filter(
             webkit-playsinline
             muted
             preload="auto"
-            class="absolute inset-0 h-full w-full object-cover"
+            class="relative block h-[28rem] w-full [aspect-ratio:auto_16/9]"
           >
             <p>{imageAlt}</p>
           </video>
@@ -120,8 +120,7 @@ const paragraphs = (description ?? "").split(/\n+/).map((p) => p.trim()).filter(
 </Section>
 
 <script>
-  // Runs on first load AND after every Astro page navigation,
-  // so the player works without a manual refresh.
+  // Runs on first load AND after every Astro page navigation.
   function initTeamVideo() {
     document.querySelectorAll<HTMLElement>("[data-team-video-root]").forEach((root) => {
       if (root.dataset.ready === "true") return;
@@ -140,34 +139,48 @@ const paragraphs = (description ?? "").split(/\n+/).map((p) => p.trim()).filter(
         overlay.style.pointerEvents = "none";
       };
 
-      // Play with sound (needs a user gesture; falls back to muted if the browser refuses)
-      const play = async (e: Event) => {
-        e.stopPropagation();
+      // Play with sound. Recovers from every failure instead of needing a page refresh.
+      const start = async () => {
         video.muted = false;
         video.volume = 1;
         try {
           await video.play();
-        } catch {
-          video.muted = true;
-          try {
-            await video.play();
-          } catch {
-            return;
+          return;
+        } catch (err) {
+          // Browser refused sound -> try muted
+          if ((err as DOMException)?.name === "NotAllowedError") {
+            video.muted = true;
+            try {
+              await video.play();
+              return;
+            } catch {}
           }
         }
+        // Stuck / stalled / aborted state -> reload the file at the same spot and retry
+        const t = video.currentTime;
+        video.load();
+        video.addEventListener(
+          "loadedmetadata",
+          async () => {
+            try {
+              video.currentTime = t;
+              await video.play();
+            } catch {}
+          },
+          { once: true }
+        );
       };
 
-      overlay.addEventListener("click", play);
+      // One handler for the whole card: tap to play, tap again to pause
+      root.addEventListener("click", () => {
+        if (video.paused) start();
+        else video.pause();
+      });
       overlay.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          play(e);
+          start();
         }
-      });
-
-      // Clicking the playing video pauses it
-      video.addEventListener("click", () => {
-        if (!video.paused) video.pause();
       });
 
       // Overlay always mirrors the real video state
@@ -176,7 +189,7 @@ const paragraphs = (description ?? "").split(/\n+/).map((p) => p.trim()).filter(
       video.addEventListener("pause", showOverlay);
       video.addEventListener("ended", showOverlay);
 
-      // If loading fails once (network hiccup), retry instead of needing a refresh
+      // If the file fails to load, retry once automatically
       let retried = false;
       video.addEventListener("error", () => {
         if (retried) return;
