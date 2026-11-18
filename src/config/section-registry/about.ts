@@ -7,7 +7,7 @@ export const aboutSections: Record<string, SectionEntry> = {
     id: 'about', label: 'O nas', groupId: 'about', hint: 'Sekcja o firmie z USP lub klasycznym opisem', icon,
     defaultVariant: 'default',
     variants: {
-      default: { component: 'UspPremiumBlock', dataKey: 'usp-premium' },
+      default: { component: 'OurCoachesBlock', dataKey: 'our-coaches' },
       classic: { component: 'AboutBlock', dataKey: 'about' },
     },
   },
