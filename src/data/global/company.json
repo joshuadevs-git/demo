@@ -5,8 +5,8 @@
     "icon": "ph-star",
     "font": "Satoshi",
     "tagline": "Websites for ambitious brands",
-    "logoImage": "",
-    "favicon": "/favicon.svg",
+    "logoImage": "/assets/images/t001-nova/icon.png",
+    "favicon": "/assets/images/t001-nova/icon.png",
     "logoSuffix": "Logo"
   },
   "address": "123 Example Street, 00-001 Warsaw",
@@ -32,3 +32,5 @@
     "twitter": ""
   }
 }
+
+

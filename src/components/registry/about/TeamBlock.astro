@@ -47,24 +47,24 @@ const paragraphs = (description ?? "").split(/\n+/).map((p) => p.trim()).filter(
     <div class="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-16">
 
       <!-- VIDEO: boxed card, click to play with sound -->
-      <div class="nova-team-media relative flex justify-center" data-motion="viewport" data-motion-skip>
-        <div class="relative w-full h-[30rem] max-w-[50rem]">
-        <figure
-          data-team-video-root
-          class="relative m-0 w-full cursor-pointer overflow-hidden rounded-2xl bg-[#12213F] shadow-[0_24px_48px_-18px_rgba(18,33,63,0.5)]"
-        >
-          <video
-            data-team-video
-            src={image}
-            loop
-            playsinline
-            webkit-playsinline
-            muted
-            preload="auto"
-            class="relative block h-[28rem] w-full [aspect-ratio:auto_16/9]"
-          >
-            <p>{imageAlt}</p>
-          </video>
+<div class="nova-team-media relative flex justify-center" data-motion="viewport" data-motion-skip>
+  <div class="relative w-full max-w-[50rem]">
+    <figure
+      data-team-video-root
+      class="relative m-0 aspect-video w-full cursor-pointer overflow-hidden rounded-2xl bg-[#12213F] shadow-[0_24px_48px_-18px_rgba(18,33,63,0.5)]"
+    >
+      <video
+        data-team-video
+        src={image}
+        loop
+        playsinline
+        webkit-playsinline
+        muted
+        preload="auto"
+        class="absolute inset-0 block h-full w-full object-cover"
+      >
+        <p>{imageAlt}</p>
+      </video>
 
           <!-- Play button overlay -->
           <div
