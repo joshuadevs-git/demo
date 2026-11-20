@@ -12,6 +12,7 @@
   { "id": "portfolio", "variant": "nova" },
   { "id": "novaServices", "variant": "default" },
   { "id": "trainingPrograms", "variant": "default" },
+  { "id": "careerOpportunities", "variant": "default" },
   { "id": "enrollmentBenefits", "variant": "default" },
   { "id": "faq3", "variant": "default" },
   { "id": "testimonials", "variant": "v2" },

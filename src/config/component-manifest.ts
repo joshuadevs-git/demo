@@ -70,6 +70,7 @@ export const COMPONENT_MANIFEST: Record<string, ComponentManifestEntry> = {
   StepsNumberedBlock: { category: 'core', status: 'provisional' },
   AgencyPartnerProcessBlock: { category: 'core', status: 'provisional' },
   TrainingProgramsBlock: { category: 'core', status: 'provisional' },
+  CareerOpportunitiesBlock: { category: 'core', status: 'provisional' },
   EnrollmentBenefitsBlock: { category: 'core', status: 'provisional' },
   TimelineAlternateBlock: { category: 'core', status: 'provisional' },
   ServicesCardsBlock: { category: 'core', status: 'provisional' },

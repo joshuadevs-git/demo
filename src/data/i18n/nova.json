@@ -56,6 +56,8 @@
           { "category": "Brand identity", "title": "A new identity for an ambitious brand", "image": "/assets/images/t001-nova/5.jpg", "alt": "Modern building used as a project example" }
         ]
       },
+      
+
            "nova-services": {
   "items": [
     { "icon": "headset", "title": "BPO professionals", "description": "Your customer service, sales, and call-handling skills fit legal support roles well." },
@@ -64,6 +66,10 @@
     { "icon": "briefcase", "title": "Corporate employees and career shifters", "description": "Take your admin, communication, and organizing skills into a growing industry." }
   ]
 },
+
+
+
+
            "nova-team": {
   "eyebrow": "OUR STORY",
   "title": "Five Friends. One Mission. A Bridge to the Legal Industry.",
@@ -123,21 +129,22 @@
       "secondaryLabel": "Explore services",
       "secondaryHref": "#services",
       "legalLinks": [
-        { "label": "Privacy policy", "href": "/polityka-prywatnosci/" },
+        { "label": "Privacy policy", "href": "" },
         { "label": "Cookies", "href": "/cookies/" }
       ],
       "footerLinks": [
-        { "label": "About us", "href": "#zespol" },
-        { "label": "Services", "href": "#services" },
-        { "label": "Selected work", "href": "#realizacje" },
-        { "label": "Reviews", "href": "#opinie" }
+        { "label": "Home", "href": "/" },
+        { "label": "About", "href": "/about" },
+        { "label": "Request a Talent", "href": "/request-a-talent" },
+        { "label": "Success Stories", "href": "/success-stories" },
+        { "label": "Contact us", "href": "/contact" }
       ],
       "ariaLegal": "Legal documents",
       "ariaNavigation": "Footer navigation",
       "copyright": "All rights reserved.",
-      "attributionPrefix": "Design and development by ",
-      "attributionLinkLabel": "WebScale",
-      "attributionLinkHref": "https://webscale.pl"
+      "attributionPrefix": "Design and development by",
+      "attributionLinkLabel": "",
+      "attributionLinkHref": ""
     }
   }
 }

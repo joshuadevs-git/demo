@@ -1,0 +1,263 @@
+---
+import Section from "@components/ui/layout/Section.astro";
+import Container from "@components/ui/layout/Container.astro";
+import Heading from "@components/ui/atoms/Heading.astro";
+import Text from "@components/ui/atoms/Text.astro";
+
+const benefits = [
+  {
+    title: "Partner agency opportunities",
+    description:
+      "Qualified graduates get priority consideration for endorsement when a suitable role opens.",
+  },
+  {
+    title: "TESDA-accredited training",
+    description:
+      "A TESDA-accredited training center in the Philippines, following recognized quality standards.",
+  },
+  {
+    title: "LGU sponsorship opportunities",
+    description:
+      "We partner with Local Government Units to help qualified people access training.",
+  },
+  {
+    title: "Small live batches",
+    description:
+      "Only 10 trainees per live batch, for more attention and better coaching.",
+  },
+  {
+    title: "Practical, industry-based training",
+    description:
+      "Real workflows, hands-on CRM practice, mock calls, and realistic work scenarios.",
+  },
+  {
+    title: "Career preparation and support",
+    description:
+      "Help with your resume, video introduction, and interview practice.",
+  },
+];
+---
+
+<Section id="career-opportunities" tone="page" class="relative overflow-hidden border-t border-brand-dark/10">
+  <Container>
+    <div class="career-wrap" data-career-wrap>
+      <div class="mx-auto max-w-3xl text-center">
+        <Text
+          tag="p"
+          variant="accent-label"
+          class="font-sans font-semibold tracking-[0.18em] text-[#FF8A00]"
+        >
+          <span class="career-eyebrow" data-career-reveal style="--i:0">CAREER OPPORTUNITIES</span>
+        </Text>
+
+        <span class="career-eyebrow-line" aria-hidden="true"></span>
+
+        <Heading
+          tag="h2"
+          variant="section-heading-xl"
+          class="mt-4 !font-extrabold !leading-[1.1] !text-brand-dark"
+        >
+          <span class="career-heading" data-career-reveal style="--i:1">
+            We Don't Stop at Training. We Help You Move Toward a Job.
+          </span>
+        </Heading>
+      </div>
+
+      <div class="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {benefits.map((benefit, index) => (
+          <article
+            class="career-card group flex h-full flex-col rounded-2xl border border-brand-dark/10 bg-white p-7 shadow-sm"
+            data-career-reveal
+            style={`--i:${index + 2}`}
+          >
+            <span class="career-label text-xs font-bold tracking-[0.18em] text-[#FF8A00]">
+              BENEFIT {String(index + 1).padStart(2, "0")}
+            </span>
+
+            <h3 class="mt-6 text-xl font-bold leading-snug text-brand-dark">
+              {benefit.title}
+            </h3>
+
+            <p class="mt-4 text-sm leading-7 text-brand-dark/70 md:text-base">
+              {benefit.description}
+            </p>
+
+            <div class="mt-auto pt-8">
+              <div class="career-divider h-px w-full bg-brand-dark/10">
+                <span class="career-divider-fill"></span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .career-wrap {
+    position: relative;
+    isolation: isolate;
+  }
+
+  /* Soft orange glow that drifts slowly behind the cards */
+  .career-wrap::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -8rem;
+    right: -8rem;
+    width: 32rem;
+    height: 32rem;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(255, 138, 0, 0.16) 0%, rgba(255, 138, 0, 0) 65%);
+    pointer-events: none;
+    animation: career-glow 10s ease-in-out infinite alternate;
+  }
+
+  /* Small orange line that draws itself under the eyebrow */
+  .career-eyebrow-line {
+    display: block;
+    width: 3.5rem;
+    height: 3px;
+    margin: 0.9rem auto 0;
+    border-radius: 999px;
+    background: #ff8a00;
+    transform-origin: center;
+  }
+
+  /* ---------- Cards ---------- */
+  .career-card {
+    position: relative;
+    overflow: hidden;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  /* Orange bar that slides across the top on hover */
+  .career-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: #ff8a00;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 400ms ease-out;
+  }
+
+  .career-label {
+    display: inline-block;
+    transition: transform 300ms ease-out, letter-spacing 300ms ease-out;
+  }
+
+  .career-divider {
+    position: relative;
+    overflow: hidden;
+  }
+  .career-divider-fill {
+    position: absolute;
+    inset: 0;
+    background: #ff8a00;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 500ms ease-out;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .career-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 138, 0, 0.35);
+      box-shadow: 0 18px 40px -18px rgba(18, 33, 63, 0.16);
+    }
+    .career-card:hover::before {
+      transform: scaleX(1);
+    }
+    .career-card:hover .career-label {
+      transform: translateX(4px);
+    }
+    .career-card:hover .career-divider-fill {
+      transform: scaleX(1);
+    }
+  }
+
+  /* ---------- Scroll reveal ----------
+     Hidden only after the script has loaded, so content is never stuck invisible. */
+  .career-wrap.is-armed [data-career-reveal] {
+    opacity: 0;
+    transform: translateY(32px) scale(0.97);
+    transition:
+      opacity 700ms ease,
+      transform 800ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
+    transition-delay: calc(var(--i, 0) * 100ms);
+  }
+  .career-wrap.is-armed .career-eyebrow,
+  .career-wrap.is-armed .career-heading {
+    display: inline-block;
+  }
+  .career-wrap.is-armed.is-visible [data-career-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+  /* After the reveal, hover should respond instantly */
+  .career-wrap.is-visible .career-card:hover {
+    transition-delay: 0ms;
+  }
+
+  .career-wrap.is-armed .career-eyebrow-line {
+    transform: scaleX(0);
+    transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1) 250ms;
+  }
+  .career-wrap.is-armed.is-visible .career-eyebrow-line {
+    transform: scaleX(1);
+  }
+
+  @keyframes career-glow {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(-3rem, 3rem) scale(1.15); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .career-wrap::before { animation: none; }
+    .career-card,
+    .career-card::before,
+    .career-label,
+    .career-divider-fill,
+    .career-wrap.is-armed [data-career-reveal],
+    .career-wrap.is-armed .career-eyebrow-line {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .career-card:hover,
+    .career-card:hover .career-label {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const careerWrap = document.querySelector<HTMLElement>("[data-career-wrap]");
+  if (careerWrap) {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce || !("IntersectionObserver" in window)) {
+      careerWrap.classList.add("is-visible");
+    } else {
+      careerWrap.classList.add("is-armed");
+      const careerObserver = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            careerWrap.classList.add("is-visible");
+            careerObserver.disconnect();
+          }
+        },
+        { threshold: 0.15 }
+      );
+      careerObserver.observe(careerWrap);
+    }
+  }
+</script>

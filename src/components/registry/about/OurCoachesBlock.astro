@@ -12,12 +12,28 @@ interface Coach {
   image: string;
 }
 
+interface TrainingItem {
+  title: string;
+  text: string;
+}
+
+interface Training {
+  eyebrow: string;
+  heading: string;
+  intro: string;
+  items: TrainingItem[];
+  tools: string[];
+  image: string;
+  imageAlt?: string;
+}
+
 interface Props {
   id?: string;
   locale?: "en";
   eyebrow?: string;
   heading?: string;
   coaches?: Coach[];
+  training?: Training;
   previousLabel?: string;
   nextLabel?: string;
   slideLabel?: string;
@@ -30,6 +46,7 @@ const props = Astro.props as Props;
 const eyebrow = props.eyebrow ?? jsonData.eyebrow;
 const heading = props.heading ?? jsonData.heading;
 const coaches: Coach[] = props.coaches ?? jsonData.coaches;
+const training: Training | undefined = props.training ?? (jsonData as any).training;
 const previousLabel = props.previousLabel ?? jsonData.previousLabel;
 const nextLabel = props.nextLabel ?? jsonData.nextLabel;
 const slideLabel = props.slideLabel ?? jsonData.slideLabel;
@@ -134,6 +151,43 @@ const posOf = (i: number) => {
     )}
   </Container>
 </Section>
+
+{training && (
+  <section id="how-our-training-works" class="training-section">
+    <Container class="w-full max-w-none px-5 md:px-10">
+      <div class="training-grid mx-auto">
+        <div class="training-copy">
+          <p class="training-eyebrow" data-reveal style="--i:0">{training.eyebrow}</p>
+          <h2 class="training-heading" data-reveal style="--i:1">{training.heading}</h2>
+          <p class="training-intro" data-reveal style="--i:2">{training.intro}</p>
+
+          <ul class="training-list">
+            {training.items.map((item, i) => (
+              <li data-reveal style={`--i:${3 + i}`}>
+                <span class="training-check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m5 12.5 4.5 4.5L19 7.5" />
+                  </svg>
+                </span>
+                <p><strong>{item.title}</strong> {item.text}</p>
+              </li>
+            ))}
+          </ul>
+
+          <ul class="training-tools" aria-label="CRM platforms">
+            {training.tools.map((tool, i) => (
+              <li data-reveal style={`--i:${6 + i}`}>{tool}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="training-photo" data-reveal="photo" style="--i:2">
+          <img src={training.image} alt={training.imageAlt ?? ""} loading="lazy" draggable="false" />
+        </div>
+      </div>
+    </Container>
+  </section>
+)}
 
 <style>
   .coach-carousel {
@@ -343,7 +397,211 @@ const posOf = (i: number) => {
       transition: none;
     }
   }
+
+  /* ---------- How our training works ---------- */
+  .training-section {
+    position: relative;
+    overflow: hidden;
+    padding: 5rem 0;
+    background: #12213f;
+    color: #fff;
+  }
+  @media (min-width: 768px) {
+    .training-section {
+      padding: 7rem 0;
+    }
+  }
+
+  .training-grid {
+    display: grid;
+    align-items: center;
+    gap: 2.5rem;
+    max-width: 1100px;
+  }
+  @media (min-width: 900px) {
+    .training-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+
+  .training-eyebrow {
+    margin: 0;
+    color: #ff8a00;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .training-heading {
+    margin: 1rem 0 0;
+    color: #fff;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .training-intro {
+    margin: 1.25rem 0 0;
+    color: #d5dcea;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  .training-list {
+    display: grid;
+    gap: 1rem;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .training-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .training-list p {
+    margin: 0;
+    color: #d5dcea;
+    line-height: 1.55;
+  }
+  .training-list strong {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .training-check {
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 0.1rem;
+    border-radius: 999px;
+    background: #ff8a00;
+    color: #fff;
+  }
+  .training-check svg {
+    width: 0.85rem;
+    height: 0.85rem;
+  }
+
+  .training-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .training-tools li {
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    background: #fff;
+    color: #12213f;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .training-photo {
+    overflow: hidden;
+    border-radius: 1.5rem;
+    aspect-ratio: 4 / 5;
+    background: #1b2d52;
+  }
+  .training-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ---------- Training animations ---------- */
+  .training-section::before {
+    content: "";
+    position: absolute;
+    top: -12rem;
+    right: -10rem;
+    width: 38rem;
+    height: 38rem;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(255, 138, 0, 0.28) 0%, rgba(255, 138, 0, 0) 65%);
+    pointer-events: none;
+    animation: training-glow 9s ease-in-out infinite alternate;
+  }
+  .training-grid {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Elements are hidden only once the script has loaded, so the content is never stuck invisible */
+  .training-section.is-armed [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 700ms ease,
+      transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--i, 0) * 100ms);
+  }
+  .training-section.is-armed [data-reveal="photo"] {
+    transform: translateX(48px) scale(0.95);
+  }
+  .training-section.is-armed.is-visible [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Photo: slow zoom-out while it slides in */
+  .training-section.is-armed .training-photo img {
+    transform: scale(1.15);
+    transition: transform 1600ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: 200ms;
+  }
+  .training-section.is-armed.is-visible .training-photo img {
+    transform: scale(1);
+  }
+
+  /* Check circles pop in */
+  .training-section.is-armed .training-check {
+    transform: scale(0);
+    transition: transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition-delay: calc(var(--i, 0) * 100ms + 250ms);
+  }
+  .training-section.is-armed.is-visible .training-check {
+    transform: scale(1);
+  }
+
+  /* Pills lift on hover */
+  .training-tools li {
+    cursor: default;
+  }
+  .training-section.is-visible .training-tools li:hover {
+    transform: translateY(-3px);
+    background: #ff8a00;
+    color: #fff;
+    transition-delay: 0ms;
+    transition-duration: 200ms;
+  }
+
+  @keyframes training-glow {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(-3rem, 2.5rem) scale(1.15); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .training-section::before { animation: none; }
+    .training-section.is-armed [data-reveal],
+    .training-section.is-armed .training-photo img,
+    .training-section.is-armed .training-check {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
 </style>
+
+
 
 <script>
   document.querySelectorAll<HTMLElement>("[data-coach-carousel]").forEach((carousel) => {
@@ -427,4 +685,25 @@ const posOf = (i: number) => {
 
     update();
   });
+
+  /* ---------- Training section: reveal on scroll ---------- */
+  const trainingSection = document.querySelector<HTMLElement>("#how-our-training-works");
+  if (trainingSection) {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce || !("IntersectionObserver" in window)) {
+      trainingSection.classList.add("is-visible");
+    } else {
+      trainingSection.classList.add("is-armed");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            trainingSection.classList.add("is-visible");
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.2 }
+      );
+      observer.observe(trainingSection);
+    }
+  }
 </script>

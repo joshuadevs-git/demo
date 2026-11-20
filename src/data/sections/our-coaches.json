@@ -23,15 +23,13 @@
       "description": "Coach Christine believes that real progress starts with understanding each person's strengths and goals. She provides thoughtful guidance and practical support to help clients move forward with confidence.",
       "image": "/assets/images/t001-nova/c3.jpg"
     },
-
-     {
+    {
       "name": "Coach Lisa",
       "role": "Performance Coach",
       "headline": "Turning goals into consistent progress.",
       "description": "Coach Cristina focuses on building strong foundations, developing effective habits, and helping clients stay accountable. Her coaching approach combines encouragement with practical strategies for long-term improvement.",
       "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=900&q=85"
     },
-
     {
       "name": "Coach Fran",
       "role": "Leadership Coach",
@@ -40,6 +38,28 @@
       "image": "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=900&q=85"
     }
   ],
+  "training": {
+    "eyebrow": "HOW OUR TRAINING WORKS",
+    "heading": "Learn Your Way. Practice for Real.",
+    "intro": "Everyone learns differently, so we offer more than one way to train.",
+    "items": [
+      {
+        "title": "Self-paced modules and recorded lessons.",
+        "text": "Study anytime, anywhere."
+      },
+      {
+        "title": "Live training with experienced coaches.",
+        "text": "Ask questions and see how legal VA work is really done."
+      },
+      {
+        "title": "Hands-on CRM training.",
+        "text": "Practice on at least two CRM platforms, based on your path and availability."
+      }
+    ],
+    "tools": ["LEAP", "Clio", "Lawmatics", "GoHighLevel", "Salesforce", "CasePeer"],
+    "image": "/assets/images/t001-nova/4.jpg",
+    "imageAlt": "Coach guiding two trainees at a computer during a live training session"
+  },
   "previousLabel": "Previous coach",
   "nextLabel": "Next coach",
   "slideLabel": "Go to coach"

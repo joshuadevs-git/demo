@@ -12,6 +12,7 @@ import { contactSections } from './section-registry/contact';
 import { ctaSections } from './section-registry/cta';
 import { contentSections } from './section-registry/content';
 import { careerPathwaysSections } from './section-registry/careerPathways';
+import { trainingCareerSections } from './section-registry/trainingCareer';
 import { enrollmentBenefitsSections } from './section-registry/enrollmentBenefits';
 import { trainingProgramsSections } from './section-registry/trainingPrograms';
 
@@ -30,6 +31,7 @@ export const SECTION_REGISTRY: Record<string, SectionEntry> = {
   ...processSections,
   ...agencyPartnerProcessSections,
   ...trainingProgramsSections,
+  ...trainingCareerSections,
   ...enrollmentBenefitsSections,
   ...socialSections,
   ...faqSections,
