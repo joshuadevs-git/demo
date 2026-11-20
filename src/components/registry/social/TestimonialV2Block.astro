@@ -423,6 +423,42 @@ const agents = [
     .vt-arrow:hover { transform: none; }
     .vt-card:hover .vt-media img { transform: none; }
   }
+
+
+
+  /* ---------- Mobile: arrows float over the photo so they're always visible ---------- */
+@media (max-width: 639px) {
+  .vt-carousel {
+    container-type: inline-size; /* lets us size things from the card width */
+  }
+
+  .vt-arrow {
+    position: absolute;
+    z-index: 2;
+    width: 2.5rem;
+    height: 2.5rem;
+    /* photo is 4/5, so its vertical center is 62.5% of the card width */
+    top: calc(62.5cqw - 1.25rem);
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(228, 232, 240, 0.9);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 8px rgba(18, 33, 63, 0.25);
+  }
+  .vt-arrow:hover {
+    transform: none; /* keep it from jumping on touch */
+  }
+  .vt-arrow[data-vt-prev] {
+    left: 0.5rem;
+  }
+  .vt-arrow[data-vt-next] {
+    right: 0.5rem;
+  }
+
+  /* only the dots remain in the controls row */
+  .vt-controls {
+    gap: 0;
+  }
+}
 </style>
 
 <script>
