@@ -4,36 +4,43 @@ import Container from "@components/ui/layout/Container.astro";
 import Heading from "@components/ui/atoms/Heading.astro";
 import Text from "@components/ui/atoms/Text.astro";
 
+// `icon` is the inner markup of a 24x24 stroke icon (Lucide-style)
 const benefits = [
   {
     title: "Partner agency opportunities",
     description:
       "Qualified graduates get priority consideration for endorsement when a suitable role opens.",
+    icon: `<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`,
   },
   {
     title: "TESDA-accredited training",
     description:
       "A TESDA-accredited training center in the Philippines, following recognized quality standards.",
+    icon: `<path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/>`,
   },
   {
     title: "LGU sponsorship opportunities",
     description:
       "We partner with Local Government Units to help qualified people access training.",
+    icon: `<path d="M3 22h18"/><path d="M6 18v-7"/><path d="M10 18v-7"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M12 2 20 7H4Z"/>`,
   },
   {
     title: "Small live batches",
     description:
       "Only 10 trainees per live batch, for more attention and better coaching.",
+    icon: `<path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/>`,
   },
   {
     title: "Practical, industry-based training",
     description:
       "Real workflows, hands-on CRM practice, mock calls, and realistic work scenarios.",
+    icon: `<path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/>`,
   },
   {
     title: "Career preparation and support",
     description:
       "Help with your resume, video introduction, and interview practice.",
+    icon: `<path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/>`,
   },
 ];
 ---
@@ -63,32 +70,65 @@ const benefits = [
         </Heading>
       </div>
 
-      <div class="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {benefits.map((benefit, index) => (
-          <article
-            class="career-card group flex h-full flex-col rounded-2xl border border-brand-dark/10 bg-white p-7 shadow-sm"
-            data-career-reveal
-            style={`--i:${index + 2}`}
-          >
-            <span class="career-label text-xs font-bold tracking-[0.18em] text-[#FF8A00]">
-              BENEFIT {String(index + 1).padStart(2, "0")}
-            </span>
+      <div class="career-carousel mt-12" data-carousel>
+        <div
+          class="career-track"
+          data-track
+          tabindex="0"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Career opportunities and benefits"
+        >
+          {benefits.map((benefit, index) => (
+            <article
+              class="career-card"
+              data-career-reveal
+              style={`--i:${index + 2}`}
+              aria-roledescription="slide"
+              aria-label={`${index + 1} of ${benefits.length}`}
+            >
+              <span class="career-icon">
+                <svg
+                  class="h-5 w-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  set:html={benefit.icon}
+                />
+              </span>
 
-            <h3 class="mt-6 text-xl font-bold leading-snug text-brand-dark">
-              {benefit.title}
-            </h3>
+              <h3 class="mt-6 text-lg font-bold leading-snug text-brand-dark">
+                {benefit.title}
+              </h3>
 
-            <p class="mt-4 text-sm leading-7 text-brand-dark/70 md:text-base">
-              {benefit.description}
-            </p>
+              <p class="mt-3 text-sm leading-6 text-brand-dark/65">
+                {benefit.description}
+              </p>
+            </article>
+          ))}
+        </div>
 
-            <div class="mt-auto pt-8">
-              <div class="career-divider h-px w-full bg-brand-dark/10">
-                <span class="career-divider-fill"></span>
-              </div>
-            </div>
-          </article>
-        ))}
+        <div class="mt-6 flex items-center justify-center gap-4">
+          <button type="button" class="carousel-btn" data-prev aria-label="Previous benefits">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+
+          <div class="flex items-center gap-2" aria-hidden="true">
+            {benefits.map(() => <span class="carousel-dot"></span>)}
+          </div>
+
+          <button type="button" class="carousel-btn" data-next aria-label="Next benefits">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   </Container>
@@ -126,61 +166,115 @@ const benefits = [
     transform-origin: center;
   }
 
+  /* ---------- Carousel track ---------- */
+  .career-track {
+    --gap: 1.25rem;
+    --per-view: 1;
+    display: flex;
+    gap: var(--gap);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* room so the soft shadow and reveal motion aren't clipped */
+    padding: 1rem 0.5rem 2.5rem;
+    margin: -1rem -0.5rem -2.5rem;
+    outline: none;
+  }
+  .career-track::-webkit-scrollbar {
+    display: none;
+  }
+  .career-track:focus-visible {
+    outline: 2px solid #ff8a00;
+    outline-offset: 4px;
+    border-radius: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .career-track { --per-view: 2; }
+  }
+  @media (min-width: 1024px) {
+    .career-track { --per-view: 3; }
+  }
+  @media (min-width: 1280px) {
+    .career-track { --per-view: 4; }
+  }
+
   /* ---------- Cards ---------- */
   .career-card {
-    position: relative;
-    overflow: hidden;
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease,
-      border-color 0.3s ease;
+    flex: 0 0 calc((100% - (var(--per-view) - 1) * var(--gap)) / var(--per-view));
+    scroll-snap-align: start;
+    min-height: 15rem;
+    padding: 1.9rem;
+    border-radius: 1.25rem;
+    border: 1px solid rgba(255, 138, 0, 0.2);
+    background: #fff;
+    box-shadow: 0 10px 30px -14px rgba(255, 138, 0, 0.28);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
   }
 
-  /* Orange bar that slides across the top on hover */
-  .career-card::before {
-    content: "";
-    position: absolute;
-    inset: 0 0 auto 0;
-    height: 4px;
-    background: #ff8a00;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 400ms ease-out;
-  }
-
-  .career-label {
-    display: inline-block;
-    transition: transform 300ms ease-out, letter-spacing 300ms ease-out;
-  }
-
-  .career-divider {
-    position: relative;
-    overflow: hidden;
-  }
-  .career-divider-fill {
-    position: absolute;
-    inset: 0;
-    background: #ff8a00;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 500ms ease-out;
+  .career-icon {
+    display: flex;
+    height: 3rem;
+    width: 3rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.9rem;
+    border: 1px solid rgba(255, 138, 0, 0.25);
+    background: #fff0dd;
+    color: #ff8a00;
+    transition: transform 300ms ease-out;
   }
 
   @media (hover: hover) and (pointer: fine) {
     .career-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(255, 138, 0, 0.35);
-      box-shadow: 0 18px 40px -18px rgba(18, 33, 63, 0.16);
+      border-color: rgba(255, 138, 0, 0.45);
+      box-shadow: 0 14px 34px -14px rgba(255, 138, 0, 0.4);
     }
-    .career-card:hover::before {
-      transform: scaleX(1);
+    .career-card:hover .career-icon {
+      transform: translateY(-2px) scale(1.05);
     }
-    .career-card:hover .career-label {
-      transform: translateX(4px);
-    }
-    .career-card:hover .career-divider-fill {
-      transform: scaleX(1);
-    }
+  }
+
+  /* ---------- Controls ---------- */
+  .carousel-btn {
+    display: flex;
+    height: 2.75rem;
+    width: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: 1px solid rgba(18, 33, 63, 0.15);
+    background: #fff;
+    color: #12213f;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+      opacity 0.2s ease;
+  }
+  .carousel-btn:hover:not(:disabled) {
+    background: #ff8a00;
+    border-color: #ff8a00;
+    color: #fff;
+  }
+  .carousel-btn:focus-visible {
+    outline: 2px solid #ff8a00;
+    outline-offset: 2px;
+  }
+  .carousel-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .carousel-dot {
+    height: 0.5rem;
+    width: 0.5rem;
+    border-radius: 9999px;
+    background: rgba(18, 33, 63, 0.18);
+    transition: width 0.25s ease, background 0.25s ease;
+  }
+  .carousel-dot.is-active {
+    width: 1.5rem;
+    background: #ff8a00;
   }
 
   /* ---------- Scroll reveal ----------
@@ -191,8 +285,8 @@ const benefits = [
     transition:
       opacity 700ms ease,
       transform 800ms cubic-bezier(0.22, 1, 0.36, 1),
-      border-color 0.3s ease,
-      box-shadow 0.3s ease;
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
     transition-delay: calc(var(--i, 0) * 100ms);
   }
   .career-wrap.is-armed .career-eyebrow,
@@ -223,26 +317,29 @@ const benefits = [
 
   @media (prefers-reduced-motion: reduce) {
     .career-wrap::before { animation: none; }
+    .career-track { scroll-behavior: auto; }
     .career-card,
-    .career-card::before,
-    .career-label,
-    .career-divider-fill,
+    .career-icon,
+    .carousel-dot,
     .career-wrap.is-armed [data-career-reveal],
     .career-wrap.is-armed .career-eyebrow-line {
       opacity: 1;
       transform: none;
       transition: none;
     }
-    .career-card:hover,
-    .career-card:hover .career-label {
+    .career-card:hover .career-icon {
       transform: none;
     }
   }
 </style>
 
 <script>
-  const careerWrap = document.querySelector<HTMLElement>("[data-career-wrap]");
-  if (careerWrap) {
+  function initCareer() {
+    const careerWrap = document.querySelector<HTMLElement>("[data-career-wrap]");
+    if (!careerWrap || careerWrap.dataset.ready) return;
+    careerWrap.dataset.ready = "true";
+
+    /* ----- Scroll reveal ----- */
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce || !("IntersectionObserver" in window)) {
       careerWrap.classList.add("is-visible");
@@ -259,5 +356,53 @@ const benefits = [
       );
       careerObserver.observe(careerWrap);
     }
+
+    /* ----- Carousel ----- */
+    const root = careerWrap.querySelector<HTMLElement>("[data-carousel]");
+    const track = root?.querySelector<HTMLElement>("[data-track]");
+    const prev = root?.querySelector<HTMLButtonElement>("[data-prev]");
+    const next = root?.querySelector<HTMLButtonElement>("[data-next]");
+    if (!root || !track || !prev || !next) return;
+
+    const dots = Array.from(root.querySelectorAll<HTMLElement>(".carousel-dot"));
+    const cards = Array.from(track.children) as HTMLElement[];
+
+    const step = () => {
+      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      return cards[0].getBoundingClientRect().width + gap;
+    };
+
+    const update = () => {
+      const max = track.scrollWidth - track.clientWidth;
+      prev.disabled = track.scrollLeft <= 4;
+      next.disabled = track.scrollLeft >= max - 4;
+
+      const trackLeft = track.getBoundingClientRect().left;
+      const trackRight = trackLeft + track.clientWidth;
+      cards.forEach((card, i) => {
+        const r = card.getBoundingClientRect();
+        const visible = r.left >= trackLeft - 8 && r.right <= trackRight + 8;
+        dots[i]?.classList.toggle("is-active", visible);
+      });
+    };
+
+    prev.addEventListener("click", () =>
+      track.scrollBy({ left: -step(), behavior: "smooth" }),
+    );
+    next.addEventListener("click", () =>
+      track.scrollBy({ left: step(), behavior: "smooth" }),
+    );
+
+    track.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") { e.preventDefault(); next.click(); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); prev.click(); }
+    });
+
+    track.addEventListener("scroll", () => requestAnimationFrame(update), { passive: true });
+    window.addEventListener("resize", update);
+    update();
   }
+
+  initCareer();
+  document.addEventListener("astro:page-load", initCareer);
 </script>
