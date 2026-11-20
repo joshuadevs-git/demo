@@ -1,12 +1,12 @@
 {
-  "fullName": "Nova Creative Agency",
+  "fullName": "",
   "name": "Nova",
   "branding": {
-    "icon": "ph-star",
-    "font": "Satoshi",
-    "tagline": "Websites for ambitious brands",
+    "icon": "",
+    "font": "",
+    "tagline": "",
     "logoImage": "/assets/images/t001-nova/icon.png",
-    "favicon": "/assets/images/t001-nova/icon.png",
+    "favicon": "/assets/images/t001-nova/logo2.png",
     "logoSuffix": "Logo"
   },
   "address": "123 Example Street, 00-001 Warsaw",

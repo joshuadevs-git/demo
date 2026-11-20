@@ -1,0 +1,160 @@
+---
+import Section from "@components/ui/layout/Section.astro";
+import Container from "@components/ui/layout/Container.astro";
+import Heading from "@components/ui/atoms/Heading.astro";
+import Text from "@components/ui/atoms/Text.astro";
+import Button from "@components/ui/atoms/Button.astro";
+import jsonData from "@data/sections/enrollment-benefits.json";
+
+type Content = {
+  eyebrow: string;
+  heading: string;
+  benefits: string[];
+  agencyEyebrow: string;
+  agencyHeading: string;
+  agencyDescription: string;
+  agencySteps: string[];
+  agencyHighlight: string;
+  agencyCta: string;
+  agencyHref?: string;
+};
+
+export interface Props {
+  locale?: "en";
+  en?: Content;
+  data?: { en: Content };
+  headingTag?: string;
+}
+
+const props = Astro.props as Props;
+const t = props.en ?? props.data?.en ?? jsonData.en as Content;
+const headingTag = props.headingTag ?? "h2";
+---
+
+<Section tone="page" class="border-t border-brand-dark/10">
+  <Container>
+    <div class="grid items-start gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+
+      <!-- LEFT: ENROLLMENT BENEFITS -->
+      <div class="min-w-0">
+        <Text
+          tag="p"
+          variant="accent-label"
+          class="font-sans font-semibold tracking-[0.18em] text-[#FF8A00] md:text-[0.72rem]"
+        >
+          {t.eyebrow}
+        </Text>
+
+        <Heading
+          tag={headingTag}
+          variant="section-heading-lg"
+          class="mt-4 !font-extrabold !leading-[1.1] !text-brand-dark"
+        >
+          {t.heading}
+        </Heading>
+
+        <ul class="mt-8 flex list-none flex-col gap-5 p-0">
+          {t.benefits.map((benefit) => (
+            <li class="flex items-start gap-4">
+              <span
+                class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-primary/10 text-brand-primary"
+                aria-hidden="true"
+              >
+                <svg
+                  class="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="m5 12 4 4L19 6" />
+                </svg>
+              </span>
+
+              <span class="text-base leading-7 text-brand-dark md:text-lg">
+                {benefit}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- RIGHT: AGENCY PARTNERS (dark navy background) -->
+      <aside class="agency-card rounded-3xl border border-white/10 bg-[#12213F] p-7 shadow-xl shadow-brand-dark/5 md:p-9">
+
+        <Text
+          tag="p"
+          variant="accent-label"
+          class="font-sans font-semibold tracking-[0.16em] text-[#FF8A00] md:text-[0.72rem]"
+        >
+          {t.agencyEyebrow}
+        </Text>
+
+        <Heading
+          tag="h3"
+          variant="feature-heading-md"
+          class="mt-4 !font-extrabold !leading-tight !text-white"
+        >
+          {t.agencyHeading}
+        </Heading>
+
+        <Text variant="body" class="mt-5 leading-7 !text-white/75">
+          {t.agencyDescription}
+        </Text>
+
+        <ul class="mt-7 flex list-none flex-col gap-5 p-0">
+          {t.agencySteps.map((step, index) => (
+            <li class="flex items-start gap-3">
+              <span
+                class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#FF8A00] text-sm font-bold text-[#12213F]"
+                aria-hidden="true"
+              >
+                {index + 1}
+              </span>
+
+              <span class="pt-0.5 text-sm leading-6 text-white md:text-base">
+                {step}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        <div class="mt-8 rounded-2xl bg-white/10 p-5">
+          <p class="m-0 text-sm font-bold leading-7 text-white md:text-base">
+            {t.agencyHighlight}
+          </p>
+        </div>
+
+        <div class="mt-8">
+          <Button
+            href={t.agencyHref || "#contact"}
+            variant="primary"
+            size="lg"
+          >
+            {t.agencyCta}
+          </Button>
+        </div>
+      </aside>
+
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .agency-card {
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .agency-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 138, 0, 0.35);
+      box-shadow: 0 18px 40px -18px rgba(18, 33, 63, 0.2);
+    }
+  }
+</style>

@@ -1,62 +1,470 @@
 ---
 import Section from "@components/ui/layout/Section.astro";
-import SectionHeader from "@components/ui/molecules/SectionHeader.astro";
-import data from "@data/sections/testimonial-v2.json";
-import { ACTIVE_TEMPLATE } from "@config/template";
+import Container from "@components/ui/layout/Container.astro";
 
-interface Item { quote: string; author: string; initials: string; role: string; avatar?: string }
-export interface Props { sectionId?: string; title?: string; description?: string; tagline?: string; avatarAltPrefix?: string; items?: Item[]; class?: string }
+/*
+  PHOTOS
+  Each agent shows a photo only (no video).
+  The `image` photos are placeholders. Replace them with real photos.
+  If you host photos yourself, put them in public/assets/ and use "/assets/yourphoto.jpg".
 
-const { sectionId = "testimonial-v2", title, description, tagline, avatarAltPrefix, items, class: className = "" } = Astro.props as Props;
-const fallback = ACTIVE_TEMPLATE === "nova" ? undefined : data;
-const list = items && items.length > 0 ? items : fallback?.items ?? [];
-const resolvedAvatarAltPrefix = avatarAltPrefix ?? fallback?.avatarAltPrefix ?? "";
-const resolvedTitle = title || fallback?.title || "";
-const resolvedDescription = description || fallback?.description || "";
-const columns = [list, [...list.slice(2), ...list.slice(0, 2)], [...list.slice(1), ...list.slice(0, 1)]];
+  SEE MORE
+  Descriptions longer than 3 lines are cut off and get a "See more" button automatically.
+  Short descriptions show nothing extra.
+*/
+const SEE_MORE = "See more";
+const SEE_LESS = "See less";
+
+const agents = [
+  {
+    name: "Angela R.",
+    role: "Intake Specialist & Legal Assistant",
+    headline: "Your experience is your advantage",
+    description: "Hi, I'm Angela R. I currently work as an Intake Specialist and Legal Assistant for a personal injury law firm. My responsibilities include conducting intakes with potential new clients, following up on cases for client or attorney determination, requesting and obtaining medical records and billing statements, requesting police reports, and providing administrative support to the legal team. I also assist paralegals with different tasks to help keep cases moving forward. Before becoming a Legal VA, I worked in the BPO industry for 10 years. Although I had years of experience in customer service, entering the legal field was a completely different experience for me. I had zero experience in the legal field. I was intimidated by all the legal terminologies and worried about making mistakes, especially because I didn't have any background in law. Everything was new to me, and I wasn't sure if I could keep up. It was challenging to step into an industry that I knew very little about, but I decided to give myself a chance. My turning point came when my client started giving me positive feedback about my work. That gave me the confidence that I was doing something right. Eventually, I also realized that the job wasn't as difficult as I initially thought. I just needed to be willing to learn, understand the processes, and be consistent. As I became more familiar with my responsibilities, I gained more confidence in my ability to handle the work. Looking back, I can say that becoming a Legal VA has made a huge difference in my life. If it weren't for my VA career, I wouldn't have been able to afford renovating our house, purchasing a car, and providing a much more comfortable life for my family. Compared to my years working in the BPO industry, our quality of life has improved significantly. I'm grateful because this career has given me opportunities that I never thought would be possible when I was just starting out. It's not just about the professional growth but also the opportunities it has given me to improve my family's life. If there's one thing I would tell someone who is thinking about becoming a Legal VA, it's that everybody starts at zero. You just have to have the courage to believe that you can do it. Believe in yourself, be proactive, and never be afraid to ask questions. However, before asking for help, make sure you've done your research and tried to figure things out on your own first. The legal field is fast-paced, and you have to be mindful of the attorneys' and paralegals' time. Don't make them spend time answering questions that you could have easily researched yourself. Most importantly, don't let your lack of experience stop you from trying. You don't need to know everything when you start. You just need to be willing to learn and put in the work.",
+    image: "/assets/images/t001-nova/Angela.jpeg",
+},
+
+  
+  {
+    name: "Coach Cristina",
+    role: "Paralegal Assistant, personal injury law firm",
+    headline: "It's never too late to start again",
+    description:
+      "A Chemical Engineering graduate who moved through quality assurance, teaching and her own businesses before becoming a Paralegal Assistant. None of that experience was wasted.",
+    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1200&auto=format&fit=crop",
+  },
+  {
+    name: "Coach Christine",
+    role: "Assistant to the Intake Director",
+    headline: "Every experience has a purpose",
+    description:
+      "From Office Assistant to Human Resources to the legal industry. Her path wasn't a straight line, but every step prepared her for where she is today.",
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1200&auto=format&fit=crop",
+  },
+  {
+    name: "Coach Fran",
+    role: "Intake Coordinator, US-based law firm",
+    headline: "You are more qualified than you think",
+    description:
+      "Nine years in BPO and an IT degree led to intake work for a US law firm. The skills law firms look for may already be yours. Handling hundreds of customer conversations taught her to listen closely, ask the right questions and document everything accurately, which is the core of good client intake. She now helps others see that the skills they built in their previous jobs can open doors in the legal industry.",
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1200&auto=format&fit=crop",
+  },
+];
 ---
 
-<Section id={sectionId === "testimonial-v2" ? "opinie" : sectionId} tone="page" class:list={["overflow-hidden", className]}>
-  <div class="ui-container">
-    <div data-motion-sequence="viewport" data-motion-profile="soft">
-      <SectionHeader title={resolvedTitle} description={resolvedDescription} titleTag="h2" align="center" class="mx-auto max-w-3xl" />
-      <div class="relative mx-auto mt-12 flex max-h-[720px] max-w-6xl justify-center gap-4 overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)] md:gap-6">
-      {columns.map((column, columnIndex) => (
-        <div class:list={["w-full max-w-sm", columnIndex > 0 ? "hidden md:block" : ""]}>
-          <div class:list={["testimonial-v2-track flex flex-col", columnIndex === 0 ? "testimonial-v2-scroll" : columnIndex === 1 ? "testimonial-v2-scroll-slow" : "testimonial-v2-scroll-fast"]}>
-            {[0, 1, 2].map((copyIndex) => (
-              <div class="flex flex-col gap-5 pb-5" aria-hidden={copyIndex > 0 ? "true" : undefined}>
-                {column.map((item) => (
-                  <article class="ui-bg-surface ui-radius-lg shrink-0 border border-brand-dark/10 p-6 shadow-sm md:p-8">
-                    <p class="text-brand-dark/75 leading-relaxed">{item.quote}</p>
-                    <footer class="mt-6 flex items-center gap-3">
-                      <span class="relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-brand-primary/15 text-xs font-semibold text-brand-primary">
-                        {item.initials}
-                        {item.avatar && <img src={item.avatar} alt={`${resolvedAvatarAltPrefix} ${item.author}`} width="40" height="40" class="absolute inset-0 size-full rounded-full object-cover" loading="eager" onerror="this.remove()" />}
-                      </span>
-                      <div>
-                        <cite class="block not-italic font-semibold text-brand-dark">{item.author}</cite>
-                        <span class="text-sm text-brand-dark/55">{item.role}</span>
-                      </div>
-                    </footer>
-                  </article>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
+<Section id="video-testimonials" tone="page" class="py-20 md:py-28 bg-white overflow-hidden">
+  <Container class="w-full max-w-[100rem] px-[clamp(1.25rem,5vw,5rem)]">
+
+    <!-- Header -->
+    <div class="mb-12 md:mb-16 grid gap-6 md:grid-cols-[1fr_auto] md:items-end md:gap-16">
+      <div>
+        <p class="flex items-center gap-3 text-base font-medium text-[#FF8A00]">
+          <span class="h-px w-10 bg-[#FF8A00]"></span>
+          Testimonials
+        </p>
+        <h2 class="mt-5 max-w-3xl text-[clamp(2.5rem,5.5vw,4.75rem)] leading-[1.03] font-bold tracking-tight text-[#12213F]">
+          Hear it from our agents
+        </h2>
       </div>
+      <p class="max-w-sm text-[#5A6478] text-lg md:text-xl leading-relaxed">
+        Real career journeys, in their own words.
+      </p>
     </div>
-  </div>
+
+    <!-- Cards -->
+    <div class="vt-carousel" data-vt-carousel>
+    <div class="vt-viewport" data-vt-viewport>
+    <ul class="vt-track" data-vt-track>
+      {agents.map((agent) => (
+        <li class="vt-card" data-vt-card>
+          <div class="vt-media">
+            <img src={agent.image} alt={agent.name} loading="lazy" draggable="false" />
+            <span class="vt-shade" aria-hidden="true"></span>
+          </div>
+
+          <div class="vt-body">
+            <p class="vt-name">{agent.name}</p>
+            <p class="vt-role">{agent.role}</p>
+
+            <div class="vt-rule" aria-hidden="true"></div>
+
+            <h3 class="vt-headline">{agent.headline}</h3>
+
+            <div class="vt-text">
+              <p class="vt-desc" data-vt-desc>{agent.description}</p>
+              <button type="button" class="vt-more" data-vt-more aria-expanded="false" hidden>
+                {SEE_MORE}
+              </button>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+    </div>
+
+    <!-- Carousel controls -->
+    <div class="vt-controls" data-vt-controls>
+      <button type="button" class="vt-arrow" data-vt-prev aria-label="Previous agent">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.25" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <div class="vt-dots" data-vt-dots role="group" aria-label="Choose agent"></div>
+      <button type="button" class="vt-arrow" data-vt-next aria-label="Next agent">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.25" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    </div>
+  </Container>
 </Section>
 
 <style>
-  @keyframes testimonial-v2-up { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, -33.333333%, 0); } }
-  .testimonial-v2-scroll, .testimonial-v2-scroll-slow, .testimonial-v2-scroll-fast { backface-visibility: hidden; will-change: transform; }
-  .testimonial-v2-scroll { animation: testimonial-v2-up 14s linear infinite; }
-  .testimonial-v2-scroll-slow { animation: testimonial-v2-up 18s linear infinite; }
-  .testimonial-v2-scroll-fast { animation: testimonial-v2-up 12s linear infinite; }
-  .testimonial-v2-scroll:hover, .testimonial-v2-scroll-slow:hover, .testimonial-v2-scroll-fast:hover { animation-play-state: paused; }
-  @media (prefers-reduced-motion: reduce) { .testimonial-v2-scroll, .testimonial-v2-scroll-slow, .testimonial-v2-scroll-fast { animation: none; } }
+  /* ---------- Carousel ---------- */
+  .vt-carousel {
+    position: relative;
+  }
+
+  /* Padding gives the card shadows room; negative margin keeps the layout tight */
+  .vt-viewport {
+    overflow: hidden;
+    padding: 1.5rem 2rem 4rem;
+    margin: -1.5rem -2rem -2rem;
+    touch-action: pan-y;
+  }
+
+  .vt-track {
+    --vt-view: 1;
+    --vt-gap: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--vt-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    transition: transform 600ms cubic-bezier(0.22, 0.8, 0.24, 1);
+    will-change: transform;
+  }
+  @media (min-width: 1024px) {
+    .vt-track {
+      --vt-view: 2;
+      --vt-gap: 3.5rem;
+    }
+  }
+
+  .vt-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.75rem;
+  }
+  .vt-controls[hidden] {
+    display: none;
+  }
+
+  .vt-arrow {
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 1px solid #e4e8f0;
+    border-radius: 999px;
+    background: #fff;
+    color: #12213f;
+    box-shadow: 0 1px 2px rgba(18, 33, 63, 0.06), 0 10px 24px -8px rgba(18, 33, 63, 0.22);
+    cursor: pointer;
+    transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, transform 200ms ease;
+  }
+  .vt-arrow:hover {
+    background: #12213f;
+    border-color: #12213f;
+    color: #fff;
+    transform: translateY(-2px);
+  }
+  .vt-arrow:focus-visible,
+  .vt-dot:focus-visible {
+    outline: 3px solid #ff8a00;
+    outline-offset: 3px;
+  }
+
+  .vt-dots {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .vt-dot {
+    width: 0.65rem;
+    height: 0.65rem;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: #cfd6e4;
+    cursor: pointer;
+    transition: width 300ms ease, background-color 300ms ease;
+  }
+  .vt-dot[aria-current="true"] {
+    width: 2.25rem;
+    background: #ff8a00;
+  }
+
+  /* ---------- Card ---------- */
+  .vt-card {
+    flex: 0 0 calc((100% - (var(--vt-view) - 1) * var(--vt-gap)) / var(--vt-view));
+    min-width: 0;
+  }
+
+  .vt-media {
+    position: relative;
+    width: 50%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 1.75rem;
+    background: #e6eaf2;
+    box-shadow:
+      0 2px 4px rgba(18, 33, 63, 0.06),
+      0 24px 48px -16px rgba(18, 33, 63, 0.25),
+      0 48px 90px -40px rgba(18, 33, 63, 0.35);
+  }
+  @media (min-width: 640px) {
+    .vt-media {
+      aspect-ratio: 16 / 10;
+    }
+  }
+
+  .vt-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 22%;
+    display: block;
+    transition: transform 900ms cubic-bezier(0.22, 0.8, 0.24, 1);
+  }
+  .vt-card:hover .vt-media img {
+    transform: scale(1.03);
+  }
+
+  .vt-shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(11, 18, 32, 0) 50%, rgba(11, 18, 32, 0.4) 100%);
+    pointer-events: none;
+  }
+
+  /* ---------- Text ---------- */
+  .vt-body {
+    padding-top: 1.75rem;
+  }
+
+  .vt-name {
+    color: #12213f;
+    font-size: clamp(1.5rem, 2vw, 1.875rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+
+  .vt-role {
+    margin-top: 0.4rem;
+    color: #5a6478;
+    font-size: 1.05rem;
+  }
+
+  .vt-rule {
+    height: 1px;
+    margin: 1.5rem 0;
+    background: #e4e8f0;
+  }
+
+  .vt-headline {
+    color: #12213f;
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .vt-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin-top: 0.75rem;
+  }
+
+  .vt-desc {
+    color: #5a6478;
+    font-size: 1.075rem;
+    line-height: 1.75;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+  }
+  .vt-desc.is-open {
+    display: block;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    overflow: visible;
+  }
+
+  .vt-more {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #12213f;
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: #ff8a00;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 5px;
+    cursor: pointer;
+  }
+  .vt-more[hidden] {
+    display: none;
+  }
+  .vt-more:hover {
+    color: #ff8a00;
+  }
+  .vt-more:focus-visible {
+    outline: 2px solid #ff8a00;
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vt-media img,
+    .vt-track,
+    .vt-arrow,
+    .vt-dot {
+      transition: none;
+    }
+    .vt-arrow:hover { transform: none; }
+    .vt-card:hover .vt-media img { transform: none; }
+  }
 </style>
+
+<script>
+  /* ---------- See more / See less for long descriptions ---------- */
+  const SEE_MORE = "See more";
+  const SEE_LESS = "See less";
+
+  const descs = Array.from(document.querySelectorAll<HTMLElement>("#video-testimonials [data-vt-desc]"));
+
+  // Show the button only when the text is actually cut off
+  const measure = () => {
+    descs.forEach((desc) => {
+      const button = desc.parentElement?.querySelector<HTMLButtonElement>("[data-vt-more]");
+      if (!button) return;
+      const open = desc.classList.contains("is-open");
+      button.hidden = !(open || desc.scrollHeight > desc.clientHeight + 1);
+    });
+  };
+
+  document.querySelectorAll<HTMLButtonElement>("#video-testimonials [data-vt-more]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const desc = button.parentElement?.querySelector<HTMLElement>("[data-vt-desc]");
+      if (!desc) return;
+      const open = desc.classList.toggle("is-open");
+      button.textContent = open ? SEE_LESS : SEE_MORE;
+      button.setAttribute("aria-expanded", String(open));
+    });
+  });
+
+  window.addEventListener("resize", measure);
+  document.fonts?.ready.then(measure);
+  measure();
+
+  /* ---------- Carousel ---------- */
+  const carousel = document.querySelector<HTMLElement>("#video-testimonials [data-vt-carousel]");
+
+  if (carousel) {
+    const viewport = carousel.querySelector<HTMLElement>("[data-vt-viewport]")!;
+    const track = carousel.querySelector<HTMLElement>("[data-vt-track]")!;
+    const slides = Array.from(carousel.querySelectorAll<HTMLElement>("[data-vt-card]"));
+    const prevButton = carousel.querySelector<HTMLButtonElement>("[data-vt-prev]");
+    const nextButton = carousel.querySelector<HTMLButtonElement>("[data-vt-next]");
+    const controls = carousel.querySelector<HTMLElement>("[data-vt-controls]");
+    const dotsWrap = carousel.querySelector<HTMLElement>("[data-vt-dots]");
+
+    // Must match the CSS breakpoint on .vt-track
+    const wide = window.matchMedia("(min-width: 1024px)");
+    const perView = () => (wide.matches ? 2 : 1);
+    const maxIndex = () => Math.max(0, slides.length - perView());
+
+    let index = 0;
+    let dots: HTMLButtonElement[] = [];
+
+    const buildDots = () => {
+      if (!dotsWrap) return;
+      dotsWrap.innerHTML = "";
+      dots = [];
+      for (let i = 0; i <= maxIndex(); i++) {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "vt-dot";
+        dot.setAttribute("aria-label", `Go to agent ${i + 1}`);
+        dot.addEventListener("click", () => goTo(i));
+        dotsWrap.appendChild(dot);
+        dots.push(dot);
+      }
+    };
+
+    const update = () => {
+      const max = maxIndex();
+      index = Math.max(0, Math.min(index, max));
+
+      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      const step = (slides[0]?.offsetWidth ?? 0) + gap;
+      track.style.transform = `translate3d(${-index * step}px, 0, 0)`;
+
+      // Cards outside the view can't be tabbed to or read by screen readers
+      slides.forEach((slide, i) => {
+        const visible = i >= index && i < index + perView();
+        slide.toggleAttribute("inert", !visible);
+        slide.setAttribute("aria-hidden", visible ? "false" : "true");
+      });
+
+      dots.forEach((dot, i) => dot.setAttribute("aria-current", String(i === index)));
+      if (controls) controls.hidden = max === 0;
+    };
+
+    const goTo = (target: number) => {
+      const max = maxIndex();
+      index = target > max ? 0 : target < 0 ? max : target;
+      update();
+    };
+
+    prevButton?.addEventListener("click", () => goTo(index - 1));
+    nextButton?.addEventListener("click", () => goTo(index + 1));
+
+    // Arrow keys
+    carousel.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") goTo(index - 1);
+      if (e.key === "ArrowRight") goTo(index + 1);
+    });
+
+    // Swipe on touch screens and with a mouse drag
+    let startX = 0;
+    let tracking = false;
+
+    viewport.addEventListener("pointerdown", (e) => {
+      tracking = true;
+      startX = e.clientX;
+    });
+    viewport.addEventListener("pointerup", (e) => {
+      if (!tracking) return;
+      tracking = false;
+      const diff = e.clientX - startX;
+      if (Math.abs(diff) < 50) return;
+      goTo(diff < 0 ? index + 1 : index - 1);
+    });
+    viewport.addEventListener("pointercancel", () => (tracking = false));
+
+    window.addEventListener("resize", () => {
+      if (dots.length !== maxIndex() + 1) buildDots();
+      update();
+      measure();
+    });
+
+    buildDots();
+    update();
+  }
+</script>

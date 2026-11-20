@@ -1,0 +1,31 @@
+
+{
+  "en": {
+    "eyebrow": "WHAT YOU GET WHEN YOU ENROLL",
+    "heading": "More Than Training. Here's What's Inside.",
+    "benefits": [
+      "Self-paced modules and recorded lessons",
+      "Live training sessions (depending on your program)",
+      "Hands-on practice with at least two CRM platforms",
+      "Mock calls and interview practice",
+      "FREE HIPAA training and certification",
+      "FREE coaching and support for your questions",
+      "Resume and video introduction help",
+      "Introductions and endorsement opportunities through our partner agencies",
+      "Access to available sponsorships for eligible trainees"
+    ],
+    "agencyEyebrow": "FOR AGENCIES AND BUSINESS PARTNERS",
+    "agencyHeading": "Need Trained Legal Talent? We'll Help You Find Them.",
+    "agencyDescription": "Tell us the role and skills you need. We source, screen, and present qualified candidates for your review.",
+    "agencySteps": [
+      "Send us your talent requirements",
+      "We source and vet candidates for you",
+      "Review our shortlist, interview, and choose",
+      "Interview and Select",
+      "Successful Placement"
+    ],
+    "agencyHighlight": "Sourcing and initial vetting are FREE. No upfront recruitment fees.",
+    "agencyCta": "Book an Agency Discovery Call",
+    "agencyHref": "#contact"
+  }
+}

@@ -69,6 +69,8 @@ export const COMPONENT_MANIFEST: Record<string, ComponentManifestEntry> = {
   ProcessTimelineScrollBlock: { category: 'core', status: 'provisional' },
   StepsNumberedBlock: { category: 'core', status: 'provisional' },
   AgencyPartnerProcessBlock: { category: 'core', status: 'provisional' },
+  TrainingProgramsBlock: { category: 'core', status: 'provisional' },
+  EnrollmentBenefitsBlock: { category: 'core', status: 'provisional' },
   TimelineAlternateBlock: { category: 'core', status: 'provisional' },
   ServicesCardsBlock: { category: 'core', status: 'provisional' },
   ServicesGridBlock: { category: 'core', status: 'provisional' },

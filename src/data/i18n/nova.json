@@ -91,17 +91,26 @@
         ]
       },
     
-      "testimonial-v2": {
-        "title": "Reviews that say more",
-        "description": "See how working with us translated into a stronger image and better results for our clients.",
-        "tagline": "Client reviews",
-        "avatarAltPrefix": "Photo of",
-        "items": [
-          { "quote": "The new website finally gave our communication a clear structure and started bringing better enquiries from the first week.", "author": "Anna Kowalska", "initials": "AK", "role": "Founder of a premium brand", "avatar": "https://i.pravatar.cc/150?u=anna-kowalska" },
-          { "quote": "The process was focused, efficient and very well guided. We received a website that genuinely fits our brand.", "author": "Michal Nowak", "initials": "MN", "role": "Operations director", "avatar": "https://i.pravatar.cc/150?u=michal-nowak" },
-          { "quote": "We can finally present our work in a way that reflects its quality. Clients noticed the difference straight away.", "author": "Karolina Wojcik", "initials": "KW", "role": "Studio owner", "avatar": "https://i.pravatar.cc/150?u=karolina-wojcik" }
-        ]
-      }
+     "testimonial-v2": {
+  "title": "Reviews that say more",
+  "description": "See how working with us translated into a stronger image and better results for our clients.",
+  "tagline": "Client reviews",
+  "avatarAltPrefix": "Photo of",
+  "seeMoreLabel": "See more",
+  "seeLessLabel": "See less",
+  "items": [
+    { "quote": "If there's one thing I would tell someone who is thinking about becoming a Legal VA, it's that everybody starts at zero. You just have to have the courage to believe that you can do it. Believe in yourself, be proactive, and never be afraid to ask questions. Most importantly, don't let your lack of experience stop you from trying. You don't need to know everything when you start. You just need to be willing to learn and put in the work.", "author": "Angela R.", "initials": "AR", "role": "Intake Specialist & Legal Assistant", "avatar": "/assets/images/t001-nova/Angela.jpeg" },
+    { "quote": "The process was focused, efficient and very well guided. We received a website that genuinely fits our brand.", "author": "Michal Nowak", "initials": "MN", "role": "Operations director", "avatar": "https://i.pravatar.cc/150?u=michal-nowak" },
+    { "quote": "We can finally present our work in a way that reflects its quality. Clients noticed the difference straight away.", "author": "Karolina Wojcik", "initials": "KW", "role": "Studio owner", "avatar": "https://i.pravatar.cc/150?u=karolina-wojcik" },
+    { "quote": "I was worried a redesign would take months and disrupt the business. Instead, the team gave us a clear timeline, explained every decision in plain language and delivered exactly on schedule. The new site loads faster, looks far more professional and, most importantly, our customers now find what they need without calling us. Within two months our enquiry form had doubled its conversions, and the quality of leads is noticeably better. I would recommend them without hesitation to anyone who wants a website that actually works for the business.", "author": "Piotr Zielinski", "initials": "PZ", "role": "Managing director", "avatar": "https://i.pravatar.cc/150?u=piotr-zielinski" },
+    { "quote": "Great communication from start to finish. Every question got a quick, clear answer.", "author": "Marta Lewandowska", "initials": "ML", "role": "Marketing manager", "avatar": "https://i.pravatar.cc/150?u=marta-lewandowska" },
+    { "quote": "What stood out most was how well they listened. We came with a vague idea and a messy brief, and they turned it into a clean, confident website that explains our services better than we ever could. The structure, the copy suggestions and the small details all showed real care. Even after launch they stayed available to adjust things and train our team to update content on our own, which saved us a lot of time and money.", "author": "Tomasz Kaminski", "initials": "TK", "role": "Co-founder, consulting firm", "avatar": "https://i.pravatar.cc/150?u=tomasz-kaminski" },
+    { "quote": "Simple, elegant and fast. Exactly what our brand needed.", "author": "Ewa Mazur", "initials": "EM", "role": "Boutique owner", "avatar": "https://i.pravatar.cc/150?u=ewa-mazur" },
+    { "quote": "Our old website felt like a brochure nobody read. The new one feels like a conversation with our best customers. People mention it in meetings, partners compliment the design, and our sales team uses it as a tool rather than an afterthought. The whole project was professional, transparent about costs and genuinely enjoyable, which I did not expect from a website build.", "author": "Jakub Wrobel", "initials": "JW", "role": "Head of sales", "avatar": "https://i.pravatar.cc/150?u=jakub-wrobel" },
+    { "quote": "Professional team, beautiful result, and a launch with zero stress. We have already received messages from clients saying how easy the new site is to use.", "author": "Natalia Dabrowska", "initials": "ND", "role": "Clinic manager", "avatar": "https://i.pravatar.cc/150?u=natalia-dabrowska" },
+    { "quote": "They understood our industry quickly and translated it into a design that feels trustworthy and modern. The attention to mobile experience was especially valuable, because most of our visitors arrive from their phones. Pages are quick, the layout is clean, and the contact flow is so straightforward that we now get fewer back-and-forth emails before a first call. It has become one of the best investments we have made this year.", "author": "Lukasz Sikora", "initials": "LS", "role": "Owner, logistics company", "avatar": "https://i.pravatar.cc/150?u=lukasz-sikora" }
+  ]
+}
     },
 
 
