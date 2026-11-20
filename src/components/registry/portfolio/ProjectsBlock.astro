@@ -29,12 +29,12 @@ const items = props.items ?? fallback?.items ?? [];
 
 <Section id="realizacje" tone="page" class:list={["relative z-[1] -mt-4 rounded-t-[var(--rounded-lg)] pb-16", props.class]}>
   <Container class="w-full max-w-none px-[clamp(1.5rem,5vw,5rem)]">
-    
+
     <div class="projects-intro">
       <div>
         {eyebrow && (
-  <Text tag="p" variant="accent-label" class="projects-eyebrow font-sans font-semibold tracking-[0.18em]">{eyebrow}</Text>
-)}
+          <Text tag="p" variant="accent-label" class="projects-eyebrow font-sans font-semibold tracking-[0.18em]">{eyebrow}</Text>
+        )}
         <Heading tag="h2" variant="section-title">{title}</Heading>
       </div>
       <div>
@@ -99,18 +99,39 @@ const items = props.items ?? fallback?.items ?? [];
     color: #B45F06;
   }
 
-  .projects-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    color: var(--color-brand-dark);
-    text-decoration: none;
-  }
+  /* ORANGE BUTTON LINK */
+.projects-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 999px;
+  background: #ff8a00;
+  color: #12213f;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 12px 28px -8px rgba(255, 138, 0, 0.45);
+  transition: background-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+}
 
-  .projects-link:hover,
-  .projects-link:focus-visible {
-    color: var(--color-brand-accent);
-  }
+/* Keeps the text dark, even if the Text component sets its own colour */
+.projects-link :global(span) {
+  color: inherit;
+  font-weight: inherit;
+}
+
+.projects-link:hover,
+.projects-link:focus-visible {
+  background: #ff9a1f;
+  color: #12213f;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px -8px rgba(255, 138, 0, 0.55);
+}
+
+.projects-link:focus-visible {
+  outline: 3px solid #12213f;
+  outline-offset: 3px;
+}
 
   .projects-grid {
     display: grid;
@@ -212,6 +233,16 @@ const items = props.items ?? fallback?.items ?? [];
     .project-card figure {
       height: clamp(22rem, 34vw, 32rem);
       aspect-ratio: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .projects-link {
+      transition: none;
+    }
+    .projects-link:hover,
+    .projects-link:focus-visible {
+      transform: none;
     }
   }
 </style>

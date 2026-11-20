@@ -10,12 +10,12 @@
   { "id": "hero", "variant": "nova" },
   { "id": "novaTeam", "variant": "default" },
   { "id": "portfolio", "variant": "nova" },
+  { "id": "testimonials", "variant": "v2" },
   { "id": "novaServices", "variant": "default" },
   { "id": "trainingPrograms", "variant": "default" },
   { "id": "careerOpportunities", "variant": "default" },
   { "id": "enrollmentBenefits", "variant": "default" },
   { "id": "faq3", "variant": "default" },
-  { "id": "testimonials", "variant": "v2" },
   { "id": "footer", "variant": "nova" }
 ]
 }
