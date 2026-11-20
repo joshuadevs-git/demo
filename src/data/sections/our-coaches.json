@@ -2,41 +2,50 @@
   "eyebrow": "MEET OUR COACHES",
   "heading": "OUR COACHES",
   "coaches": [
+
     {
-      "name": "Coach Christine",
-      "role": "Senior Coach",
-      "headline": "Helping people unlock their full potential.",
-      "description": "Coach Jules brings experience, dedication, and a practical approach to helping individuals grow. Through personalized guidance and consistent support, Jules helps every client build confidence and achieve meaningful progress.",
-      "image": "/assets/images/t001-nova/c1.jpg"
-    },
+  "name": "Coach Cristina",
+  "role": "IT'S NEVER TOO LATE TO START AGAIN",
+  "headline": "It's never too late to start again",
+  "description": "I have a degree in Chemical Engineering, but today, I work in the legal industry. And that's proof that your degree doesn't have to define your entire career. My professional journey took me through quality assurance, auditing, customer service, teaching, tutoring, and even running my own businesses. Eventually, I found my way into the legal industry as a Paralegal Assistant in a personal injury law firm. It wasn't the career path I originally imagined, but every experience helped me develop skills that I use today. Here's something important: Your previous experience is not wasted. Whether you come from engineering, education, customer service, or business, you have transferable skills that can help you succeed. You don't need to know everything before you start. You need the courage to learn and the willingness to grow. Don't let your background decide your future. Explore the legal VA industry, invest in yourself, and give yourself a chance to build a career you never thought possible.",
+  "image": "/assets/images/t001-nova/c1.jpg"
+},
+
+    
     {
-      "name": "Coach Jules",
-      "role": "Performance Coach",
-      "headline": "Turning goals into consistent progress.",
-      "description": "Coach Cristina focuses on building strong foundations, developing effective habits, and helping clients stay accountable. Her coaching approach combines encouragement with practical strategies for long-term improvement.",
-      "image": "/assets/images/t001-nova/c2.jpg"
-    },
-    {
-      "name": "Coach Cristina",
-      "role": "Personal Development Coach",
-      "headline": "Building confidence through meaningful growth.",
-      "description": "Coach Christine believes that real progress starts with understanding each person's strengths and goals. She provides thoughtful guidance and practical support to help clients move forward with confidence.",
-      "image": "/assets/images/t001-nova/c3.jpg"
-    },
+  "name": "Coach Jules",
+  "role": "YOUR EXPERIENCE IS YOUR ADVANTAGE",
+  "headline": "Your experience is your advantage",
+  "description": "You don't have to change who you are to change your career. Sometimes, you just need to take your skills somewhere new. Before entering the legal industry, I worked as a Team Lead in the BPO industry in Bacolod, managing daily operations, coordinating teams, and handling administrative responsibilities. Today, I specialize in medical records coordination and retrieval for law firms. I work with healthcare providers, track medical records, organize case documents, and help ensure attorneys have the information they need. What I once considered ordinary BPO experience has become one of my greatest strengths in my legal career. Here's what I want you to remember: Communication, organization, problem-solving, and attention to detail are skills that law firms value. You may not know legal procedures yet, but you already have a foundation you can build on. Ready to explore a career in the legal industry? Take the first step. Your next opportunity might be closer than you think.",
+  "image": "/assets/images/t001-nova/c2.jpg"
+},
+
+   {
+  "name": "Coach Christine",
+  "role": "EVERY EXPERIENCE HAS A PURPOSE",
+  "headline": "Every experience has a purpose",
+  "description": "Sometimes, the jobs you never thought would matter become the very reason you're ready for something bigger. I started my career as an Office Assistant, supporting Administration, HR, Sales, and Finance. I later explored the food business, online teaching, and BPO industry before finding my passion in Human Resources. Today, I work as an Assistant to the Intake Director in the legal industry, bringing together everything I've learned about people management, communication, and organization. My journey wasn't a straight line, but every experience prepared me for where I am today. If you're thinking about becoming a Legal VA, don't underestimate your background. Managing tasks, meeting deadlines, handling people, and staying organized are valuable skills in a law firm. You don't need a law degree to get started. You need the willingness to learn and the discipline to grow. Your past experience could be the foundation of your next career. Take that chance and discover what you can achieve in the legal industry.",
+  "image": "/assets/images/t001-nova/c3.jpg"
+},
+
     {
       "name": "Coach Lisa",
-      "role": "Performance Coach",
+      "role": "YOU ARE MORE QUALIFIED THAN YOU THINK",
       "headline": "Turning goals into consistent progress.",
       "description": "Coach Cristina focuses on building strong foundations, developing effective habits, and helping clients stay accountable. Her coaching approach combines encouragement with practical strategies for long-term improvement.",
       "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=900&q=85"
     },
+
+
     {
-      "name": "Coach Fran",
-      "role": "Leadership Coach",
-      "headline": "Inspiring growth, one step at a time.",
-      "description": "Coach Fran helps individuals strengthen their leadership, communication, and decision-making skills. With a supportive and results-focused approach, Fran encourages clients to turn challenges into opportunities.",
-      "image": "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=900&q=85"
-    }
+  "name": "Coach Fran",
+  "role": "YOU ARE MORE QUALIFIED THAN YOU THINK",
+  "headline": "You are more qualified than you think",
+  "description": "Nine years in the BPO industry taught me many things. But I never imagined those same skills would lead me to a career in the legal industry. With a degree in Information Technology, I started my career in customer service, technical support, and sales. I eventually became a Team Leader, coaching people, handling escalations, and managing daily operations. I also gained experience in general virtual assistance. Today, I'm an Intake Coordinator for a US-based law firm, helping prospective clients get connected with the legal team by screening inquiries and gathering important case information. One thing I've learned: Working in a law firm isn't just about knowing the law. It's also about understanding people, communicating clearly, protecting confidential information, and paying attention to details. If you have a background in BPO, customer service, sales, or administration, you may already have skills that law firms are looking for. Don't wait until you feel completely ready. Start learning, build your skills, and take that first step toward becoming a Legal VA. Your next career chapter starts with giving yourself a chance.",
+  "image": "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=900&q=85"
+}
+
+
   ],
   "training": {
     "eyebrow": "HOW OUR TRAINING WORKS",
