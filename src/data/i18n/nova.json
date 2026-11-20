@@ -9,7 +9,7 @@
       "menu": [
         { "label": "Home", "href": "/" },
         { "label": "About", "href": "/about" },
-        { "label": "Request a Talent", "href": "/request-a-talent" },
+        
         { "label": "Success Stories", "href": "/success-stories" },
         { "label": "Contact us", "href": "/contact" }
       ],
@@ -135,7 +135,6 @@
       "footerLinks": [
         { "label": "Home", "href": "/" },
         { "label": "About", "href": "/about" },
-        { "label": "Request a Talent", "href": "/request-a-talent" },
         { "label": "Success Stories", "href": "/success-stories" },
         { "label": "Contact us", "href": "/contact" }
       ],
