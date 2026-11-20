@@ -120,30 +120,54 @@
     },
 
 
-    "footer": {
-      "eyebrow": "Your brand deserves more",
-      "heading": "Let's create together",
-      "description": "Tell us about your project and let's see how we can help your brand grow.",
-      "primaryLabel": "Get in touch",
-      "primaryHref": "#contact",
-      "secondaryLabel": "Explore services",
-      "secondaryHref": "#services",
-      "legalLinks": [
-        { "label": "Privacy policy", "href": "" },
-        { "label": "Cookies", "href": "/cookies/" }
-      ],
-      "footerLinks": [
-        { "label": "Home", "href": "/" },
-        { "label": "About", "href": "/about" },
-        { "label": "Success Stories", "href": "/success-stories" },
-        { "label": "Contact us", "href": "/contact" }
-      ],
-      "ariaLegal": "Legal documents",
-      "ariaNavigation": "Footer navigation",
-      "copyright": "All rights reserved.",
-      "attributionPrefix": "Design and development by",
-      "attributionLinkLabel": "",
-      "attributionLinkHref": ""
+   "footer": {
+  "eyebrow": "Your brand deserves more",
+  "heading": "Let's create together",
+  "description": "Tell us about your project and let's see how we can help your brand grow.",
+  "primaryLabel": "Get in touch",
+  "primaryHref": "#contact",
+  "secondaryLabel": "Explore services",
+  "secondaryHref": "#services",
+  "contact": {
+    "emailLabel": "support@casebridge.com",
+    "emailHref": "mailto:support@casebridge.com",
+    "phoneLabel": "+63 900 000 0000",
+    "phoneHref": "tel:+639000000000"
+  },
+  "socialLinks": [
+    {
+      "label": "WhatsApp",
+      "icon": "whatsapp",
+      "href": "https://wa.me/639000000000"
+    },
+    {
+      "label": "Facebook",
+      "icon": "facebook",
+      "href": "https://www.facebook.com/your-page"
+    },
+    {
+      "label": "LinkedIn",
+      "icon": "linkedin",
+      "href": "https://www.linkedin.com/company/your-company"
     }
+  ],
+  "ariaSocial": "Social media links",
+  "legalLinks": [
+    { "label": "Privacy policy", "href": "" },
+    { "label": "Cookies", "href": "/cookies/" }
+  ],
+  "footerLinks": [
+    { "label": "Home", "href": "/" },
+    { "label": "About", "href": "/about" },
+    { "label": "Success Stories", "href": "/success-stories" },
+    { "label": "Contact us", "href": "/contact" }
+  ],
+  "ariaLegal": "Legal documents",
+  "ariaNavigation": "Footer navigation",
+  "copyright": "All rights reserved.",
+  "attributionPrefix": "Design and development by",
+  "attributionLinkLabel": "",
+  "attributionLinkHref": ""
+}
   }
 }
