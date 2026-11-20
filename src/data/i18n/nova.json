@@ -50,7 +50,7 @@
         "title": "No legal background? No Problem.",
         "description": "What you already know can help you succeed in this industry. You bring the potential. We build the skills.",
         "linkLabel": "Reserve Your Free Orientation Seat",
-        "linkHref": "#realizacje",
+        "linkHref": "https://1b759a57-2bf4-4a53-ba26-cbcb489d8d05.vibe-coding-preview.softr.app/orientation-form",
         "items": [
           { "category": "Websites", "title": "A premium brand with a new website", "image": "/assets/images/t001-nova/4.jpg", "alt": "Laptop showing a website project" },
           { "category": "Brand identity", "title": "A new identity for an ambitious brand", "image": "/assets/images/t001-nova/5.jpg", "alt": "Modern building used as a project example" }
