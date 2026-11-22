@@ -1,0 +1,548 @@
+<div
+  id="casebridge-preloader"
+  role="progressbar"
+  aria-label="Loading website"
+  aria-valuemin="0"
+  aria-valuemax="100"
+  aria-valuenow="0"
+  transition:persist="casebridge-preloader"
+>
+  <div class="cb-content">
+    <div class="cb-stage">
+      <!-- Progress ring -->
+      <svg class="cb-ring" viewBox="0 0 320 320" aria-hidden="true">
+        <circle class="cb-ring-bg" cx="160" cy="160" r="148" />
+        <circle class="cb-ring-fill" cx="160" cy="160" r="148" />
+      </svg>
+
+      <!-- Ground shadow -->
+      <div class="cb-shadow" aria-hidden="true"></div>
+
+      <!-- 3D orange sphere with the name on it -->
+      <div class="cb-orb">
+        <div class="cb-orb-shade" aria-hidden="true"></div>
+        <div class="cb-wordmark">
+          <strong>CASE</strong><span>BRIDGE</span>
+        </div>
+        <div class="cb-orb-gloss" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <p class="cb-tagline">Building a stronger future together.</p>
+
+    <div class="cb-info" aria-hidden="true">
+      <span class="cb-status">Initializing</span>
+      <span class="cb-percent"><span class="cb-num">0</span>%</span>
+    </div>
+  </div>
+
+  <div class="cb-footer" aria-hidden="true">
+    <span>CASEBRIDGE</span>
+    <span>EST. IN EXCELLENCE</span>
+  </div>
+</div>
+
+<noscript>
+  <style is:inline>
+    #casebridge-preloader {
+      display: none !important;
+    }
+    html.cb-loading {
+      overflow: auto !important;
+    }
+  </style>
+</noscript>
+
+<style is:global>
+  html.cb-loading {
+    overflow: hidden;
+  }
+
+  #casebridge-preloader {
+    --cb-navy: #17233d;
+    --cb-muted: #8a93a3;
+    --cb-orange: #e58a32;
+
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #ffffff;
+    color: var(--cb-navy);
+    font-family: inherit;
+    transform: translateY(0);
+    transition: transform 900ms cubic-bezier(0.77, 0, 0.175, 1);
+    will-change: transform;
+  }
+
+  #casebridge-preloader.is-leaving {
+    transform: translateY(-100%);
+  }
+
+  #casebridge-preloader.is-leaving .cb-content,
+  #casebridge-preloader.is-leaving .cb-footer {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  #casebridge-preloader.is-done,
+  #casebridge-preloader.is-skipped {
+    display: none !important;
+  }
+
+  #casebridge-preloader .cb-content,
+  #casebridge-preloader .cb-footer {
+    transition:
+      opacity 400ms ease,
+      transform 600ms ease;
+  }
+
+  #casebridge-preloader .cb-content {
+    width: min(340px, calc(100% - 48px));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: cb-enter 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* ---------- Stage ---------- */
+  #casebridge-preloader .cb-stage {
+    position: relative;
+    width: min(300px, 78vw);
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    perspective: 900px;
+  }
+
+  /* ---------- Progress ring ---------- */
+  #casebridge-preloader .cb-ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+    overflow: visible;
+  }
+
+  #casebridge-preloader .cb-ring circle {
+    fill: none;
+    stroke-width: 6;
+  }
+
+  #casebridge-preloader .cb-ring-bg {
+    stroke: rgba(23, 35, 61, 0.08);
+  }
+
+  #casebridge-preloader .cb-ring-fill {
+    stroke: var(--cb-orange);
+    stroke-linecap: round;
+    stroke-dasharray: 930;
+    stroke-dashoffset: 930;
+    filter: drop-shadow(0 0 5px rgba(229, 138, 50, 0.5));
+  }
+
+  /* ---------- Ground shadow ---------- */
+  #casebridge-preloader .cb-shadow {
+    position: absolute;
+    bottom: 4%;
+    left: 50%;
+    width: 52%;
+    height: 7%;
+    translate: -50% 0;
+    background: radial-gradient(ellipse at center, rgba(120, 60, 10, 0.32), transparent 70%);
+    filter: blur(6px);
+    animation: cb-shadow 4s ease-in-out infinite;
+  }
+
+  /* ---------- 3D sphere ---------- */
+  #casebridge-preloader .cb-orb {
+    position: relative;
+    width: 76%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(circle at 30% 24%, #ffd1a0 0%, #ffa850 22%, #e58a32 52%, #b95f17 82%, #8f4509 100%);
+    box-shadow:
+      inset -18px -22px 40px rgba(110, 48, 0, 0.45),
+      inset 10px 12px 28px rgba(255, 220, 180, 0.45),
+      0 26px 40px -14px rgba(229, 138, 50, 0.55),
+      0 10px 18px -8px rgba(120, 60, 10, 0.35);
+    transform-style: preserve-3d;
+    animation: cb-float 4s ease-in-out infinite;
+  }
+
+  /* Subtle rim light on the lower edge */
+  #casebridge-preloader .cb-orb-shade {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 70% 82%, rgba(255, 190, 120, 0.35), transparent 45%);
+    pointer-events: none;
+  }
+
+  /* Glossy highlight */
+  #casebridge-preloader .cb-orb-gloss {
+    position: absolute;
+    top: 7%;
+    left: 15%;
+    width: 46%;
+    height: 28%;
+    border-radius: 50%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
+    filter: blur(2px);
+    transform: rotate(-24deg);
+    pointer-events: none;
+  }
+
+  /* ---------- Name on the sphere ---------- */
+  #casebridge-preloader .cb-wordmark {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-size: clamp(17px, 4.6vw, 22px);
+    letter-spacing: 0.16em;
+    white-space: nowrap;
+    color: #ffffff;
+    text-shadow:
+      0 1px 0 rgba(150, 70, 10, 0.55),
+      0 3px 6px rgba(110, 48, 0, 0.45);
+    /* optical centering for trailing letter-spacing */
+    padding-left: 0.16em;
+    animation: cb-tilt 4s ease-in-out infinite;
+  }
+
+  #casebridge-preloader .cb-wordmark strong {
+    font-weight: 800;
+  }
+
+  #casebridge-preloader .cb-wordmark span {
+    font-weight: 300;
+  }
+
+  /* ---------- Text ---------- */
+  #casebridge-preloader .cb-tagline {
+    margin: 30px 0 0;
+    color: var(--cb-muted);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  #casebridge-preloader .cb-info {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 14px;
+    margin-top: 16px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  #casebridge-preloader .cb-status {
+    color: var(--cb-muted);
+  }
+
+  #casebridge-preloader .cb-percent {
+    min-width: 4ch;
+    text-align: left;
+    color: var(--cb-navy);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.06em;
+  }
+
+  #casebridge-preloader .cb-footer {
+    position: absolute;
+    right: 32px;
+    bottom: 28px;
+    left: 32px;
+    display: flex;
+    justify-content: space-between;
+    color: #aab0bb;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+  }
+
+  /* ---------- Animations ---------- */
+  @keyframes cb-enter {
+    from {
+      opacity: 0;
+      transform: translateY(14px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes cb-float {
+    0%,
+    100% {
+      transform: translateY(0) rotateX(0deg) rotateY(-6deg);
+    }
+    50% {
+      transform: translateY(-8px) rotateX(3deg) rotateY(6deg);
+    }
+  }
+
+  @keyframes cb-tilt {
+    0%,
+    100% {
+      transform: translateX(-4px);
+    }
+    50% {
+      transform: translateX(4px);
+    }
+  }
+
+  @keyframes cb-shadow {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.9;
+    }
+    50% {
+      transform: scale(0.88);
+      opacity: 0.65;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #casebridge-preloader {
+      transform: none !important;
+      transition: opacity 200ms ease;
+    }
+    #casebridge-preloader.is-leaving {
+      opacity: 0;
+    }
+    #casebridge-preloader .cb-content,
+    #casebridge-preloader .cb-orb,
+    #casebridge-preloader .cb-wordmark,
+    #casebridge-preloader .cb-shadow {
+      animation: none;
+    }
+  }
+</style>
+
+<!--
+  Inline (non-bundled) script: runs synchronously right after the markup is
+  parsed, so a returning visitor never sees a flash of the preloader.
+-->
+<script is:inline>
+  (function () {
+    var root = document.documentElement;
+    var preloader = document.getElementById('casebridge-preloader');
+
+    if (!preloader || preloader.dataset.initialized === 'true') return;
+    preloader.dataset.initialized = 'true';
+
+    var KEY = 'casebridge-preloader-shown';
+
+    // Show once per browser tab session.
+    try {
+      if (sessionStorage.getItem(KEY) === 'true') {
+        preloader.classList.add('is-skipped');
+        return;
+      }
+      sessionStorage.setItem(KEY, 'true');
+    } catch (e) {}
+
+    root.classList.add('cb-loading');
+
+    var ring = preloader.querySelector('.cb-ring-fill');
+    var num = preloader.querySelector('.cb-num');
+    var statusText = preloader.querySelector('.cb-status');
+    var CIRC = 2 * Math.PI * 148; // matches the SVG circle radius
+
+    ring.style.strokeDasharray = String(CIRC);
+    ring.style.strokeDashoffset = String(CIRC);
+
+    var MIN_DURATION = 900; // avoids a distracting flash on fast loads
+    var MAX_WAIT = 30000; // last-resort only; normally the site opens ONLY after loading reaches 100%
+    var HOLD = 350; // pause at 100% before revealing
+
+    var stages = [
+      [0, 'Initializing'],
+      [30, 'Loading resources'],
+      [60, 'Preparing experience'],
+      [85, 'Almost ready'],
+      [100, 'Complete']
+    ];
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var start = performance.now();
+    var shown = 0; // displayed value (always monotonic)
+    var last = start;
+    var finished = false;
+    var fontsReady = !(document.fonts && document.fonts.ready);
+    var windowLoaded = document.readyState === 'complete';
+    var lastLabel = '';
+    var lastAria = -1;
+
+    if (!fontsReady) {
+      document.fonts.ready.then(
+        function () { fontsReady = true; },
+        function () { fontsReady = true; }
+      );
+    }
+    if (!windowLoaded) {
+      window.addEventListener('load', function () { windowLoaded = true; }, { once: true });
+    }
+
+    /**
+     * Real progress, 0-100, from what the browser has actually loaded:
+     *   document parsing ........ up to 35
+     *   stylesheets ............. up to 15
+     *   web fonts ............... up to 10
+     *   eager images ............ up to 30
+     *   window "load" event ..... final 10
+     */
+    function measure() {
+      if (windowLoaded) return 100;
+
+      var score = 0;
+      var rs = document.readyState;
+
+      score += rs === 'loading' ? 10 : 35;
+
+      var links = document.querySelectorAll('link[rel="stylesheet"]');
+      if (links.length) {
+        var cssDone = 0;
+        for (var i = 0; i < links.length; i++) {
+          try { if (links[i].sheet) cssDone++; } catch (e) { cssDone++; }
+        }
+        score += 15 * (cssDone / links.length);
+      } else {
+        score += rs === 'loading' ? 0 : 15;
+      }
+
+      score += fontsReady ? 10 : 0;
+
+      // Images that load immediately (lazy ones are excluded on purpose)
+      var imgs = document.querySelectorAll('img:not([loading="lazy"])');
+      var total = 0;
+      var done = 0;
+      for (var j = 0; j < imgs.length; j++) {
+        var img = imgs[j];
+        if (!img.currentSrc && !img.getAttribute('src')) continue;
+        total++;
+        if (img.complete) done++;
+      }
+      if (total) {
+        score += 30 * (done / total);
+      } else {
+        score += rs === 'loading' ? 0 : 30;
+      }
+
+      return Math.min(score, 99);
+    }
+
+    function render(value) {
+      var v = Math.min(100, Math.max(0, value));
+      var rounded = Math.round(v);
+
+      ring.style.strokeDashoffset = String(CIRC * (1 - v / 100));
+      if (num) num.textContent = String(rounded);
+
+      if (statusText) {
+        var label = stages[0][1];
+        for (var i = 0; i < stages.length; i++) {
+          if (rounded >= stages[i][0]) label = stages[i][1];
+        }
+        if (label !== lastLabel) {
+          statusText.textContent = label;
+          lastLabel = label;
+        }
+      }
+
+      // Update assistive tech in coarse steps, not every frame.
+      var step = Math.floor(rounded / 10) * 10;
+      if (step !== lastAria) {
+        preloader.setAttribute('aria-valuenow', String(rounded));
+        lastAria = step;
+      }
+    }
+
+    function reveal() {
+      root.classList.remove('cb-loading');
+      preloader.classList.add('is-leaving');
+
+      var cleanup = function () {
+        preloader.classList.add('is-done');
+      };
+
+      preloader.addEventListener('transitionend', function handler(e) {
+        if (e.target !== preloader) return;
+        preloader.removeEventListener('transitionend', handler);
+        cleanup();
+      });
+      // Fallback in case transitionend never fires.
+      window.setTimeout(cleanup, reduceMotion ? 400 : 1200);
+    }
+
+    function finish() {
+      if (finished) return;
+      finished = true;
+      render(100);
+      window.setTimeout(reveal, reduceMotion ? 0 : HOLD);
+    }
+
+    function tick(now) {
+      if (finished) return;
+
+      var elapsed = now - start;
+      var dt = Math.min(now - last, 50);
+      last = now;
+
+      var real = measure();
+      // Time ceiling keeps the animation smooth on fast loads,
+      // but the bar never shows more than what has really loaded.
+      var timeCap = Math.min(100, (elapsed / MIN_DURATION) * 100);
+      var target = Math.min(real, timeCap);
+
+      // Ease toward the target; never go backwards.
+      var ease = 1 - Math.exp(-dt / 140);
+      var next = shown + (target - shown) * ease;
+      if (target - next < 0.15) next = target;
+      shown = Math.max(shown, next);
+
+      render(shown);
+
+      if (shown >= 100 && windowLoaded && fontsReady) {
+        finish();
+        return;
+      }
+
+      // Last-resort fallback for a stalled connection (30s+).
+      if (elapsed >= MAX_WAIT) {
+        finish();
+        return;
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    // Back/forward cache restore: skip straight past the preloader.
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) {
+        finished = true;
+        root.classList.remove('cb-loading');
+        preloader.classList.add('is-done');
+      }
+    });
+
+    render(0);
+    requestAnimationFrame(tick);
+  })();
+</script>

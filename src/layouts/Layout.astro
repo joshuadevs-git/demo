@@ -22,6 +22,8 @@ import FooterMinimalBlock from '@components/registry/shell/FooterMinimalBlock.as
 import FooterPromoBlock from '@components/registry/shell/FooterPromoBlock.astro';
 import NovaFooterBlock from '@components/registry/shell/NovaFooterBlock.astro';
 import NovaDemoBanner from '@components/ui/molecules/NovaDemoBanner.astro';
+import CaseBridgeChatbot from '@components/chatbot/CaseBridgeChatbot.astro';
+import Preloader from '@components/ui/molecules/Preloader.astro';
 import type { NovaLocale } from '@utils/nova-i18n';
 
 
@@ -318,7 +320,8 @@ const mainPaddingStyle = fullBleedTop
 		data-review-api={reviewApiUrl || undefined}
 		data-review-project={reviewProject || undefined}
 	>
-		{clientRuntime && <MobileDrawer locale={locale} />}
+    {clientRuntime && <Preloader />}
+    {clientRuntime && <MobileDrawer locale={locale} />}
 		{showShell && theme === 'nova' && <NovaDemoBanner locale={locale} />}
 		{showShell && navbarResolved && (
 			<div class:list={theme === 'nova' ? ['relative'] : []}>
@@ -362,13 +365,15 @@ const mainPaddingStyle = fullBleedTop
 		<!-- Analytics must not delay first render, defer keeps cookie consent compatibility. -->
 		{clientRuntime && <script is:inline data-astro-rerun src="/js/analytics.js" defer></script>}
 		{clientRuntime && <script is:inline data-astro-rerun src="/js/theme-switcher.js" defer></script>}
-		{clientRuntime && hasOptionalTracking && <CookieConsent />}
-	        {clientRuntime && <Toast />}
-	        {clientRuntime && <FloatingBar />}
-	        {clientRuntime && <ImageLightbox />}
-	{
-		// Custom code from client at page end (chat widgets, scripts loaded at end).
-		customBodyEnd && <Fragment set:html={customBodyEnd} />
-	}
+	    {clientRuntime && hasOptionalTracking && <CookieConsent />}
+		{clientRuntime && <Toast />}
+		{clientRuntime && <FloatingBar />}
+		{clientRuntime && <ImageLightbox />}
+		{clientRuntime && showShell && !isComponentToolPage && <CaseBridgeChatbot />}
+
+		{
+			// Custom code from client at page end (chat widgets, scripts loaded at end).
+			customBodyEnd && <Fragment set:html={customBodyEnd} />
+		}
 </body>
 </html>

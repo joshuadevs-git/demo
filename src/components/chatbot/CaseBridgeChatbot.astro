@@ -1,0 +1,589 @@
+---
+const orientationUrl = "https://1b759a57-2bf4-4a53-ba26-cbcb489d8d05.vibe-coding-preview.softr.app/orientation-form";
+---
+
+<div data-chatbot data-orientation-url={orientationUrl} transition:persist="casebridge-chatbot">
+  <template>
+    <style is:inline>
+      :host { all: initial; font-family: inherit; }
+
+      .cb-chatbot {
+        --navy: #12213f;
+        --navy-2: #1b3160;
+        --orange: #ff8a00;
+        --orange-dk: #e07800;
+        --ink: #1f2c42;
+        --muted: #6b7a90;
+        --line: #e5eaf1;
+        --bg: #f5f7fa;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 1.5;
+        color: var(--ink);
+        text-align: left;
+        position: fixed;
+        right: 27px;
+        bottom: 140px;
+        z-index: 9990;
+      }
+      .cb-chatbot *, .cb-chatbot *::before, .cb-chatbot *::after { box-sizing: border-box; }
+      .cb-chatbot button, .cb-chatbot input { font: inherit; letter-spacing: normal; text-transform: none; }
+      .cb-chatbot button { appearance: none; border: 0; padding: 0; margin: 0; cursor: pointer; }
+      .cb-chatbot svg { display: block; flex: none; }
+      .cb-chatbot :focus-visible { outline: 3px solid rgb(255 138 0 / 55%); outline-offset: 2px; }
+
+      /* Launcher */
+      .cb-launcher {
+        position: relative;
+        width: 46px; height: 46px;
+        border-radius: 50%;
+        background: var(--orange); color: var(--navy);
+        display: grid; place-items: center;
+        box-shadow: 0 10px 26px rgb(18 33 63 / 28%);
+        transition: transform .2s ease, background .2s ease;
+      }
+      .cb-launcher:hover { background: var(--orange-dk); transform: scale(1.06); }
+      .cb-launcher svg { width: 22px; height: 22px; grid-area: 1 / 1; }
+
+      /* Only one icon at a time: chat bubble when closed, X when open */
+      .cb-launcher .cb-i-x { display: none; }
+      .is-open .cb-launcher .cb-i-chat { display: none; }
+      .is-open .cb-launcher .cb-i-x { display: block; }
+      .is-open .cb-launcher .cb-tooltip { display: none; }
+
+      .cb-tooltip {
+        position: absolute; right: 72px;
+        background: var(--navy); color: #fff;
+        font-size: 13px; font-weight: 600; white-space: nowrap;
+        padding: 9px 14px; border-radius: 10px;
+        opacity: 0; pointer-events: none; transform: translateX(6px);
+        transition: opacity .2s ease, transform .2s ease;
+      }
+      .cb-launcher:hover .cb-tooltip, .cb-launcher:focus-visible .cb-tooltip { opacity: 1; transform: none; }
+
+      /* Window */
+      .cb-window {
+        position: absolute; right: 0; bottom: 58px;
+        width: min(380px, calc(100vw - 32px));
+        height: min(560px, calc(100dvh - 200px));
+        min-height: 320px;
+        display: flex; flex-direction: column;
+        background: #fff; border-radius: 20px; overflow: hidden;
+        border: 1px solid rgb(18 33 63 / 8%);
+        box-shadow: 0 24px 64px rgb(18 33 63 / 24%), 0 4px 12px rgb(18 33 63 / 8%);
+        opacity: 0; visibility: hidden;
+        transform: translateY(12px) scale(.98); transform-origin: bottom right;
+        transition: opacity .2s ease, transform .2s ease, visibility .2s;
+      }
+      .is-open .cb-window { opacity: 1; visibility: visible; transform: none; }
+
+      /* Header */
+      .cb-header {
+        display: flex; align-items: center; gap: 12px;
+        padding: 16px 16px 16px 18px;
+        background: linear-gradient(135deg, var(--navy), var(--navy-2));
+        color: #fff; flex-shrink: 0;
+      }
+      .cb-avatar {
+        flex: 0 0 42px; width: 42px; height: 42px; border-radius: 12px;
+        background: var(--orange); color: var(--navy);
+        display: grid; place-items: center;
+        font-size: 14px; font-weight: 800; letter-spacing: .02em;
+      }
+      .cb-title { flex: 1; min-width: 0; }
+      .cb-title strong { display: block; font-size: 15px; font-weight: 700; line-height: 1.3; }
+      .cb-title span { display: flex; align-items: center; gap: 6px; margin-top: 3px; font-size: 12px; color: #c9d6ea; }
+      .cb-title i { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 0 3px rgb(74 222 128 / 25%); }
+      .cb-icon-btn {
+        flex: 0 0 34px; width: 34px; height: 34px; border-radius: 10px;
+        background: rgb(255 255 255 / 10%); color: #fff;
+        display: grid; place-items: center; transition: background .2s ease;
+      }
+      .cb-icon-btn:hover { background: rgb(255 255 255 / 20%); }
+      .cb-icon-btn svg { width: 16px; height: 16px; }
+
+      /* Messages */
+      .cb-messages {
+        flex: 1; overflow-y: auto; scroll-behavior: smooth;
+        padding: 18px 16px; background: var(--bg);
+        display: flex; flex-direction: column; gap: 14px;
+      }
+      .cb-row { display: flex; align-items: flex-end; gap: 8px; }
+      .cb-row-user { justify-content: flex-end; }
+      .cb-mini {
+        flex: 0 0 28px; width: 28px; height: 28px; border-radius: 8px;
+        background: var(--navy); color: var(--orange);
+        display: grid; place-items: center; font-size: 10px; font-weight: 800;
+      }
+      .cb-bubble {
+        max-width: 82%; padding: 11px 14px;
+        font-size: 14px; line-height: 1.55; overflow-wrap: anywhere;
+        border-radius: 16px;
+      }
+      .cb-bubble p { margin: 0; }
+      .cb-bubble p + p, .cb-bubble p + ul, .cb-bubble ul + p { margin-top: 9px; }
+      .cb-bubble ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+      .cb-bubble li { position: relative; padding-left: 18px; }
+      .cb-bubble li::before {
+        content: ""; position: absolute; left: 2px; top: .55em;
+        width: 7px; height: 7px; border-radius: 50%; background: var(--orange);
+      }
+      .cb-bot { background: #fff; color: var(--ink); border: 1px solid var(--line); border-bottom-left-radius: 4px; }
+      .cb-user { background: var(--navy); color: #fff; border-bottom-right-radius: 4px; }
+
+      .cb-cta {
+        display: inline-flex; align-items: center; gap: 8px;
+        margin-top: 12px; padding: 10px 16px;
+        background: var(--orange); color: var(--navy);
+        font-size: 13.5px; font-weight: 700; text-decoration: none;
+        border-radius: 10px; transition: background .2s ease;
+      }
+      .cb-cta:hover { background: var(--orange-dk); }
+      .cb-cta svg { width: 15px; height: 15px; }
+
+      /* Suggestion buttons inside bot replies */
+      .cb-inline-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+      .cb-inline-chips button {
+        padding: 7px 12px; background: #fff; color: var(--navy);
+        border: 1px solid #d5dde9; border-radius: 999px;
+        font-size: 12.5px; font-weight: 600; text-align: left;
+        transition: border-color .2s ease, background .2s ease;
+      }
+      .cb-inline-chips button:hover { border-color: var(--orange); background: #fff6ea; }
+
+      /* Typing indicator */
+      .cb-typing { display: flex; gap: 5px; padding: 15px 16px; }
+      .cb-typing span {
+        width: 7px; height: 7px; border-radius: 50%; background: #9aa8bd;
+        animation: cb-bounce 1s infinite ease-in-out;
+      }
+      .cb-typing span:nth-child(2) { animation-delay: .15s; }
+      .cb-typing span:nth-child(3) { animation-delay: .3s; }
+      @keyframes cb-bounce { 0%, 60%, 100% { transform: translateY(0); opacity: .5; } 30% { transform: translateY(-5px); opacity: 1; } }
+
+      /* Quick replies */
+      .cb-chips {
+        display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 16px;
+        background: #fff; border-top: 1px solid var(--line); flex-shrink: 0;
+      }
+      /* After the first question: stay wrapped and visible, just smaller */
+      .cb-chips[data-compact="true"] { max-height: 84px; overflow-y: auto; gap: 6px; padding: 8px 16px; }
+      .cb-chips[data-compact="true"] button { padding: 6px 12px; font-size: 12.5px; }
+      .cb-chips button {
+        flex: 0 0 auto; padding: 8px 14px;
+        background: #fff; color: var(--navy);
+        border: 1px solid #d5dde9; border-radius: 999px;
+        font-size: 13px; font-weight: 600; white-space: nowrap;
+        transition: border-color .2s ease, background .2s ease;
+      }
+      .cb-chips button:hover { border-color: var(--orange); background: #fff6ea; }
+
+      /* Input */
+      .cb-form { display: flex; gap: 8px; padding: 4px 16px 12px; background: #fff; flex-shrink: 0; margin: 0; }
+      .cb-form input {
+        flex: 1; min-width: 0; height: 44px; padding: 0 16px; margin: 0;
+        border: 1px solid #d5dde9; border-radius: 12px;
+        background: var(--bg); color: var(--ink); font-size: 14px;
+        transition: border-color .2s ease, background .2s ease;
+      }
+      .cb-form input::placeholder { color: #8a97ab; }
+      .cb-form input:focus { outline: none; border-color: var(--orange); background: #fff; }
+      .cb-form button {
+        flex: 0 0 44px; width: 44px; height: 44px; border-radius: 12px;
+        background: var(--navy); color: #fff;
+        display: grid; place-items: center; transition: background .2s ease;
+      }
+      .cb-form button:hover { background: var(--navy-2); }
+      .cb-form button svg { width: 18px; height: 18px; }
+      .cb-foot { padding: 0 16px 12px; background: #fff; text-align: center; font-size: 11px; color: var(--muted); flex-shrink: 0; }
+
+      @media (max-width: 480px) {
+        .cb-chatbot { right: 14px; bottom: 14px; }
+        .cb-launcher { width: 56px; height: 56px; }
+        .cb-window { position: fixed; right: 10px; left: 10px; bottom: 80px; width: auto; height: min(600px, calc(100dvh - 100px)); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .cb-chatbot * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+      }
+    </style>
+
+    <div class="cb-chatbot">
+      <section class="cb-window" data-chat-window role="dialog" aria-label="CaseBridge chat assistant" aria-hidden="true">
+        <header class="cb-header">
+          <div class="cb-avatar" aria-hidden="true">CB</div>
+          <div class="cb-title">
+            <strong>CaseBridge Assistant</strong>
+            <span><i></i>Online now</span>
+          </div>
+          <button class="cb-icon-btn" type="button" data-chat-close aria-label="Close chat">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </header>
+
+        <div class="cb-messages" data-chat-messages role="log" aria-live="polite">
+          <div class="cb-row cb-row-bot">
+            <div class="cb-mini" aria-hidden="true">CB</div>
+            <div class="cb-bubble cb-bot">
+              <p>Hi, welcome to CaseBridge! 👋</p>
+              <p>I can answer questions about our legal support training and how to enroll. Pick a topic or type your own question.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cb-chips" data-chat-suggestions aria-label="Suggested questions">
+          <button type="button" data-question="What training programs do you offer?">Training programs</button>
+          <button type="button" data-question="Do I need a legal background?">Legal background</button>
+          <button type="button" data-question="What are the enrollment benefits?">Benefits</button>
+          <button type="button" data-question="Do you offer job opportunities?">Job opportunities</button>
+          <button type="button" data-question="How can I enroll?">How to enroll</button>
+        </div>
+
+        <form class="cb-form" data-chat-form>
+          <input type="text" data-chat-input placeholder="Ask a question…" aria-label="Type your question" autocomplete="off" maxlength="300" />
+          <button type="submit" aria-label="Send message">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
+        <div class="cb-foot">Automated assistant. For specifics, our team is happy to help.</div>
+      </section>
+
+      <button class="cb-launcher" type="button" data-chat-open aria-label="Open CaseBridge chat" aria-expanded="false">
+        <svg class="cb-i-chat" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l1.8-3.2A7.5 7.5 0 1 1 20 11.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 11h8M8 14h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <svg class="cb-i-x" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span class="cb-tooltip">Questions? Chat with us</span>
+      </button>
+    </div>
+  </template>
+</div>
+
+<script is:inline data-astro-rerun>
+(() => {
+  const initCaseBridgeChat = () => {
+    const host = document.querySelector('[data-chatbot]');
+    if (!host || host.dataset.initialized === 'true') return;
+    host.dataset.initialized = 'true';
+
+    // Render inside a Shadow DOM so the site's global CSS can't affect the chatbot
+    const shadow = host.shadowRoot || host.attachShadow({ mode: 'open' });
+    shadow.append(host.querySelector('template').content.cloneNode(true));
+
+    const orientationUrl = host.dataset.orientationUrl;
+    const $ = (s) => shadow.querySelector(s);
+    const root = $('.cb-chatbot');
+    const windowEl = $('[data-chat-window]');
+    const openButton = $('[data-chat-open]');
+    const closeButton = $('[data-chat-close]');
+    const messages = $('[data-chat-messages]');
+    const form = $('[data-chat-form]');
+    const input = $('[data-chat-input]');
+    const suggestions = $('[data-chat-suggestions]');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // cta: true adds an "orientation seat" button under the answer
+    const answers = [
+      {
+        keys: ['program', 'course', 'training', 'career path', 'offer'],
+        answer: 'We offer six legal support training paths:\n\n• Legal Intake Qualifier\n• Legal Intake Closer\n• Medical Records Retriever\n• Paralegal Support\n• Legal Case Manager\n• Legal Assistant / Administrative Support\n\nEach program focuses on practical tasks used in legal support roles.'
+      },
+      {
+        keys: ['legal background', 'law degree', 'lawyer', 'experience', 'no background', 'beginner'],
+        answer: 'No legal background? No problem! Our training is designed to help you build the skills needed for legal support work. You bring the potential, and we help you develop the skills.',
+        cta: true
+      },
+      {
+        keys: ['benefit', 'included', 'what do i get', 'features'],
+        answer: 'Enrollment benefits include:\n\n• Self-paced modules and recorded lessons\n• Live sessions, depending on your program\n• Hands-on practice with at least two CRM platforms\n• Mock calls and interview practice\n• Free HIPAA training and certification\n• Coaching and support\n• Resume and video introduction assistance\n\nSome additional opportunities may be available to eligible trainees.'
+      },
+      {
+        keys: ['job', 'employment', 'hiring', 'agency', 'career opportunity', 'placement'],
+        answer: 'Qualified graduates may receive priority consideration for endorsement when a suitable role opens through our partner agencies. We also provide career preparation and interview practice. Job placement is not guaranteed.'
+      },
+      {
+        keys: ['tesda', 'accredit'],
+        answer: 'CaseBridge offers training through a TESDA-accredited training center in the Philippines, following recognized quality standards.'
+      },
+      {
+        keys: ['batch', 'class size', 'trainees', 'students'],
+        answer: 'Our live batches are limited to 10 trainees to provide more attention, guidance, and coaching.'
+      },
+      {
+        keys: ['hipaa', 'certificate', 'certification'],
+        answer: 'Free HIPAA training and certification are included among the enrollment benefits.'
+      },
+      {
+        keys: ['price', 'pricing', 'fee', 'fees', 'cost', 'tuition', 'payment'],
+        answer: 'For the latest training fees and payment details, please contact the CaseBridge team directly or reserve a free orientation seat. We do not want to give you outdated pricing information.',
+        cta: true
+      },
+      {
+        keys: ['online', 'remote', 'virtual', 'where', 'location', 'schedule', 'time'],
+        answer: 'Our enrollment benefits include self-paced modules and recorded lessons, as well as live training sessions depending on your program. Please contact the team for the current schedule and delivery details.',
+        cta: true
+      },
+      {
+        keys: ['enroll', 'enrollment', 'register', 'orientation', 'sign up', 'apply'],
+        answer: 'Ready to get started? Reserve your free orientation seat and the CaseBridge team will walk you through the next steps.',
+        cta: true
+      },
+      {
+        keys: ['sponsor', 'sponsorship', 'lgu'],
+        answer: 'We work with Local Government Units (LGUs) to help qualified individuals access training. Sponsorship opportunities may depend on eligibility and availability.'
+      },
+      {
+        keys: ['resume', 'cv', 'interview', 'mock call', 'video introduction'],
+        answer: 'We help trainees prepare their resumes, video introductions, mock calls, and interview skills as part of career preparation.'
+      },
+      {
+        keys: ['crm', 'software', 'platform', 'tools'],
+        answer: 'Our training includes hands-on practice with at least two CRM platforms so trainees can become familiar with practical workflows.'
+      }
+    ];
+
+    const conversationalAnswers = [
+      {
+        keys: ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening'],
+        answer: "Hello! 👋 Welcome to CaseBridge! I'm here to help you learn about our training programs, enrollment, and career opportunities. What would you like to know?"
+      },
+      {
+        keys: ['thank you', 'thanks', 'thankyou', 'salamat'],
+        answer: "You're very welcome! 😊 I'm happy to help. Feel free to ask me anything about CaseBridge."
+      },
+      {
+        keys: ['bye', 'goodbye', 'see you', 'thats all', 'that is all'],
+        answer: "Thank you for visiting CaseBridge! 👋 We hope to see you soon. Feel free to come back anytime."
+      },
+      {
+        keys: ['what is casebridge', 'about casebridge', 'who are you', 'what do you do'],
+        answer: "CaseBridge provides training designed to prepare individuals for legal support careers. Our programs focus on practical skills, CRM platforms, and career preparation."
+      },
+      {
+        keys: ['interested', 'i want to join', 'i want to learn', 'tell me more'],
+        answer: "That's great! 😊 CaseBridge offers several legal support training paths. You can explore the programs and reserve a free orientation seat to learn more.",
+        cta: true
+      },
+      {
+        keys: ['confused', 'help me', 'i dont understand', 'i do not understand'],
+        answer: "No worries! 😊 I can guide you. You can ask me about training programs, enrollment, fees, job opportunities, or the benefits of joining CaseBridge."
+      },
+      {
+        keys: ['what can you do', 'help', 'topics', 'what can i ask'],
+        answer: "I can help answer questions about:\n\n• Training programs\n• Enrollment and orientation\n• Training fees\n• Career opportunities\n• HIPAA certification\n• Training benefits\n\nJust type your question!"
+      }
+    ];
+
+    // Replies for random / unrecognized messages. They rotate, and each
+    // one shows clickable topic buttons so the user can get back on track.
+    const fallbacks = [
+      {
+        answer: "Hmm, I'm not sure I caught that. 😊 I'm best at questions about CaseBridge's legal support training. Here are some things I can help with:",
+        chips: ['What training programs do you offer?', 'How can I enroll?', 'How much is the training fee?']
+      },
+      {
+        answer: "I didn't quite get that, but I'd love to help! Try asking about one of these topics:",
+        chips: ['What are the enrollment benefits?', 'Do you offer job opportunities?', 'Do I need a legal background?']
+      },
+      {
+        answer: "That one's a little outside what I know. 😊 I can tell you about CaseBridge's training, enrollment, fees, and career support. Want to start here?",
+        chips: ['What training programs do you offer?', 'Do you offer job opportunities?', 'How can I enroll?'],
+        cta: true
+      }
+    ];
+    let fallbackIndex = 0;
+    const getFallback = () => fallbacks[fallbackIndex++ % fallbacks.length];
+
+    const normalize = (v) => v.toLowerCase().replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim();
+
+    const scrollDown = () => {
+      messages.scrollTo({ top: messages.scrollHeight, behavior: reduceMotion ? 'auto' : 'smooth' });
+    };
+
+    const makeRow = (type) => {
+      const row = document.createElement('div');
+      row.className = `cb-row cb-row-${type}`;
+      if (type === 'bot') {
+        const mini = document.createElement('div');
+        mini.className = 'cb-mini';
+        mini.setAttribute('aria-hidden', 'true');
+        mini.textContent = 'CB';
+        row.append(mini);
+      }
+      return row;
+    };
+
+    const addUser = (text) => {
+      const row = makeRow('user');
+      const bubble = document.createElement('div');
+      bubble.className = 'cb-bubble cb-user';
+      bubble.textContent = text;
+      row.append(bubble);
+      messages.append(row);
+      scrollDown();
+    };
+
+    // Turns "• item" lines into a real list and blank lines into paragraphs
+    const renderBotText = (bubble, text) => {
+      let list = null;
+      text.split('\n').forEach((line) => {
+        const t = line.trim();
+        if (!t) { list = null; return; }
+        if (t.startsWith('•')) {
+          if (!list) { list = document.createElement('ul'); bubble.append(list); }
+          const li = document.createElement('li');
+          li.textContent = t.replace(/^•\s*/, '');
+          list.append(li);
+        } else {
+          list = null;
+          const p = document.createElement('p');
+          p.textContent = t;
+          bubble.append(p);
+        }
+      });
+    };
+
+    const addBot = (item) => {
+      const row = makeRow('bot');
+      const bubble = document.createElement('div');
+      bubble.className = 'cb-bubble cb-bot';
+      renderBotText(bubble, item.answer);
+
+      if (item.chips) {
+        const wrap = document.createElement('div');
+        wrap.className = 'cb-inline-chips';
+        item.chips.forEach((q) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.textContent = q;
+          b.addEventListener('click', () => ask(q));
+          wrap.append(b);
+        });
+        bubble.append(wrap);
+      }
+
+      if (item.cta) {
+        const link = document.createElement('a');
+        link.className = 'cb-cta';
+        link.href = orientationUrl;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.innerHTML = 'Reserve your free orientation seat <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        bubble.append(link);
+      }
+
+      row.append(bubble);
+      messages.append(row);
+      scrollDown();
+    };
+
+    const showTyping = () => {
+      const row = makeRow('bot');
+      const bubble = document.createElement('div');
+      bubble.className = 'cb-bubble cb-bot cb-typing';
+      bubble.setAttribute('aria-label', 'Assistant is typing');
+      bubble.innerHTML = '<span></span><span></span><span></span>';
+      row.append(bubble);
+      messages.append(row);
+      scrollDown();
+      return row;
+    };
+
+    const getAnswer = (question) => {
+      const normalized = normalize(question);
+      const paddedQuestion = ` ${normalized} `;
+      const words = normalized.split(' ').filter((w) => w.length >= 4);
+
+      // Exact phrase match
+      const findBestMatch = (items) => {
+        let best = null, bestScore = 0;
+        items.forEach((item) => {
+          let score = 0;
+          item.keys.forEach((key) => {
+            const k = normalize(key);
+            if (paddedQuestion.includes(` ${k} `)) score += k.split(' ').length + 2;
+          });
+          if (score > bestScore) { bestScore = score; best = item; }
+        });
+        return best;
+      };
+
+      // Loose match: handles word forms like "enrolling", "programs", "jobs", "payments"
+      const findLooseMatch = (items) => {
+        let best = null, bestScore = 0;
+        items.forEach((item) => {
+          let score = 0;
+          item.keys.forEach((key) => {
+            normalize(key).split(' ').filter((kw) => kw.length >= 4).forEach((kw) => {
+              if (words.some((w) => w.startsWith(kw) || kw.startsWith(w))) score += 1;
+            });
+          });
+          if (score > bestScore) { bestScore = score; best = item; }
+        });
+        return best;
+      };
+
+      // Specific FAQ answers first, so "help me enroll" gets the enrollment
+      // answer instead of the generic help list.
+      return (
+        findBestMatch(answers) ||
+        findBestMatch(conversationalAnswers) ||
+        findLooseMatch(answers) ||
+        getFallback()
+      );
+    };
+
+    let busy = false;
+    const ask = (question) => {
+      const value = question.trim();
+      if (!value || busy) return;
+      busy = true;
+
+      addUser(value);
+      suggestions.dataset.compact = 'true'; // chips shrink but stay visible
+      const typing = showTyping();
+      const delay = reduceMotion ? 0 : 650;
+
+      setTimeout(() => {
+        typing.remove();
+        addBot(getAnswer(value));
+        busy = false;
+      }, delay);
+    };
+
+    const setOpen = (open) => {
+      root.classList.toggle('is-open', open);
+      windowEl.setAttribute('aria-hidden', String(!open));
+      openButton.setAttribute('aria-expanded', String(open));
+      openButton.setAttribute('aria-label', open ? 'Close CaseBridge chat' : 'Open CaseBridge chat');
+      if (open) setTimeout(() => input.focus(), 120);
+      else openButton.focus({ preventScroll: true });
+    };
+
+    openButton.addEventListener('click', () => setOpen(!root.classList.contains('is-open')));
+    closeButton.addEventListener('click', () => setOpen(false));
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      ask(input.value);
+      input.value = '';
+    });
+
+    suggestions.addEventListener('click', (e) => {
+      const button = e.target.closest('[data-question]');
+      if (button) ask(button.dataset.question);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && root.classList.contains('is-open')) setOpen(false);
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCaseBridgeChat, { once: true });
+  } else {
+    initCaseBridgeChat();
+  }
+  document.addEventListener('astro:page-load', initCaseBridgeChat);
+})();
+</script>
