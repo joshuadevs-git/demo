@@ -1,3 +1,7 @@
+<!--
+  From Uiverse.io by moasko - https://uiverse.io/moasko/rude-catfish-31
+  MIT License, Copyright (c) moasko (moasko.dev)
+-->
 <div
   id="casebridge-preloader"
   role="progressbar"
@@ -15,16 +19,13 @@
         <circle class="cb-ring-fill" cx="160" cy="160" r="148" />
       </svg>
 
-      <!-- Ground shadow -->
-      <div class="cb-shadow" aria-hidden="true"></div>
-
-      <!-- 3D orange sphere with the name on it -->
-      <div class="cb-orb">
-        <div class="cb-orb-shade" aria-hidden="true"></div>
-        <div class="cb-wordmark">
-          <strong>CASE</strong><span>BRIDGE</span>
-        </div>
-        <div class="cb-orb-gloss" aria-hidden="true"></div>
+      <!-- Uiverse loader (class names prefixed with cb- to avoid collisions) -->
+      <div class="cb-loader" aria-hidden="true">
+        <div class="cb-loader-circle cb-loader-c1"></div>
+        <div class="cb-loader-circle cb-loader-c2"></div>
+        <div class="cb-loader-circle cb-loader-c3"></div>
+        <div class="cb-loader-circle cb-loader-c4"></div>
+        <span class="cb-loader-text">Loading...</span>
       </div>
     </div>
 
@@ -116,7 +117,6 @@
     aspect-ratio: 1;
     display: grid;
     place-items: center;
-    perspective: 900px;
   }
 
   /* ---------- Progress ring ---------- */
@@ -146,84 +146,63 @@
     filter: drop-shadow(0 0 5px rgba(229, 138, 50, 0.5));
   }
 
-  /* ---------- Ground shadow ---------- */
-  #casebridge-preloader .cb-shadow {
-    position: absolute;
-    bottom: 4%;
-    left: 50%;
-    width: 52%;
-    height: 7%;
-    translate: -50% 0;
-    background: radial-gradient(ellipse at center, rgba(120, 60, 10, 0.32), transparent 70%);
-    filter: blur(6px);
-    animation: cb-shadow 4s ease-in-out infinite;
-  }
-
-  /* ---------- 3D sphere ---------- */
-  #casebridge-preloader .cb-orb {
-    position: relative;
-    width: 76%;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    background:
-      radial-gradient(circle at 30% 24%, #ffd1a0 0%, #ffa850 22%, #e58a32 52%, #b95f17 82%, #8f4509 100%);
-    box-shadow:
-      inset -18px -22px 40px rgba(110, 48, 0, 0.45),
-      inset 10px 12px 28px rgba(255, 220, 180, 0.45),
-      0 26px 40px -14px rgba(229, 138, 50, 0.55),
-      0 10px 18px -8px rgba(120, 60, 10, 0.35);
-    transform-style: preserve-3d;
-    animation: cb-float 4s ease-in-out infinite;
-  }
-
-  /* Subtle rim light on the lower edge */
-  #casebridge-preloader .cb-orb-shade {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: radial-gradient(circle at 70% 82%, rgba(255, 190, 120, 0.35), transparent 45%);
-    pointer-events: none;
-  }
-
-  /* Glossy highlight */
-  #casebridge-preloader .cb-orb-gloss {
-    position: absolute;
-    top: 7%;
-    left: 15%;
-    width: 46%;
-    height: 28%;
-    border-radius: 50%;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
-    filter: blur(2px);
-    transform: rotate(-24deg);
-    pointer-events: none;
-  }
-
-  /* ---------- Name on the sphere ---------- */
-  #casebridge-preloader .cb-wordmark {
-    position: relative;
+  /*
+    From Uiverse.io by moasko - https://uiverse.io/moasko/rude-catfish-31
+    MIT License, Copyright (c) moasko (moasko.dev)
+  */
+  #casebridge-preloader .cb-loader {
+    width: 100%;
+    height: 100%;
     display: flex;
+    justify-content: center;
     align-items: center;
-    font-size: clamp(17px, 4.6vw, 22px);
-    letter-spacing: 0.16em;
-    white-space: nowrap;
-    color: #ffffff;
-    text-shadow:
-      0 1px 0 rgba(150, 70, 10, 0.55),
-      0 3px 6px rgba(110, 48, 0, 0.45);
-    /* optical centering for trailing letter-spacing */
-    padding-left: 0.16em;
-    animation: cb-tilt 4s ease-in-out infinite;
   }
 
-  #casebridge-preloader .cb-wordmark strong {
-    font-weight: 800;
+  #casebridge-preloader .cb-loader-circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 360px 400px;
+    border: 12px solid;
+    position: absolute;
   }
 
-  #casebridge-preloader .cb-wordmark span {
-    font-weight: 300;
+  #casebridge-preloader .cb-loader-c1 {
+    animation: cb-loader-rota 2.2s linear infinite;
+    border-color: orange;
+  }
+
+  #casebridge-preloader .cb-loader-c2 {
+    animation: cb-loader-rota 3s linear infinite;
+    border-color: red;
+  }
+
+  #casebridge-preloader .cb-loader-c3 {
+    animation: cb-loader-rota 2s linear infinite;
+    border-color: #fff;
+    opacity: 0.5;
+  }
+
+  #casebridge-preloader .cb-loader-c4 {
+    animation: cb-loader-rota 1s linear infinite;
+    border-color: white;
+    opacity: 0.8;
+  }
+
+  @keyframes cb-loader-rota {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Centered "Loading..." text */
+  #casebridge-preloader .cb-loader-text {
+    position: relative;
+    z-index: 1;
+    color: var(--cb-navy);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    user-select: none;
   }
 
   /* ---------- Text ---------- */
@@ -286,38 +265,6 @@
     }
   }
 
-  @keyframes cb-float {
-    0%,
-    100% {
-      transform: translateY(0) rotateX(0deg) rotateY(-6deg);
-    }
-    50% {
-      transform: translateY(-8px) rotateX(3deg) rotateY(6deg);
-    }
-  }
-
-  @keyframes cb-tilt {
-    0%,
-    100% {
-      transform: translateX(-4px);
-    }
-    50% {
-      transform: translateX(4px);
-    }
-  }
-
-  @keyframes cb-shadow {
-    0%,
-    100% {
-      transform: scale(1);
-      opacity: 0.9;
-    }
-    50% {
-      transform: scale(0.88);
-      opacity: 0.65;
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     #casebridge-preloader {
       transform: none !important;
@@ -326,10 +273,7 @@
     #casebridge-preloader.is-leaving {
       opacity: 0;
     }
-    #casebridge-preloader .cb-content,
-    #casebridge-preloader .cb-orb,
-    #casebridge-preloader .cb-wordmark,
-    #casebridge-preloader .cb-shadow {
+    #casebridge-preloader .cb-content {
       animation: none;
     }
   }
