@@ -27,6 +27,7 @@
       },
       "languageLabel": "Choose language"
     },
+    
     "sections": {
    "nova-hero-wireframe": {
     "eyebrow": "LEGAL VA TRAINING CENTER",
@@ -35,7 +36,7 @@
     "subheading": "Learn the skills. Start your Legal VA career. Get connected to real opportunities.",
     "description": "Casebridge trains aspiring Virtual Assistants to work with law firms. You learn by doing, practice on real CRM software, and get guidance from coaches who work in the industry every day.",
     "primaryCTA": { "label": "Explore Training Programs", "href": "#programs" },
-    "secondaryCTA": { "label": "Request a Legal VA Talent Pool", "href": "#talent-pool" },
+    "secondaryCTA": { "label": "Request a Legal VA Talent Pool", "href": "https://casebridge.mysoftr.app/lead-form" },
     "image": "/assets/images/t001-nova/1.jpg",
     "imageAlt": "Strategist working at a laptop",
     "stats": [

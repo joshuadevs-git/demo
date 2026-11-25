@@ -85,15 +85,17 @@ const stats = props.stats ?? fallback?.stats ?? [];
               )}
 
               {secondaryCTA && (
-                <Button
-                  href={secondaryCTA.href}
-                  variant="outline"
-                  size="lg"
-                  class="min-h-11 w-full whitespace-nowrap font-semibold tracking-normal text-white border-white/30 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/60 hover:bg-white/10 !px-6 sm:w-auto md:text-[clamp(0.95rem,1.05vw,1.1rem)]"
-                >
-                  {secondaryCTA.label}
-                </Button>
-              )}
+              <Button
+    href={secondaryCTA.href}
+    target="_blank"
+    rel="noopener noreferrer"
+    variant="outline"
+    size="lg"
+    class="min-h-11 w-full whitespace-nowrap font-semibold tracking-normal text-white border-white/30 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/60 hover:bg-white/10 !px-6 sm:w-auto md:text-[clamp(0.95rem,1.05vw,1.1rem)]"
+  >
+    {secondaryCTA.label}
+  </Button>
+)}
             </div>
           </div>
         </div>
@@ -168,7 +170,7 @@ const stats = props.stats ?? fallback?.stats ?? [];
               </div>
             ))}
           </div>
-        </div>
+        </div>a
       </div>
     </div>
   </Container>
